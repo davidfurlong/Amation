@@ -177,13 +177,14 @@ div.button-container>div>button{
 }
 button{
 	border:none;
-	border-radius: 0;
+	border-radius: 2;
 	background-color:#000;
 	padding: 10px;
 	color:#fff;
 	text-align: center;
 	width: 100%;
 	cursor: pointer;
+	height: 40px;
 }
 
 input.full{
@@ -279,9 +280,9 @@ h1 input[type="text"]{
 		overflow-y:auto;
 	}
 .canvas-container{
-	margin-left:540px;
 	overflow:auto;
 	height:100%;
+	padding: 20px !important;
 }
 	#canvas{
 		width:800px;
@@ -289,7 +290,6 @@ h1 input[type="text"]{
 		background-color:#fff;	
 	}
 		#canvas-center{
-			margin:0 auto;
 			width:800px;
 		}
 
