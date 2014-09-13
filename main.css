@@ -188,6 +188,15 @@ input.full{
 	padding-left:10px;
 	width:74px;
 }
+svg#canvas > g {
+	cursor: pointer;
+}
+
+svg#canvas > g:hover {
+	stroke: blue;
+	stroke-width: 1px;
+}
+
 /* div bgs rgba(255,255,255,0.1)  rgba(255,255,255,0.2) */
 /* borders rgba(255,255,255,0.6) */
 /* field bg rgba(255,255,255,0.6) */

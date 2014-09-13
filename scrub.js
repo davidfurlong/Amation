@@ -18,20 +18,41 @@ function setupScrub() {
 		svg.unpauseAnimations();
 		updateSlider();
 	});
+
+
+	buildTicker();
 	updateSlider();
 };
+
+function buildTicker(){
+	$('#ticker-container').html('');
+	var width = $('#ticker-container').width();
+	var duration = $('#project-duration').val();
+	for(var i=0; i<duration; i++){
+		$('#ticker-container').append('<span style="width:' + Math.floor(width/duration) + 'px;">' + (i+1) + 's</span>');
+	}
+}
+
+$('#project-duration').on("keyup",function(){
+	buildTicker();
+});
 
 function updateSlider() {
 	setTimeout(function(){
 		if (!svg.animationsPaused()) {
 			time = (svg.getCurrentTime()/getDuration())*slider.attr('max');
-			slider.val(time);
+			if(time >= slider.attr('max')){
+				svg.setCurrentTime(0);
+				slider.val(0);
+			}
+			else{
+				slider.val(time);
+			}
 			updateSlider();
 		}
 	}, 200);
 };
 
 function getDuration() {
-	durationField = $("#project-duration");
-	return durationField.val();
+	return $("#project-duration").val();
 }
