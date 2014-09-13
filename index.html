@@ -52,6 +52,12 @@
 							<p class="last-saved-msg">last saved 10 minutes ago</p>
 						</div>
 					</div>
+					<div class="button-container">
+						<div>
+							<button class="play-btn playing"></button>
+							<button class="rewind-btn"></button>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="canvas-container">
@@ -65,25 +71,21 @@
 
 		<footer>
 			<div class="timeline">
-				<div id="ticker-container">
-					<span>1s</span>
-					<span>2s</span>
-					<span>3s</span>
-				</div>
+				<div id="ticker-container"></div>
 				<div id="slider-container">
 					<input id="slider" type="range" min="0" max="80" step="1" >
 				</div>
 				<div class="bars">
 					<div class="clearfix">
-						<div><hr></div>
+						<div class="bar"><hr></div>
 						<h3>Text</h3>
 					</div>
 					<div class="clearfix">
-						<div><hr></div>
+						<div class="bar"><hr></div>
 						<h3>Circle</h3>
 					</div>
 					<div class="clearfix">
-						<div><hr></div>
+						<div class="bar"><hr></div>
 						<h3>Background</h3>
 					</div>
 				</div>

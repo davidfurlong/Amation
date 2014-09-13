@@ -40,6 +40,7 @@ $('#project-duration').on("keyup",function(){
 function updateSlider() {
 	setTimeout(function(){
 		if (!svg.animationsPaused()) {
+			$('.play-btn').addClass('playing');
 			time = (svg.getCurrentTime()/getDuration())*slider.attr('max');
 			if(time >= slider.attr('max')){
 				svg.setCurrentTime(0);
@@ -49,6 +50,9 @@ function updateSlider() {
 				slider.val(time);
 			}
 			updateSlider();
+		}
+		else{
+			$('.play-btn').removeClass('playing');
 		}
 	}, 200);
 };
