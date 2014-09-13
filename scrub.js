@@ -5,15 +5,15 @@ function setupScrub() {
 	slider = $("#slider");
 	time = 0;
 
-	$("#slider").on("mousedown", function() {
+	slider.on("mousedown", function() {
 		svg.pauseAnimations();
 		slider.on("mousemove mouseup", function() {
-			time = ($(this).val()/100)*getDuration();
+			time = ($(this).val()/slider.attr('max'))*getDuration();
 			svg.setCurrentTime(time);
 		});
 	});
 
-	$("#slider").on("mouseup", function() {
+	slider.on("mouseup", function() {
 		$(this).off("mousemove");
 		svg.unpauseAnimations();
 		updateSlider();
@@ -24,7 +24,7 @@ function setupScrub() {
 function updateSlider() {
 	setTimeout(function(){
 		if (!svg.animationsPaused()) {
-			time = svg.getCurrentTime()/getDuration()*100;
+			time = (svg.getCurrentTime()/getDuration())*slider.attr('max');
 			slider.val(time);
 			updateSlider();
 		}
@@ -35,5 +35,3 @@ function getDuration() {
 	durationField = $("#project-duration");
 	return durationField.val();
 }
-
-
