@@ -1,3 +1,44 @@
+$.fn.draggable = function(){
+    var $this = this,
+    ns = 'draggable_'+(Math.random()+'').replace('.',''),
+    mm = 'mousemove.'+ns,
+    mu = 'mouseup.'+ns,
+    $w = $(window),
+    isFixed = ($this.css('position') === 'fixed'),
+    adjX = 0, adjY = 0;
+
+    $this.mousedown(function(ev){
+        var pos = $this.offset();
+        if (isFixed) {
+            adjX = $w.scrollLeft(); adjY = $w.scrollTop();
+        }
+        var ox = (ev.pageX - pos.left), oy = (ev.pageY - pos.top);
+        $this.data(ns,{ x : ox, y: oy });
+        $w.on(mm, function(ev){
+            ev.preventDefault();
+            ev.stopPropagation();
+            if (isFixed) {
+                adjX = $w.scrollLeft(); adjY = $w.scrollTop();
+            }
+            var offset = $this.data(ns);
+            // $this.css({left: ev.pageX - adjX - offset.x, top: ev.pageY - adjY - offset.y});
+            $this.css({left: ev.pageX - adjX - offset.x - $('.timeline').css('padding-left').replace('px','')});
+        });
+        $w.on(mu, function(){
+        	if($this.hasClass('start')){
+        		console.log($this.parent().css('margin-left').replace('px','')+ev.pageX - adjX - $this.data(ns).x - $('.timeline').css('padding-left').replace('px','')+'px');
+        		$this.parent().css('background-color','green').css('margin-left',$this.parent().css('margin-left')+ev.pageX - adjX - $this.data(ns).x - $('.timeline').css('padding-left').replace('px','')+'px');
+        	}
+            $w.off(mm + ' ' + mu).removeData(ns);
+        });
+    });
+
+    return this;
+};
+
+
+
+
 var animationDuration = 40; // seconds
 var animationWidth = 500; // px
 var animationHeight = 400; // px
@@ -103,6 +144,15 @@ $(function(){
 	    return r;
 	}
 
+	function allowDrag(){
+		$('.keyframe').each(function(i,v){
+			if(!$(v).hasClass('draggable')){
+				$(v).addClass('draggable').draggable();
+			}
+		});
+		return true;
+	}
+
 	$('input[type="text"]').focus(function(e){
 		$(e.target).parent().addClass('focus');
 	});
@@ -130,7 +180,8 @@ $(function(){
 		else if($(e.target).is('.bar')){
 			var relPosX = $(e.target).position().left;
 			var posX = e.pageX - relPosX;
-			$(e.target).append('<div class="keyframe" data-pos="' + posX + '" style="left:'+posX+'px;"></div>');
+			$(e.target).append('<div class="keyframe" data-pos="' + posX + '" style="left:'+(posX-5)+'px;"></div>');
+			allowDrag();
 		}
 	});
 
@@ -140,4 +191,5 @@ $(function(){
 	})
 	setupScrub();
 	buildLayers(svg);
+	allowDrag();
 });
