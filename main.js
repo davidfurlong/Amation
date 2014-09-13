@@ -112,6 +112,26 @@ $(function(){
 	$(window).resize(function(){
 		$('#slider-container,#ticker-container').width($('body').width()-$('.layer-details').width());
 	});
+	$('body').click(function(e){
+		if($(e.target).is('.play-btn')){
+			if($(e.target).hasClass('playing')){
+				document.getElementById("canvas").pauseAnimations();
+			}
+			else{
+				document.getElementById("canvas").unpauseAnimations();
+				updateSlider();
+			}
+		}
+		else if($(e.target).is('.rewind-btn')){
+			document.getElementById("canvas").setCurrentTime(0);
+			slider.val(0);
+		}
+		else if($(e.target).is('.bar')){
+			var relPosX = $(e.target).position().left;
+			var posX = e.pageX - relPosX;
+			$(e.target).append('<div class="keyframe" data-pos="' + posX + '" style="left:'+posX+'px;"></div>');
+		}
+	});
 
 	$('#project-width').blur(function(){
 		var w = $(this).val()
