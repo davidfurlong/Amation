@@ -360,6 +360,9 @@ footer{
 		div.two-up>div.focus,div.focus{
 			border:1px solid rgb(51,255,99);
 		}
+		div.two-up>div.error,div.error{
+			border:1px solid red;
+		}
 		div.two-up{
 			border:none;
 		}

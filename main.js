@@ -113,6 +113,46 @@ $(function(){
 		$('#slider-container,#ticker-container').width($('body').width()-$('.layer-details').width());
 	});
 
+	$('#project-width').blur(function(){
+		var w = $(this).val()
+		if(w == parseInt(w))
+			$('#canvas').width(w);
+		else 
+			$(this).parent().addClass('error');
+	});
+
+	$('#project-height').blur(function(){
+		var h = $(this).val()
+		if(h == parseInt(h))
+			$('#canvas').height(h);
+		else 
+			$(this).parent().addClass('error');
+	});
+
+	$('#project-duration').blur(function(){
+		var h = $(this).val()
+		if(h == parseInt(h))
+			var x = null;
+		else 
+			$(this).parent().addClass('error');
+	});
+
+	$('#project-height, #project-width, #project-duration').keyup(function(e){
+		var v = $(this).val()
+		if(v == parseInt(v) || v == "")
+			$(this).parent().removeClass('error');
+		else 
+			$(this).parent().addClass('error');
+		if(e.keyCode == 13)
+			$(this).blur();
+	});
+
+
+
+	$('#project-title-input').click(function(){
+		$(this).select();
+	})
+
 	$('#project-title-input').blur(function(){
 		if($(this).val() == "")
 			$(this).val("Project 1");
