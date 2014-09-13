@@ -85,6 +85,7 @@ $(function(){
 			newG.appendChild(svgParsed[i])
 		}
 		$('#canvas').append(newG);	
+		buildLayers();
 	}
 
 	function previewfile(file) {
@@ -189,5 +190,6 @@ $(function(){
 			$(this).val("Project 1");
 	})
 	setupScrub();
+	buildLayers(svg);
 	allowDrag();
 });
