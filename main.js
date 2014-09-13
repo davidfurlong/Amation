@@ -38,6 +38,7 @@ $(function(){
 		var doc = parser.parseFromString(s, "image/svg+xml");
 		var svgParsed = $($(doc).find('svg')[0]).children();
 		var newG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+		newG.id = (new Date).getTime();
 		newG.className = "unit"
 		for(var i = 0; i < svgParsed.length; i ++){
 			newG.appendChild(svgParsed[i])
@@ -111,5 +112,10 @@ $(function(){
 	$(window).resize(function(){
 		$('#slider-container,#ticker-container').width($('body').width()-$('.layer-details').width());
 	});
+
+	$('#project-title-input').blur(function(){
+		if($(this).val() == "")
+			$(this).val("Project 1");
+	})
 	setupScrub();
 });
