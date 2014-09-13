@@ -45,8 +45,8 @@
 				</div>
 			</div>
 			<div class="canvas-container">
-				<svg id="canvas">
-
+				<svg id="canvas" xmlns='http://www.w3.org/2000/svg'
+ onload="Init(evt)" onmousedown="Grab(evt)" onmousemove="Drag(evt)" onmouseup="Drop(evt)" onclick="Select(evt)">
 				</svg>
 			</div>
 		</div>
@@ -131,5 +131,6 @@
 
 		<script src="http://code.jquery.com/jquery-2.1.1.js"></script>
 		<script src="main.js"></script>
+		<script src="dnd.js"></script>
 	</body>
 </html>
