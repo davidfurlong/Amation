@@ -15,7 +15,12 @@ function setupScrub() {
 
 	slider.on("mouseup", function() {
 		$(this).off("mousemove");
-		svg.unpauseAnimations();
+		if($('.play-btn').hasClass('playing')){
+			svg.unpauseAnimations();
+		}
+		else{
+			svg.pauseAnimations();
+		}
 		updateSlider();
 	});
 

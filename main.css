@@ -337,21 +337,6 @@ footer{
 			float:left;
 			position: relative;
 		}
-			.bars>div>div:before,.bars>div>div:after{
-				position: absolute;
-				top:25px;
-				left:-5px;
-				content: ' ';
-				width:10px;
-				height:10px;
-				display: block;
-				background-color:#fff;
-				border-radius:50%;
-			}
-				.bars>div>div:after{
-					left:auto;
-					right:-5px;
-				}
 			.bars hr{
 				width:100%;
 				height:1px;
