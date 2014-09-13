@@ -1,42 +1,49 @@
 <html>
 	<head>
 		<link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="bootstrap-grid.min.css">
 		<link rel="stylesheet" href="main.css">
-		<script src="snap.js"></script>
-		<script src="main.js"></script>
 
 	</head>
 	<body>
 		<div class="container">
-			<div class="row project">
-				<div class="col-md-3 col details">
-					<div class="project-details">
-						<div class="project-title">
-						Project Name
-						</div>
-						<div class="project-dimensions">
-						</div>
-						<div class="project-time">
-						</div>
-						<div class="project-run">
-						</div>
+			<div class="row">
+				<div class="project-details">
+					<div class="branding">
+						<h3><span></span>Playground</h3>
 					</div>
+
 				</div>
-				<div class="col-md-9 col views">
-					<div class="svg-view">
-					</div>
-				</div>
-			</div>
-			<div class="row animations">
-				<div class="col-md-3 col keyframe-editor">
-				</div>
-				<div class="col-md-9 col">
-					<div class="keyframe-visual">
-						<div class="keyframe"></div>
+				<div class="canvas-container">
+					<div class="canvas">
+
 					</div>
 				</div>
 			</div>
 		</div>
+
+		<footer>
+			<div class="layer-details">
+				<h3 class="layer-title">Circle</h3>
+				<div class="layer-options">
+					<div>
+						<div>
+							<label for="layer-x">X:</label>
+							<input type="text" id="layer-x" name="layer-x" value="100">
+						</div>
+						<div>
+							<label for="layer-y">Y:</label>
+							<input type="text" id="layer-y" name="layer-y" value="100">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="timeline">
+
+			</div>
+		</footer>
+
+		<script src="snap.js"></script>
+		<script src="jquery.min.js"></script>
+		<script src="main.js"></script>
 	</body>
 </html>
