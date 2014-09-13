@@ -1,24 +1,135 @@
 <html>
 	<head>
 		<link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="bootstrap-grid.min.css">
 		<link rel="stylesheet" href="main.css">
-		<script src="http://code.jquery.com/jquery-2.1.1.js"></script>
-		<script src="snap.js"></script>
-		<script src="main.js"></script>
-
+		<title>SVG Playground</title>
 	</head>
-	<body>
-		<div id="test"></div>
-		<svg id="canvas" width="100" height="100"></svg>
-		<div id="holder">
-		 </div> 
-		 <p id="upload" class="hidden"><label>Drag &amp; drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
-		 <p id="filereader">File API &amp; FileReader API not supported</p>
+	<body id="holder">
+		
+		 <!-- <p id="upload" class="hidden"><label>Drag &amp; drop not supported, but you can still upload via this input field:<br><input type="file"></label></p> -->
+		 <!-- <p id="filereader">File API &amp; FileReader API not supported</p>
 		 <p id="formdata">XHR2's FormData is not supported</p>
 		 <p id="progress">XHR2's upload progress isn't supported</p>
-		 <p>Upload progress: <progress id="uploadprogress" max="100" value="0">0</progress></p>
-		 <p>Drag an image from your desktop on to the drop zone above to see the browser both render the preview, but also upload automatically to this server.</p>
+		 <p>Upload progress: <progress id="uploadprogress" max="100" value="0">0</progress></p> -->
+		<div class="container">
+			<div class="project-details">
+				<div class="branding">
+					<h3><span></span>Playground</h3>
+				</div>
+				<h1 class="project-title">Project 1</h1>
+				<div class="project-options">
+					<div>
+						<label for="project-frame">frame:</label>
+						<select id="project-frame" name="project-frame">
+							<option value="dribbble">dribbble</option>
+						</select>
+					</div>
+					<div>
+						<label for="project-duration">duration:</label>
+						<input type="text" id="project-duration" name="project-duration" value="40">
+						<label for="project-duration" class="units">s</label>
+					</div>
+					<div>
+						<label for="project-width">frame width:</label>
+						<input type="text" id="project-width" name="project-width" value="800">
+						<label for="project-width" class="units">px</label>
+					</div>
+					<div>
+						<label for="project-height">frame height:</label>
+						<input type="text" id="project-height" name="project-height" value="600">
+						<label for="project-height" class="units">px</label>
+					</div>
+					<div>
+						<input type="button" id="loop-btn" value="loop">
+					</div>	
+				</div>
+			</div>
+			<div class="canvas-container">
+				<svg id="canvas">
 
+				</svg>
+			</div>
+		</div>
+
+		<footer>
+			<div class="timeline">
+				<div class="bars">
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+			<div class="layer-details">
+				<h3 class="layer-title"><span></span>Circle</h3>
+				<div class="layer-options">
+					<div class="two-up">
+						<div>
+							<label for="layer-x">x:</label>
+							<input type="text" id="layer-x" name="layer-x" value="100">
+						</div>
+						<div>
+							<label for="layer-y">y:</label>
+							<input type="text" id="layer-y" name="layer-y" value="100">
+						</div>
+					</div>
+					<div class="two-up">
+						<div>
+							<input type="text" id="layer-fg" name="layer-fg" value="#FF6666" class="full">
+						</div>
+						<div>
+							<input type="text" id="layer-bg" name="layer-bg" value="#000000" class="full">
+						</div>
+					</div>
+					<div class="two-up">
+						<div>
+							<label for="layer-w">w:</label>
+							<input type="text" id="layer-w" name="layer-w" value="100">
+							<label for="layer-w" class="units">px</label>
+						</div>
+						<div>
+							<label for="layer-h">h:</label>
+							<input type="text" id="layer-h" name="layer-h" value="80">
+							<label for="layer-h" class="units">px</label>
+						</div>
+					</div>
+					<div>
+						<label for="layer-opacity">opacity:</label>
+						<input for="layer-opacity" type="text" id="layer-opacity" name="layer-opacity" value="0.8">
+					</div>
+					<div>
+						<label for="layer-scale">scale:</label>
+						<input type="text" id="layer-scale" name="layer-scale" value="100">
+						<label for="layer-scale" class="units">%</label>
+					</div>
+					<div>
+						<label for="layer-stroke-weight">stroke weight:</label>
+						<input type="text" id="layer-stroke-weight" name="layer-stroke-weight" value="4">
+						<label for="layer-stroke-weight" class="units">px</label>
+					</div>
+					<div>
+						<label for="layer-rotation">rotation:</label>
+						<input type="text" id="layer-rotation" name="layer-rotation" value="0">
+						<label for="layer-rotation" class="units">%</label>
+					</div>
+					<div>
+						<label for="layer-filter">filter:</label>
+						<select id="layer-filter" name="layer-filter">
+							<option value="normal">normal</option>
+						</select>
+					</div>
+					<div>
+						<label for="layer-easing">easing:</label>
+						<select id="layer-easing" name="layer-easing">
+							<option value="linear">linear</option>
+							<option value="ease">ease</option>
+						</select>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</footer>
+
+		<script src="http://code.jquery.com/jquery-2.1.1.js"></script>
+		<script src="main.js"></script>
 	</body>
 </html>

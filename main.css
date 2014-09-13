@@ -1,49 +1,195 @@
 html, body {
-	background: #222;
+	background: rgb(26,26,26);
 	color: #efefef;
 	font-family: 'Inconsolata', sans-serif;
 	font-weight: 300;
-	font-size: 16pt;
+	margin:0;
+}
+h1,h2,h3,h4,h5,h6{
+	font-weight:normal;
 }
 
-.views {
-	background: #111;
-	height: 100%;
-}
+/* div bgs rgba(255,255,255,0.1)  rgba(255,255,255,0.2) */
+/* borders rgba(255,255,255,0.6) */
+/* field bg rgba(255,255,255,0.6) */
+/* green 51,255,99 */
 
-.project-details {
-	padding: 60px 0;
-}
 
-#svg-view {
-	background: white;
-	height: calc(100% - 40px);
-	margin-top: 20px;
-}
-
-.keyframe-editor {
-	background: #444;
-	height: 300px;
-}
-
-.project {
-	height: 500px;
-}
-
-.keyframe-visual {
-	padding: 20px 0;
-}
-
-.keyframe {
-	height: 50px;
-	border-radius: 4px;
-	border: 1px solid #222;
-	min-width: 10px;
-	background: salmon;
+.branding h3{
+	text-transform: uppercase;
+	font-size: 0.8em;
+	line-height: 1.6em;
 }
 
 
-#holder { border: 10px dashed #ccc; width: 300px; min-height: 300px; margin: 20px auto;}
+.branding h3 span{
+	border-radius: 50%;
+	background-color: rgb(51,255,99);
+	width: 15px;
+	height: 15px;
+	display: block;
+	float: left;
+	margin: 2px 10px 0 0;
+}
+h1{
+	font-size:20pt;
+}
+
+.container>div,footer>div{
+	padding:40px;
+}
+.container{
+	height:60%;
+	box-sizing:border-box;
+	overflow:hidden;
+}
+	.project-details{
+		height:100%;
+		width:460px;
+		float:left;
+		background-color:rgba(255,255,255,0.1);
+		overflow-y:auto;
+	}
+.canvas-container{
+	margin-left:540px;
+	overflow:auto;
+	height:100%;
+}
+	#canvas{
+		width:800px;
+		height:600px;
+		background-color:salmon;
+	}
+
+
+footer{
+	clear:both;
+	height:40%;
+	width:100%;
+	background-color:rgba(255,255,255,0.1);
+	border-top:1px solid rgb(51,255,99);
+	box-sizing:border-box;
+	overflow:hidden;
+}
+	.timeline{
+		height:100%;
+		width:100%;
+		overflow: auto;
+		float:right;
+		box-sizing:border-box;
+		padding:0 0 0 540px;
+	}
+
+
+	.layer-details{
+		background-color:rgba(255,255,255,0.1);
+		width:460px;
+		height:100%;
+		overflow-y:auto;
+		position: absolute;
+	}
+	.layer-title span{
+		background-color: #FF33E2;
+		width: 15px;
+		height: 15px;
+		display: block;
+		float: left;
+		margin: 2px 10px 0 0;
+	}
+	.layer-options>div,.project-options>div{
+		width:220px;
+		float:left;
+		margin:0 0 20px 0;
+		color:rgba(255,255,255,0.6);
+		border:1px solid rgba(255,255,255,0.6);
+		border-radius: 2px;
+		box-sizing:border-box;
+		font-size:10pt;
+	}
+		div.two-up>div.focus,div.focus{
+			border:1px solid rgb(51,255,99);
+		}
+		div.two-up{
+			border:none;
+		}
+			div.two-up>div{
+				border-radius: 2px;
+				border:1px solid rgba(255,255,255,0.6);
+			}
+				div.two-up>div:last-child,div.focus:last-child{
+					border-left:none;
+				}
+		.layer-options>div:nth-child(odd),.project-options>div:nth-child(odd){
+			margin-right:20px;
+		}
+		.layer-options>div>div,.project-options>div>div{
+			float:left;
+			width:50%;
+			box-sizing:border-box;
+		}
+			.layer-options>div>div:first-child,.project-options>div>div:first-child{
+				border-right:1px solid rgba(255,255,255,0.6);
+			}
+	label:first-child{
+		padding:10px 0 10px 10px;
+		cursor: text;
+	}
+	label:last-child{
+		padding:10px 10px 10px 0;
+		cursor: text;
+	}
+	input[type="text"]{
+		background-color:transparent;
+		border:none;
+		color:#fff;
+		width:74px;
+		padding:10px 10px 10px 0;
+	}
+		input[type="text"]:focus{
+			outline:0;
+		}
+	input[type="button"],input[type="submit"]{
+		border:none;
+		border-radius: 0;
+		background-color:transparent;
+		padding: 10px;
+		color:#fff;
+		text-align: center;
+		width: 100%;
+	}
+	input.full{
+		padding-left:10px;
+		width:74px;
+	}
+	#layer-h,#layer-w{
+		width:40px;
+		padding-right:0;
+	}
+	#layer-opacity{
+		width:136px;
+	}
+	#layer-scale{
+		width:126px;
+		padding-right:0;
+	}
+	#layer-stroke-weight{
+		width:54px;
+		padding-right:0;
+	}
+	#layer-rotation{
+		width:102px;
+		padding-right:0;
+	}
+	select{
+		width:144px;
+		border-radius:0;
+		border:none;
+		background-color:transparent;
+		color:#fff;
+		margin:8px 0;
+	}
+
+#holder {}
 #holder.hover { border: 10px dashed #0c0; }
 #holder img { display: block; margin: 10px auto; }
 #holder p { margin: 10px; font-size: 14px; }
@@ -51,3 +197,4 @@ progress { width: 100%; }
 progress:after { content: '%'; }
 .fail { background: #c00; padding: 2px; color: #fff; }
 .hidden { display: none !important;}
+.clear{clear:both;}

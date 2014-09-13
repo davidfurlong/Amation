@@ -23,17 +23,13 @@ $(document).ready(function(){
 	    progress = document.getElementById('uploadprogress'),
 	    fileupload = document.getElementById('upload');
 
-	"filereader formdata progress".split(' ').forEach(function (api) {
-	  if (tests[api] === false) {
-	    support[api].className = 'fail';
-	  } else {
-	    // FFS. I could have done el.hidden = true, but IE doesn't support
-	    // hidden, so I tried to create a polyfill that would extend the
-	    // Element.prototype, but then IE10 doesn't even give me access
-	    // to the Element object. Brilliant.
-	    support[api].className = 'hidden';
-	  }
-	});
+	// "filereader formdata progress".split(' ').forEach(function (api) {
+	//   if (tests[api] === false) {
+	//     support[api].className = 'fail';
+	//   } else {
+	//     support[api].className = 'hidden';
+	//   }
+	// });
 
 	function processSvg(s) {
 		var parser = new DOMParser();
@@ -104,3 +100,10 @@ $(document).ready(function(){
 
 });
 
+
+$('input[type="text"]').focus(function(e){
+	$(e.target).parent().addClass('focus');
+});
+$('input[type="text"]').blur(function(e){
+	$(e.target).parent().removeClass('focus');
+});
