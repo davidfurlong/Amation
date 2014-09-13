@@ -33,6 +33,7 @@ $(function(){
 	//   }
 	// });
 
+
 	function processSvg(s) {
 		var parser = new DOMParser();
 		var doc = parser.parseFromString(s, "image/svg+xml");
@@ -167,6 +168,74 @@ $(function(){
 			$(this).blur();
 	});
 
+	// function setAnimation(el){
+
+	// 	if(translate || rotate || scale){
+	// 		var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
+	// 		anim.className = "animator";
+	// 		newG.appendChild(anim);
+	// 	}
+
+	// 	// $('#'+id)
+	// 	$('#layer-x').val();
+	// 	$('#layer-opacity').val();
+	// }
+
+	function updateAnimation(){
+		var currentSlide = 0;
+		var id = 400;
+
+
+		var g = $('#'+id);
+		var anim = g.children('animate, animateTransform, animateColor');
+		anim.sort(function(a, b){
+			return (parseInt(b.attr('dur').replace('s', ''))+parseInt(b.attr('begin').replace('s', '')))-(parseInt(a.attr('dur').replace('s', ''))+parseInt(a.attr('begin').replace('s', '')));
+		});
+		var initial = g;
+		
+		if(currentSlide = 0){
+			initial.setAttribute('fill', $('#layer-fg').val());
+			initial.setAttribute('stroke', $('#layer-bg').val());
+			initial.setAttribute('width', $('#layer-w').val());
+			initial.setAttribute('height', $('#layer-h').val());
+			initial.setAttribute('opacity', $('#layer-opacity').val());
+			initial.setAttribute('scale', $('#layer-scale').val());
+			initial.setAttribute('stroke-width', $('#layer-weight').val());
+			initial.setAttribute('transform', 'translate('+$('#layer-x').val()+' '+$('#layer-y').val()+') rotate('+$('#layer-rotation').val()+')');
+		}
+	}
+
+	// $('#layer-fg').val()
+	// $('#layer-bg').val()
+	// $('#layer-w').val()
+	// $('#layer-h').val()
+	// $('#layer-opacity').val()
+	// $('#layer-scale').val()
+	// $('#layer-weight').val()
+
+
+	// $('#layer-rotation').val()
+	// // $('#layer-x').val()
+	// // $('#layer-y').val()
+
+
+	// // $('#layer-filter').val()
+	// $('#layer-easing').val()
+
+	// }
+
+
+
+	// animate
+	// attributeName
+	// dur
+	// to
+	// from
+	// begin
+
+	// animateTransform
+	// type
+	// repeatCount
 
 
 	$('#project-title-input').click(function(){
