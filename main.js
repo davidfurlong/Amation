@@ -186,7 +186,7 @@ $(function(){
 
 	$('#project-title-input').blur(function(){
 		if($(this).val() == "")
-			$(this).val("Project 1"),
+			$(this).val("Project 1");
 	})
 	setupScrub();
 	allowDrag();
