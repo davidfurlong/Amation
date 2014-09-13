@@ -3,40 +3,22 @@
 		<link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="bootstrap-grid.min.css">
 		<link rel="stylesheet" href="main.css">
+		<script src="http://code.jquery.com/jquery-2.1.1.js"></script>
 		<script src="snap.js"></script>
 		<script src="main.js"></script>
 
 	</head>
 	<body>
-		<div class="container">
-			<div class="row project">
-				<div class="col-md-3 col details">
-					<div class="project-details">
-						<div class="project-title">
-						Project Name
-						</div>
-						<div class="project-dimensions">
-						</div>
-						<div class="project-time">
-						</div>
-						<div class="project-run">
-						</div>
-					</div>
-				</div>
-				<div class="col-md-9 col views">
-					<div class="svg-view">
-					</div>
-				</div>
-			</div>
-			<div class="row animations">
-				<div class="col-md-3 col keyframe-editor">
-				</div>
-				<div class="col-md-9 col">
-					<div class="keyframe-visual">
-						<div class="keyframe"></div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div id="test"></div>
+		<svg id="canvas" width="100" height="100"></svg>
+		<div id="holder">
+		 </div> 
+		 <p id="upload" class="hidden"><label>Drag &amp; drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
+		 <p id="filereader">File API &amp; FileReader API not supported</p>
+		 <p id="formdata">XHR2's FormData is not supported</p>
+		 <p id="progress">XHR2's upload progress isn't supported</p>
+		 <p>Upload progress: <progress id="uploadprogress" max="100" value="0">0</progress></p>
+		 <p>Drag an image from your desktop on to the drop zone above to see the browser both render the preview, but also upload automatically to this server.</p>
+
 	</body>
 </html>
