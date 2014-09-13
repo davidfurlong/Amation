@@ -106,9 +106,9 @@ $(function(){
 	$('input[type="text"]').blur(function(e){
 		$(e.target).parent().removeClass('focus');
 	});
-	$('#slider-container').width($('body').width()-$('.layer-details').width());
+	$('#slider-container,#ticker-container').width($('body').width()-$('.layer-details').width());
 	$(window).resize(function(){
-		$('#slider-container').width($('body').width()-$('.layer-details').width());
+		$('#slider-container,#ticker-container').width($('body').width()-$('.layer-details').width());
 	});
 	setupScrub();
 });

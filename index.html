@@ -26,7 +26,7 @@
 					</div>
 					<div>
 						<label for="project-duration">duration:</label>
-						<input type="text" id="project-duration" name="project-duration" value="40">
+						<input type="text" id="project-duration" name="project-duration" value="10">
 						<label for="project-duration" class="units">s</label>
 					</div>
 					<div>
@@ -35,7 +35,7 @@
 						<label for="project-width" class="units">px</label>
 					</div>
 					<div class="input-btn">
-						<input type="button" id="loop-btn" value="loop">
+						<button id="loop-btn">loop</button>
 					</div>
 					<div>
 						<label for="project-height">frame height:</label>
@@ -43,13 +43,13 @@
 						<label for="project-height" class="units">px</label>
 					</div>
 					<div class="button-container">
-						<div>
-							<input type="button" id="upload-btn" value="upload SVGs">
+						<div class="clearfix">
+							<button id="upload-btn">upload SVGs</button>
 							<p>or drag-and-drop</p>
 						</div>
-						<div>
-							<input type="button" id="save-btn" class="primary" value="save and export">
-							<p>last saved 10 minutes ago</p>
+						<div class="clearfix">
+							<button id="save-btn" class="primary">save and export</button>
+							<p class="last-saved-msg">last saved 10 minutes ago</p>
 						</div>
 					</div>
 				</div>
@@ -65,8 +65,13 @@
 
 		<footer>
 			<div class="timeline">
+				<div id="ticker-container">
+					<span>1s</span>
+					<span>2s</span>
+					<span>3s</span>
+				</div>
 				<div id="slider-container">
-					<input id="slider" type="range">
+					<input id="slider" type="range" min="0" max="80" step="1" >
 				</div>
 				<div class="bars">
 					<div class="clearfix">

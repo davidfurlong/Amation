@@ -125,6 +125,7 @@ label:first-child{
 label:last-child{
 	padding:10px 10px 10px 0;
 	cursor: text;
+	text-align: right;
 }
 input[type="text"]{
 	background-color:transparent;
@@ -136,6 +137,13 @@ input[type="text"]{
 	input[type="text"]:focus{
 		outline:0;
 	}
+button.primary{
+	background-color:#33FF63;
+	color:#000;
+}
+.input-btn button{
+	background-color:transparent;
+}
 .layer-options>div.input-btn, .project-options>div.input-btn{
 	width:100px;
 }
@@ -147,17 +155,25 @@ input[type="text"]{
 }
 	.layer-options>div.button-container>div, .project-options>div.button-container>div{
 		float:none;
+		clear:both;
 		width:100%;
+		padding-bottom:20px;
 	}
 		.layer-options>div.button-container>div:first-child, .project-options>div.button-container>div:first-child{
 			border-right:none;
 		}
-div.button-container>div>*{
+div.button-container>div>button{
 	width:50%;
 	box-sizing:border-box;
 	float:left;
 }
-input[type="button"]{
+.button-container p{
+	margin:10px 0 0 10px;
+	width:210px;
+	float:left;
+	box-sizing:border-box;
+}
+button{
 	border:none;
 	border-radius: 0;
 	background-color:#000;
@@ -165,6 +181,7 @@ input[type="button"]{
 	color:#fff;
 	text-align: center;
 	width: 100%;
+	cursor: pointer;
 }
 
 input.full{
@@ -245,6 +262,12 @@ footer{
 		float:right;
 		box-sizing:border-box;
 		padding:0 0 0 540px;
+	}
+	#ticker-container span{
+		display:block;
+		float:left;
+		border-left:1px solid #fff;
+		box-sizing:border-box;
 	}
 	#slider-container{
 		height:100%;
@@ -352,24 +375,34 @@ footer{
 				border-right:1px solid rgba(255,255,255,0.6);
 			}
 	#layer-h,#layer-w{
-		width:40px;
+		width:48px;
 		padding-right:0;
 	}
 	#layer-opacity{
-		width:136px;
+		width:118px;
 	}
 	#layer-scale{
-		width:126px;
+		width:138px;
 		padding-right:0;
 	}
 	#layer-stroke-weight{
-		width:54px;
+		width:78px;
 		padding-right:0;
 	}
 	#layer-rotation{
 		width:102px;
 		padding-right:0;
 	}
+	#project-width{
+		width:91px;
+	}
+	#project-duration{
+		width:118px;
+	}
+	#project-height{
+		width:84px;
+	}
+
 	select{
 		width:144px;
 		border-radius:0;
@@ -382,7 +415,6 @@ footer{
 #holder {}
 #holder.hover { border: 10px dashed #0c0; }
 #holder img { display: block; margin: 10px auto; }
-#holder p { margin: 10px; font-size: 14px; }
 progress { width: 100%; }
 progress:after { content: '%'; }
 .fail { background: #c00; padding: 2px; color: #fff; }
