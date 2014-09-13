@@ -34,29 +34,53 @@
 						<input type="text" id="project-width" name="project-width" value="800">
 						<label for="project-width" class="units">px</label>
 					</div>
+					<div class="input-btn">
+						<input type="button" id="loop-btn" value="loop">
+					</div>
 					<div>
 						<label for="project-height">frame height:</label>
 						<input type="text" id="project-height" name="project-height" value="600">
 						<label for="project-height" class="units">px</label>
 					</div>
-					<div>
-						<input type="button" id="loop-btn" value="loop">
-					</div>	
+					<div class="button-container">
+						<div>
+							<input type="button" id="upload-btn" value="upload SVGs">
+							<p>or drag-and-drop</p>
+						</div>
+						<div>
+							<input type="button" id="save-btn" class="primary" value="save and export">
+							<p>last saved 10 minutes ago</p>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="canvas-container">
-				<svg id="canvas">
+				<div id="canvas-center">
+					<svg id="canvas">
 
-				</svg>
+					</svg>
+				</div>
 			</div>
 		</div>
 
 		<footer>
 			<div class="timeline">
+				<div id="slider-container">
+					<input id="slider" type="range">
+				</div>
 				<div class="bars">
-					<div></div>
-					<div></div>
-					<div></div>
+					<div class="clearfix">
+						<div><hr></div>
+						<h3>Text</h3>
+					</div>
+					<div class="clearfix">
+						<div><hr></div>
+						<h3>Circle</h3>
+					</div>
+					<div class="clearfix">
+						<div><hr></div>
+						<h3>Background</h3>
+					</div>
 				</div>
 			</div>
 			<div class="layer-details">
@@ -128,8 +152,9 @@
 				<div class="clear"></div>
 			</div>
 		</footer>
-
-		<script src="http://code.jquery.com/jquery-2.1.1.js"></script>
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script><!-- supposedly faster to load -->
+		<script src="scrub.js"></script>
 		<script src="main.js"></script>
 	</body>
 </html>

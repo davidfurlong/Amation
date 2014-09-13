@@ -2,7 +2,9 @@ var animationDuration = 40; // seconds
 var animationWidth = 500; // px
 var animationHeight = 400; // px
 
-$(document).ready(function(){
+
+
+$(function(){
 
 	var holder = document.getElementById('holder'),
 	    tests = {
@@ -98,12 +100,15 @@ $(document).ready(function(){
 	    return r;
 	}
 
-});
-
-
-$('input[type="text"]').focus(function(e){
-	$(e.target).parent().addClass('focus');
-});
-$('input[type="text"]').blur(function(e){
-	$(e.target).parent().removeClass('focus');
+	$('input[type="text"]').focus(function(e){
+		$(e.target).parent().addClass('focus');
+	});
+	$('input[type="text"]').blur(function(e){
+		$(e.target).parent().removeClass('focus');
+	});
+	$('#slider-container').width($('body').width()-$('.layer-details').width());
+	$(window).resize(function(){
+		$('#slider-container').width($('body').width()-$('.layer-details').width());
+	});
+	setupScrub();
 });
