@@ -21,17 +21,17 @@
 					<div>
 						<label for="project-duration">duration:</label>
 						<input type="text" id="project-duration" name="project-duration" value="40">
-						<span class="units">s</span>
+						<label for="project-duration" class="units">s</label>
 					</div>
 					<div>
 						<label for="project-width">frame width:</label>
 						<input type="text" id="project-width" name="project-width" value="800">
-						<span class="units">px</span>
+						<label for="project-width" class="units">px</label>
 					</div>
 					<div>
 						<label for="project-height">frame height:</label>
 						<input type="text" id="project-height" name="project-height" value="600">
-						<span class="units">px</span>
+						<label for="project-height" class="units">px</label>
 					</div>
 					<div>
 						<input type="button" id="loop-btn" value="loop">
@@ -46,8 +46,15 @@
 		</div>
 
 		<footer>
+			<div class="timeline">
+				<div class="bars">
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+			</div>
 			<div class="layer-details">
-				<h3 class="layer-title">Circle</h3>
+				<h3 class="layer-title"><span></span>Circle</h3>
 				<div class="layer-options">
 					<div class="two-up">
 						<div>
@@ -71,32 +78,32 @@
 						<div>
 							<label for="layer-w">w:</label>
 							<input type="text" id="layer-w" name="layer-w" value="100">
-							<span class="units">px</span>
+							<label for="layer-w" class="units">px</label>
 						</div>
 						<div>
 							<label for="layer-h">h:</label>
 							<input type="text" id="layer-h" name="layer-h" value="80">
-							<span class="units">px</span>
+							<label for="layer-h" class="units">px</label>
 						</div>
 					</div>
 					<div>
 						<label for="layer-opacity">opacity:</label>
-						<input type="text" id="layer-opacity" name="layer-opacity" value="0.8">
+						<input for="layer-opacity" type="text" id="layer-opacity" name="layer-opacity" value="0.8">
 					</div>
 					<div>
 						<label for="layer-scale">scale:</label>
 						<input type="text" id="layer-scale" name="layer-scale" value="100">
-						<span class="units">%</span>
+						<label for="layer-scale" class="units">%</label>
 					</div>
 					<div>
 						<label for="layer-stroke-weight">stroke weight:</label>
 						<input type="text" id="layer-stroke-weight" name="layer-stroke-weight" value="4">
-						<span class="units">px</span>
+						<label for="layer-stroke-weight" class="units">px</label>
 					</div>
 					<div>
 						<label for="layer-rotation">rotation:</label>
 						<input type="text" id="layer-rotation" name="layer-rotation" value="0">
-						<span class="units">%</span>
+						<label for="layer-rotation" class="units">%</label>
 					</div>
 					<div>
 						<label for="layer-filter">filter:</label>
@@ -113,9 +120,6 @@
 					</div>
 				</div>
 				<div class="clear"></div>
-			</div>
-			<div class="timeline">
-
 			</div>
 		</footer>
 
