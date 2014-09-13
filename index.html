@@ -25,17 +25,69 @@
 			<div class="layer-details">
 				<h3 class="layer-title">Circle</h3>
 				<div class="layer-options">
-					<div>
+					<div class="two-up">
 						<div>
-							<label for="layer-x">X:</label>
+							<label for="layer-x">x:</label>
 							<input type="text" id="layer-x" name="layer-x" value="100">
 						</div>
 						<div>
-							<label for="layer-y">Y:</label>
+							<label for="layer-y">y:</label>
 							<input type="text" id="layer-y" name="layer-y" value="100">
 						</div>
 					</div>
+					<div class="two-up">
+						<div>
+							<input type="text" id="layer-fg" name="layer-fg" value="#FF6666" class="full">
+						</div>
+						<div>
+							<input type="text" id="layer-bg" name="layer-bg" value="#000000" class="full">
+						</div>
+					</div>
+					<div class="two-up">
+						<div>
+							<label for="layer-w">w:</label>
+							<input type="text" id="layer-w" name="layer-w" value="100">
+							<span class="units">px</span>
+						</div>
+						<div>
+							<label for="layer-h">h:</label>
+							<input type="text" id="layer-h" name="layer-h" value="80">
+							<span class="units">px</span>
+						</div>
+					</div>
+					<div>
+						<label for="layer-opacity">opacity:</label>
+						<input type="text" id="layer-opacity" name="layer-opacity" value="0.8">
+					</div>
+					<div>
+						<label for="layer-scale">scale:</label>
+						<input type="text" id="layer-scale" name="layer-scale" value="100">
+						<span class="units">%</span>
+					</div>
+					<div>
+						<label for="layer-stroke-weight">stroke weight:</label>
+						<input type="text" id="layer-stroke-weight" name="layer-stroke-weight" value="4">
+						<span class="units">px</span>
+					</div>
+					<div>
+						<label for="layer-rotation">rotation:</label>
+						<input type="text" id="layer-rotation" name="layer-rotation" value="0">
+						<span class="units">%</span>
+					</div>
+					<div>
+						<label for="layer-filter">filter:</label>
+						<select id="layer-filter" name="layer-filter">
+							<option value="normal">normal</option>
+						</select>
+					</div>
+					<div>
+						<label for="layer-easing">easing:</label>
+						<select id="layer-easing" name="layer-easing">
+							<option value="linear">linear</option>
+						</select>
+					</div>
 				</div>
+				<div class="clear"></div>
 			</div>
 			<div class="timeline">
 

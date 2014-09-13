@@ -4,6 +4,9 @@ html, body {
 	font-family: 'Inconsolata', sans-serif;
 	font-weight: 300;
 }
+h1,h2,h3,h4,h5,h6{
+	font-weight:normal;
+}
 
 /* div bgs rgba(255,255,255,0.1)  rgba(255,255,255,0.2) */
 /* borders rgba(255,255,255,0.6) */
@@ -32,8 +35,56 @@ footer{
 	background-color:rgba(255,255,255,0.1);
 	border-top:1px solid rgb(51,255,99);
 }
-	.layer-options>div{
-		width:150px;
-		float:left;
-		margin:0 20px 20px 0;
+	.layer-details{
+		background-color:rgba(255,255,255,0.1);
+		width:460px;
 	}
+	.layer-options>div{
+		width:220px;
+		float:left;
+		margin:0 0 20px 0;
+		color:rgba(255,255,255,0.6);
+		border:1px solid rgba(255,255,255,0.6);
+		border-radius: 2px;
+		box-sizing:border-box;
+		font-size:12pt;
+	}
+		.layer-options>div:nth-child(odd){
+			margin-right:20px;
+		}
+		.layer-options>div>div{
+			float:left;
+			width:50%;
+			box-sizing:border-box;
+		}
+			.layer-options>div>div:first-child{
+				border-right:1px solid rgba(255,255,255,0.6);
+			}
+	label{
+		padding-left:10px;
+	}
+	input[type="text"]{
+		background-color:transparent;
+		border:none;
+		color:#fff;
+		width:74px;
+		padding:10px 10px 10px 0;
+	}
+		input[type="text"]:focus{
+			outline:0;
+		}
+	input.full{
+		padding-left:10px;
+		width:74px;
+	}
+	#layer-h,#layer-w{
+		width:40px;
+		padding-right:0;
+	}
+	#layer-opacity{
+		width:136px;
+	}
+	span.units{padding-right:10px;}
+
+
+.clear{clear:both;}
