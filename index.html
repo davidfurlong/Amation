@@ -2,7 +2,7 @@
 	<head>
 		<link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="main.css">
-
+		<title>SVG Playground</title>
 	</head>
 	<body>
 		<div class="container">
@@ -10,7 +10,33 @@
 				<div class="branding">
 					<h3><span></span>Playground</h3>
 				</div>
-
+				<h1 class="project-title">Project 1</h1>
+				<div class="project-options">
+					<div>
+						<label for="project-frame">frame:</label>
+						<select id="project-frame" name="project-frame">
+							<option value="dribbble">dribbble</option>
+						</select>
+					</div>
+					<div>
+						<label for="project-duration">duration:</label>
+						<input type="text" id="project-duration" name="project-duration" value="40">
+						<span class="units">s</span>
+					</div>
+					<div>
+						<label for="project-width">frame width:</label>
+						<input type="text" id="project-width" name="project-width" value="800">
+						<span class="units">px</span>
+					</div>
+					<div>
+						<label for="project-height">frame height:</label>
+						<input type="text" id="project-height" name="project-height" value="600">
+						<span class="units">px</span>
+					</div>
+					<div>
+						<input type="button" id="loop-btn" value="loop">
+					</div>	
+				</div>
 			</div>
 			<div class="canvas-container">
 				<div id="canvas">

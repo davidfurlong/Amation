@@ -14,15 +14,31 @@ h1,h2,h3,h4,h5,h6{
 /* field bg rgba(255,255,255,0.6) */
 /* green 51,255,99 */
 
+.branding h3{
+	text-transform: uppercase;
+	font-size: 0.8em;
+	line-height: 1.6em;
+}
 .branding h3 span{
-	padding:10px;
-	border-radius:50%;
-	background-color:rgb(51,255,99);
+	border-radius: 50%;
+	background-color: rgb(51,255,99);
+	width: 15px;
+	height: 15px;
+	display: block;
+	float: left;
+	margin: 2px 10px 0 0;
+}
+h1{
+	font-size:20pt;
 }
 
 .container>div,footer>div{
 	padding:40px;
-	height:100%;
+}
+.container{
+	height:60%;
+	box-sizing:border-box;
+	overflow-y:auto;
 }
 	.project-details{
 		width:460px;
@@ -41,20 +57,19 @@ h1,h2,h3,h4,h5,h6{
 
 footer{
 	clear:both;
-	display: none;
-	position: fixed;
-	bottom:0;
-	left:0;
+	height:40%;
 	width:100%;
 	background-color:rgba(255,255,255,0.1);
 	border-top:1px solid rgb(51,255,99);
+	box-sizing:border-box;
+	overflow-y:auto;
 }
 	.layer-details{
 		background-color:rgba(255,255,255,0.1);
 		width:460px;
 		float:left;
 	}
-	.layer-options>div{
+	.layer-options>div,.project-options>div{
 		width:220px;
 		float:left;
 		margin:0 0 20px 0;
@@ -64,15 +79,15 @@ footer{
 		box-sizing:border-box;
 		font-size:10pt;
 	}
-		.layer-options>div:nth-child(odd){
+		.layer-options>div:nth-child(odd),.project-options>div:nth-child(odd){
 			margin-right:20px;
 		}
-		.layer-options>div>div{
+		.layer-options>div>div,.project-options>div>div{
 			float:left;
 			width:50%;
 			box-sizing:border-box;
 		}
-			.layer-options>div>div:first-child{
+			.layer-options>div>div:first-child,.project-options>div>div:first-child{
 				border-right:1px solid rgba(255,255,255,0.6);
 			}
 	label{
@@ -88,6 +103,15 @@ footer{
 		input[type="text"]:focus{
 			outline:0;
 		}
+	input[type="button"],input[type="submit"]{
+		border:none;
+		border-radius: 0;
+		background-color:transparent;
+		padding: 10px;
+		color:#fff;
+		text-align: center;
+		width: 100%;
+	}
 	input.full{
 		padding-left:10px;
 		width:74px;
