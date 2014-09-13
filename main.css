@@ -1,0 +1,42 @@
+html, body {
+	background: #222;
+	color: #efefef;
+	font-family: 'Inconsolata', sans-serif;
+	font-weight: 300;
+	font-size: 16pt;
+}
+
+.views {
+	background: #111;
+	height: 100%;
+}
+
+.project-details {
+	padding: 60px 0;
+}
+
+.svg-view {
+	background: white;
+}
+
+.keyframe-editor {
+	background: #444;
+	height: 300px;
+}
+
+.project {
+	height: 500px;
+}
+
+.keyframe-visual {
+	padding: 20px 0;
+}
+
+.keyframe {
+	height: 50px;
+	border-radius: 4px;
+	border: 1px solid #222;
+	min-width: 10px;
+	background: salmon;
+}
+
