@@ -3,6 +3,7 @@ html, body {
 	color: #efefef;
 	font-family: 'Inconsolata', sans-serif;
 	font-weight: 300;
+	margin:0;
 }
 h1,h2,h3,h4,h5,h6{
 	font-weight:normal;
@@ -24,10 +25,23 @@ h1,h2,h3,h4,h5,h6{
 	height:100%;
 }
 	.project-details{
-		width:400px;
+		width:460px;
+		float:left;
+		background-color:rgba(255,255,255,0.1);
 	}
+.canvas-container{
+	margin-left:500px;
+}
+#canvas{
+	width:800px;
+	height:600px;
+	background-color:salmon;
+}
+
 
 footer{
+	clear:both;
+	display: none;
 	position: fixed;
 	bottom:0;
 	left:0;
@@ -38,6 +52,7 @@ footer{
 	.layer-details{
 		background-color:rgba(255,255,255,0.1);
 		width:460px;
+		float:left;
 	}
 	.layer-options>div{
 		width:220px;
@@ -47,7 +62,7 @@ footer{
 		border:1px solid rgba(255,255,255,0.6);
 		border-radius: 2px;
 		box-sizing:border-box;
-		font-size:12pt;
+		font-size:10pt;
 	}
 		.layer-options>div:nth-child(odd){
 			margin-right:20px;
@@ -84,7 +99,26 @@ footer{
 	#layer-opacity{
 		width:136px;
 	}
+	#layer-scale{
+		width:126px;
+		padding-right:0;
+	}
+	#layer-stroke-weight{
+		width:54px;
+		padding-right:0;
+	}
+	#layer-rotation{
+		width:102px;
+		padding-right:0;
+	}
 	span.units{padding-right:10px;}
-
+	select{
+		width:144px;
+		border-radius:0;
+		border:none;
+		background-color:transparent;
+		color:#fff;
+		margin:8px 0;
+	}
 
 .clear{clear:both;}
