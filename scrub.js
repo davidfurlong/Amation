@@ -32,7 +32,7 @@ function setupScrub() {
 function buildTicker(){
 	$('#ticker-container').html('');
 	var width = $('#slider').width();
-	var duration = parseInt($('#project-duration').val())+1;
+	var duration = parseInt($('#project-duration').val());
 	for(var i=0; i<duration; i++){
 		$('#ticker-container').append('<span style="width:' + Math.floor(width/(duration)) + 'px;">' + i + 's</span>');
 	}
@@ -41,6 +41,12 @@ function buildTicker(){
 $('#project-duration').on("keyup",function(){
 	buildTicker();
 });
+
+function alignStick(pos){	
+	svg.setCurrentTime(pos);
+	svg.pauseAnimations();
+	slider.val((pos/11));
+}
 
 function updateSlider() {
 	setTimeout(function(){
@@ -53,8 +59,9 @@ function updateSlider() {
 					slider.val(0);
 				}
 				else {
-					svg.pauseAnimations();
+					
 					svg.setCurrentTime(0);
+					svg.pauseAnimations();
 					slider.val(0);
 				}
 			}
