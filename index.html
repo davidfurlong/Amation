@@ -1,3 +1,4 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <html>
 	<head>
 		<link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
@@ -14,7 +15,7 @@
 		<div class="container">
 			<div class="project-details">
 				<div class="branding">
-					<h3><span></span>Amation</h3>
+					<h3><img src="logo.svg" alt="Amation logo">Amation</h3>
 				</div>
 				<h1 class="project-title"><input id="project-title-input" type="text" value="Project 1"></h1>
 				<div class="project-options clearfix">
@@ -36,7 +37,7 @@
 						</div>
 					</div>
 					<div class="button-inside">
-						<button id="upload-btn">import</button>
+						<button id="save-btn" class="primary">save</button>
 					</div>
 					<div class="two-up">
 						<div>
@@ -51,7 +52,7 @@
 						</div>
 					</div>
 					<div class="button-inside">
-						<button id="save-btn" class="primary">save</button>
+						<p id="upload-btn">drag & drop to import</p>
 					</div>
 					<div>
 						<label for="project-duration">duration:</label>
@@ -83,7 +84,8 @@
 			</div>
 			<div class="canvas-container">
 				<div id="canvas-center">
-					<svg id="canvas" xmlns='http://www.w3.org/2000/svg'
+					<svg id="canvas" xmlns="http://www.w3.org/2000/svg" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
  onload="Init(evt)" onmousedown="Grab(evt)" onmousemove="Drag(evt)" onmouseup="Drop(evt)" onclick="Select(evt)">
 					</svg>
 				</div>
@@ -109,10 +111,12 @@
 						<div>
 							<label for="layer-x">x:</label>
 							<input type="text" id="layer-x" name="layer-x" value="100">
+							<label for="layer-x" class="units">px</label>
 						</div>
 						<div>
 							<label for="layer-y">y:</label>
 							<input type="text" id="layer-y" name="layer-y" value="100">
+							<label for="layer-y" class="units">px</label>
 						</div>
 					</div>
 					<div class="two-up">
@@ -139,7 +143,7 @@
 					</div>
 					<div>
 						<label for="layer-opacity">opacity:</label>
-						<input for="layer-opacity" type="text" id="layer-opacity" name="layer-opacity" value="0.8">
+						<input for="layer-opacity" type="text" id="layer-opacity" name="layer-opacity" value="1.0">
 					</div>
 					<div>
 						<label for="layer-scale">scale:</label>
@@ -148,7 +152,7 @@
 					</div>
 					<div>
 						<label for="layer-stroke-weight">stroke weight:</label>
-						<input type="text" id="layer-stroke-weight" name="layer-stroke-weight" value="4">
+						<input type="text" name="layer-stroke-weight" value="0"> <!-- id="layer-stroke-weight" -->
 						<label for="layer-stroke-weight" class="units">px</label>
 					</div>
 					<div>
@@ -158,8 +162,8 @@
 					</div>
 					<div>
 						<label for="layer-easing">easing:</label>
-						<input type="text" id="layer-easing" name="layer-easing" class="dropdown">
-						<div class="dropdown-menu" data-target="layer-easing">
+						<input type="text" id="fake-id" name="layer-easing" class="dropdown"><!-- id="layer-easing" -->
+						<div class="dropdown-menu" data-target="fake-id">
 							<ul>
 								<li class="dropdown-item selected" data-value="linear">linear</li>
 								<li class="dropdown-item" data-value="ease">ease</li>

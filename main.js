@@ -30,7 +30,7 @@ $.fn.draggable = function(){
 	        	if($this.hasClass('track')){
 	        		// track dragged, call handler
 	        		// todo david
-	        		recalculateAnimations(currentTrack);
+	        		// recalculateAnimations(currentTrack);
 	        		// console.log(window.y = $this);
 	        		// updateTrackOffset($(this).data('trackid'), this);
 	        	}
@@ -114,7 +114,6 @@ $(function(){
 		var obj = {
 			"el": newG,
 			"keyframes": [],
-			"animations": [],
 			"layerName": fileName.replace('.svg','')
 		}
 		tracks[trackID] = obj;
@@ -219,6 +218,13 @@ $(function(){
 			editKeyFrame(currentTrack, currentKeyFrame);
 	});
 
+	$('#save-btn').click(function(e){
+		var s = new XMLSerializer();
+		var d = $('#canvas').get(0);
+		 var str = s.serializeToString(d);
+		window.prompt("Copy to clipboard: Ctrl+C, Enter", str);
+	});
+
 	$('.play-btn').click(function(e){
 		if($(e.target).hasClass('playing')){
 			document.getElementById("canvas").pauseAnimations();
@@ -267,6 +273,7 @@ $(function(){
 			populateDetails(currentTrack, currentKeyFrame);
 			$('.layer-title-container').html('<span style="background-color:' + $(e.target).parent().data('color') + ';"></span><span class="layer-title">' + $(e.target).parent().parent().find('.layer-name').html() + '</span>');
 			$('.layer-details-inner').removeClass('hidden');
+			alignStick(currentKeyFrame);
 		}
 	});
 
@@ -337,7 +344,11 @@ $(function(){
 			var el = findKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame)
 			$(el['el']).remove();
 			removeKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame);
+			recalculateAnimations(currentTrack);
 			return false;
+		}
+		else if(e.which == 13 && $(e.target).is('input:focus')){
+			$(e.target).blur();
 		}
 	});
 
@@ -451,4 +462,8 @@ $(function(){
 
 	allowDrag();
 	buildDropdowns();
+
+	document.getElementById("canvas").setCurrentTime(0);
+	slider.val(0);
+	document.getElementById("canvas").pauseAnimations();
 });
