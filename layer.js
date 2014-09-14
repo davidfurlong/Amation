@@ -23,8 +23,9 @@
 
 function createTrack(trackID,fileName){
 	var bars = $(".bars");
+	var bg = '#'+Math.floor(Math.random()*16777215).toString(16);
 	var newBarContainer = $('<div class="clearfix track new-bar" data-trackid="'+trackID+'"></div>');
-	var bar = $('<div class="bar"><hr><div class="width-handle new-handle"></div></div><h3 class="layer-name">'+fileName+'</h3>');
+	var bar = $('<div class="bar" style="background-color:'+bg+';" data-color="'+bg+'"><hr><div class="width-handle new-handle"></div></div><h3 class="layer-name">'+fileName.replace('.svg','')+'</h3>');
 	newBarContainer.append(bar);
 	bars.append(newBarContainer);
 	$('.new-bar').draggable().removeClass('new-bar');
@@ -58,7 +59,8 @@ function editKeyFrame(trackID, pos){
 }
 
 function createKeyFrame(trackID, pos, el) {
-	var newKeyFrame = $('<div class="keyframe selected" data-pos="' + pos + '" style="left:'+pos+'px;"></div>');
+	$('.selected').removeClass('selected');
+	var newKeyFrame = $('<div class="keyframe selected" data-pos="' + pos + '" style="left:'+(pos-5)+'px;"></div>');
 	tracks[trackID].keyframes.push(
 		{
 			"pos": pos, // acts like an id

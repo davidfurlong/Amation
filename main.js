@@ -29,7 +29,7 @@ $.fn.draggable = function(){
 	        $w.on(mu, function(){
 	        	if($this.hasClass('track')){
 	        		// track dragged, call handler
-	        		// to do
+	        		// todo david
 	        		
 	        	}
 	            $w.off(mm + ' ' + mu).removeData(ns);
@@ -262,13 +262,14 @@ $(function(){
 			currentTrack = $(this).closest('.clearfix').data('trackid');
 			console.log(currentTrack);
 			populateDetails(currentTrack, currentKeyFrame);
+			$('.layer-title').html('<span style="background-color:' + $(e.target).parent().data('color') + ';"></span>' + $(e.target).parent().parent().find('.layer-name').html());
 			$('.layer-details-inner').removeClass('hidden');
 		}
 	});
 
-	$('body').on('click', '.remove-keyframe-btn', function(e){
-		// remove a keyframe
-		console.log('keyframe removal still needs to be implemented');
+	$('body').on('click', '.remove-layer-btn', function(e){
+		// remove a layer
+		console.log('layer removal still needs to be implemented');
 	});
 	$('body').click(function(e){
 		if($(e.target).is('.dropdown')){
@@ -297,8 +298,9 @@ $(function(){
 		}
 	});
 
-	$(document).keypress(function(e){
+	$(document).keyup(function(e){
 		if(!$(e.target).is('input:focus') && e.which == 32){
+			// space key
 			e.preventDefault();
 			if($('.play-btn').hasClass('playing')){
 				document.getElementById("canvas").pauseAnimations();
@@ -308,6 +310,11 @@ $(function(){
 				updateSlider();
 			}
 			return false;
+		}
+		else if(e.which == 8){
+			// delete key
+			$('.selected.keyframe').remove();
+			// todo david
 		}
 	});
 

@@ -394,7 +394,7 @@ h1 input[type="text"]{
 	#canvas{
 		width:800px;
 		height:600px;
-		background-color:#fff;	
+		background-color:#fff;
 	}
 		#canvas-center{
 			margin:0 auto;
@@ -510,7 +510,7 @@ footer{
 		cursor: pointer;
 		position: absolute;
 		top:20px;	
-		left: -8px;	
+		left: -8px;
 	}
 
 	.keyframe.selected {
@@ -539,7 +539,7 @@ footer{
 	.layer-toolbar{
 		float: right;
 	}
-		.remove-keyframe-btn{
+		.remove-layer-btn{
 			padding: 5px;
 			width: 12px;
 			height: 12px;
