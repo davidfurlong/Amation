@@ -30,7 +30,7 @@ $.fn.draggable = function(){
 	        	if($this.hasClass('track')){
 	        		// track dragged, call handler
 	        		// todo david
-	        		recalculateAnimations(currentTrack);
+	        		// recalculateAnimations(currentTrack);
 	        		// console.log(window.y = $this);
 	        		// updateTrackOffset($(this).data('trackid'), this);
 	        	}

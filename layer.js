@@ -199,30 +199,29 @@ function recalculateAnimations(trackID) {
 			        			anim.setAttribute('from', fields[j][1]+' 100 100'/*parseInt(fields[j][1])*/);
 			        			anim.setAttribute('to', kfa["rotate"]+' 100 100'/*kfa["rotate"]*/);
 			        			anim.setAttribute('onend', 'animationReset("' + el.getAttribute('id') + '", "' + anim.getAttribute('type') +  '", "'+ anim.getAttribute('to')+'")');
+			        			anim.setAttribute('fill', 'freeze');
 			        			el.appendChild(anim);
 						        break;
 						    case "x":
-	    				        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
-	    				        anim.setAttribute('attributeType', 'XML');
-	    	        			anim.setAttribute('attributeName', 'x');
+	    				        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
 	    	        			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
 	    	        			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
-	    	        			anim.setAttribute('from', fields[j][1]/*parseInt(fields[j][1])*/);
-	    	        			anim.setAttribute('to', kfa["x"]/*kfa["rotate"]*/);
+	    	        			anim.setAttribute('from', fields[7][1] +","+fields[8][1]);
+	    	        			anim.setAttribute('to', kfa["x"] +","+kfa["y"]);
 	    	        			anim.setAttribute('fill', 'freeze');
 	    	        			el.appendChild(anim);
 	    	        			break;
-						    case "y":
-	    				        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
-	    	        			anim.setAttribute('attributeType', 'XML');
-	    	        			anim.setAttribute('attributeName', 'y');
-	    	        			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
-	    	        			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
-	    	        			anim.setAttribute('from', fields[j][1]/*parseInt(fields[j][1])*/);
-	    	        			anim.setAttribute('to', kfa["y"]/*kfa["rotate"]*/);
-	    	        			anim.setAttribute('fill', 'freeze');
-	    	        			el.appendChild(anim);
-	    	        			break;
+						    // case "y":
+	    				 //        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+	    	    //     			anim.setAttribute('attributeType', 'XML');
+	    	    //     			anim.setAttribute('attributeName', 'y');
+	    	    //     			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
+	    	    //     			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
+	    	    //     			anim.setAttribute('from', fields[j][1]/*parseInt(fields[j][1])*/);
+	    	    //     			anim.setAttribute('to', kfa["y"]/*kfa["rotate"]*/);
+	    	    //     			anim.setAttribute('fill', 'freeze');
+	    	    //     			el.appendChild(anim);
+	    	    //     			break;
 	    	        		case "scale":
 						        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
 			        			anim.setAttribute('attributeName', 'transform');
@@ -232,6 +231,7 @@ function recalculateAnimations(trackID) {
 			        			anim.setAttribute('type', 'scale');
 			        			anim.setAttribute('from', (fields[j][1]/100).toFixed(2)/*parseInt(fields[j][1])*/);
 			        			anim.setAttribute('to', (kfa["scale"]/100).toFixed(2)/*kfa["rotate"]*/);
+			        			anim.setAttribute('fill', 'freeze');
 			        			el.appendChild(anim);
 			        			break;
 						}
