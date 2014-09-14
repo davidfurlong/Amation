@@ -31,10 +31,10 @@ function setupScrub() {
 
 function buildTicker(){
 	$('#ticker-container').html('');
-	var width = $('#ticker-container').width();
+	var width = $('#slider').width();
 	var duration = $('#project-duration').val();
 	for(var i=0; i<duration; i++){
-		$('#ticker-container').append('<span style="width:' + Math.floor(width/duration) + 'px;">' + (i+1) + 's</span>');
+		$('#ticker-container').append('<span style="width:' + Math.floor(width/duration) + 'px;">' + i + 's</span>');
 	}
 }
 

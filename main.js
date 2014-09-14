@@ -1,7 +1,5 @@
 
-// for future keyframe draggability
-/*$.fn.draggable = function(){
->>>>>>> 6a5d867ac25cefc068ad1b3f728196b9a963e887
+$.fn.draggable = function(){
     var $this = this,
     ns = 'draggable_'+(Math.random()+'').replace('.',''),
     mm = 'mousemove.'+ns,
@@ -11,33 +9,61 @@
     adjX = 0, adjY = 0;
 
     $this.mousedown(function(ev){
-        var pos = $this.offset();
-        if (isFixed) {
-            adjX = $w.scrollLeft(); adjY = $w.scrollTop();
-        }
-        var ox = (ev.pageX - pos.left), oy = (ev.pageY - pos.top);
-        $this.data(ns,{ x : ox, y: oy });
-        $w.on(mm, function(ev){
-            ev.preventDefault();
-            ev.stopPropagation();
-            if (isFixed) {
-                adjX = $w.scrollLeft(); adjY = $w.scrollTop();
-            }
-            var offset = $this.data(ns);
-            // $this.css({left: ev.pageX - adjX - offset.x, top: ev.pageY - adjY - offset.y});
-            $this.css({left: ev.pageX - adjX - offset.x - $('.timeline').css('padding-left').replace('px','')});
-        });
-        $w.on(mu, function(){
-        	if($this.hasClass('start')){
-        		console.log($this.parent().css('margin-left').replace('px','')+ev.pageX - adjX - $this.data(ns).x - $('.timeline').css('padding-left').replace('px','')+'px');
-        		$this.parent().css('background-color','green').css('margin-left',$this.parent().css('margin-left')+ev.pageX - adjX - $this.data(ns).x - $('.timeline').css('padding-left').replace('px','')+'px');
-        	}
-            $w.off(mm + ' ' + mu).removeData(ns);
-        });
+    	if(!$(ev.target).is('.width-handle')){
+	        var pos = $this.offset();
+	        if (isFixed) {
+	            adjX = $w.scrollLeft(); adjY = $w.scrollTop();
+	        }
+	        var ox = (ev.pageX - pos.left), oy = (ev.pageY - pos.top);
+	        $this.data(ns,{ x : ox, y: oy });
+	        $w.on(mm, function(ev){
+	            ev.preventDefault();
+	            ev.stopPropagation();
+	            if (isFixed) {
+	                adjX = $w.scrollLeft(); adjY = $w.scrollTop();
+	            }
+	            var offset = $this.data(ns);
+	            // $this.css({left: ev.pageX - adjX - offset.x, top: ev.pageY - adjY - offset.y});
+	            $this.css({left: ev.pageX - adjX - offset.x - $('.timeline').css('padding-left').replace('px','')});
+	        });
+	        $w.on(mu, function(){
+	        	if($this.hasClass('track')){
+	        		// track dragged, call handler
+	        		// todo david
+	        		
+	        	}
+	            $w.off(mm + ' ' + mu).removeData(ns);
+	        });
+	    }
     });
 
     return this;
-};*/
+};
+
+$.fn.dragWidth = function(){
+	var $this = this;
+    ns = 'draggableWidth_'+(Math.random()+'').replace('.',''),
+    mm = "mousemove."+ns,
+    mu = "mouseup."+ns;
+ 	$this.mousedown(function(ev){
+ 		var pos = $this.offset();
+ 		var ox = (ev.pageX - pos.left), oy = (ev.pageY - pos.top);
+ 		$this.data(ns,{ x: ox, y: oy});
+ 		$this.data('origWidth',$this.parent().width());
+ 		$(window).on(mm, function(ev){
+ 			ev.preventDefault();
+ 			ev.stopPropagation();
+ 			var offset = $this.data(ns);
+ 			var relPos = $this.parent().parent().css('left').replace('px','')!=='auto' ? $this.parent().parent().css('left').replace('px','') : 0;
+ 			$this.parent().width( ev.pageX - offset.x - $('.timeline').css('padding-left').replace('px','') - relPos);
+ 		});
+
+        $(window).on(mu, function(){
+            $(window).off(mm + ' ' + mu).removeData(ns);
+        });
+ 	});
+	return this;
+};
 
 var animationDuration = 40; // seconds
 var animationWidth = 500; // px
@@ -47,6 +73,7 @@ var currentKeyFrame = null;
 var currentTrack = null;
 
 var draggingKeyFrame = false;
+var draggingTrack = false;
 
 var tracks = {};
 var scale = 1; // unitless, scale of canvas
@@ -235,15 +262,17 @@ $(function(){
 			currentTrack = $(this).closest('.clearfix').data('trackid');
 			console.log(currentTrack);
 			populateDetails(currentTrack, currentKeyFrame);
+			$('.layer-title').html('<span style="background-color:' + $(e.target).parent().data('color') + ';"></span>' + $(e.target).parent().parent().find('.layer-name').html());
 			$('.layer-details-inner').removeClass('hidden');
 		}
 	});
 
-	$('body').on('click', '.remove-keyframe-btn', function(e){
+	$('body').on('click', '.remove-layer-btn', function(e){
 		// remove a keyframe
 		removeKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame);
 		var el = findKeyFrameByPos(tracks.currentTrack.keyframes, currentKeyFrame)
 		tracks.currentTrack.keyframes[currentKeyFrame][el].remove();
+		// todo
 	});
 	$('body').click(function(e){
 		if($(e.target).is('.dropdown')){
@@ -272,8 +301,10 @@ $(function(){
 		}
 	});
 
-	$(document).keypress(function(e){
+	$(document).keyup(function(e){
 		if(!$(e.target).is('input:focus') && e.which == 32){
+			// space key
+			e.preventDefault();
 			if($('.play-btn').hasClass('playing')){
 				document.getElementById("canvas").pauseAnimations();
 			}
@@ -282,6 +313,11 @@ $(function(){
 				updateSlider();
 			}
 			return false;
+		}
+		else if(e.which == 8){
+			// delete key
+			$('.selected.keyframe').remove();
+			// todo david
 		}
 	});
 
