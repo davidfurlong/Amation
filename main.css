@@ -488,6 +488,7 @@ footer{
 		.bars>div>h3{
 			margin-left:20px;
 			float:left;
+			margin-top:19px;
 		}
 	.keyframe{
 		border-radius: 50%;
@@ -512,13 +513,33 @@ footer{
 		box-sizing:border-box;
 		border-right:1px solid rgba(255,255,255,0.6);
 	}
-	.layer-title span{
-		background-color: #FF33E2;
-		width: 15px;
-		height: 15px;
-		display: block;
-		float: left;
-		margin: 2px 10px 0 0;
+	.layer-title{
+		float:left;
+	}
+		.layer-title span{
+			background-color: #FF33E2;
+			width: 15px;
+			height: 15px;
+			display: block;
+			float: left;
+			margin: 7px 10px 0 0;
+		}
+	.layer-toolbar{
+		float: right;
+	}
+		.remove-keyframe-btn{
+			padding: 5px;
+			width: 12px;
+			height: 12px;
+			line-height: 12px;
+			display: block;
+			text-align: center;
+			color: rgba(255,255,255,0.6);
+			font-weight: bold;
+			cursor: pointer;
+		}
+	.layer-options{
+		clear:both;
 	}
 	.layer-options>div,.project-options>div{
 		width:220px;
@@ -601,6 +622,9 @@ footer{
 	}
 	#project-w,#project-h{
 		width:46px;
+	}
+	#layer-easing{
+		width:153px;
 	}
 
 	select{
