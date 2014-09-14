@@ -504,13 +504,13 @@ footer{
 		}
 	.keyframe{
 		border-radius: 50%;
-		height:16px;
-		width:16px;
-		background-color:#fff;
+		height: 16px;
+		width: 16px;
+		background-color: #fff;
 		cursor: pointer;
 		position: absolute;
-		top:20px;	
-		left: -8px;
+		top: 21px;	
+		left: 0;
 	}
 
 	.keyframe.selected {

@@ -121,7 +121,7 @@ $(function(){
 		$('#canvas').append(newG);
 
 		createTrack(trackID,fileName);
-		createKeyFrame(trackID, 0);
+		createKeyFrame(trackID, 0, null);
 	}
 
 	function previewfile(file) {
@@ -246,9 +246,9 @@ $(function(){
 		if(!e.isDefaultPrevented()){
 			var relPosX = $(e.target).position().left;
 			var posX = e.pageX - relPosX;
-			currentKeyFrame = parseInt(posX);
+			currentKeyFrame = parseInt(posX-$('.layer-details').width()-50);
 			currentTrack = $(this).closest('.clearfix').data('trackid');
-			createKeyFrame(currentTrack, currentKeyFrame);
+			createKeyFrame(currentTrack, currentKeyFrame, this);
 		}
 		allowDrag();
 	});
