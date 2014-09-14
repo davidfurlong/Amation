@@ -37,7 +37,7 @@ function createTrack(trackID,fileName){
 	var bar = $('<div class="bar" style="background-color:'+bg+';" data-color="'+bg+'"><hr><div class="width-handle new-handle"></div></div><h3 class="layer-name">'+fileName.replace('.svg','')+'</h3>');
 	newBarContainer.append(bar);
 	bars.append(newBarContainer);
-	$('.new-bar').draggable().removeClass('new-bar');
+	$('.new-bar').removeClass('new-bar'); // .draggable().removeClass('new-bar');
 	$('.new-handle').dragWidth().removeClass('new-handle');
 }
 
