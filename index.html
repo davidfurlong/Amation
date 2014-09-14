@@ -2,15 +2,16 @@
 	<head>
 		<link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="main.css">
-		<title>SVG Playground</title>
+		<title>Project 1</title>
 	</head>
 	<body id="holder">
 		
-		 <!-- <p id="upload" class="hidden"><label>Drag &amp; drop not supported, but you can still upload via this input field:<br><input type="file"></label></p> -->
-		 <!-- <p id="filereader">File API &amp; FileReader API not supported</p>
-		 <p id="formdata">XHR2's FormData is not supported</p>
-		 <p id="progress">XHR2's upload progress isn't supported</p>
-		 <p>Upload progress: <progress id="uploadprogress" max="100" value="0">0</progress></p> -->
+		<div id="drop-msg">
+			<div>
+				<h1>Drop to insert.</h1>
+			</div>
+		</div>
+
 		<div class="container">
 			<div class="project-details">
 				<div class="branding">
@@ -19,10 +20,21 @@
 				<h1 class="project-title"><input id="project-title-input" type="text" value="Project 1"></h1>
 				<div class="project-options">
 					<div>
-						<label for="project-frame">frame:</label>
-						<select id="project-frame" name="project-frame">
-							<option value="dribbble">dribbble</option>
-						</select>
+						<label for="project-frame">canvas:</label>
+						<input type="text" id="project-frame" name="project-frame" class="dropdown" data-value="wInPx,hInPx">
+						<div class="dropdown-menu" data-target="project-frame">
+							<ul>
+								<li class="dropdown-item" data-value="320,480">iPhone 4S</li>
+								<li class="dropdown-item" data-value="320,568">iPhone 5</li>
+								<li class="dropdown-item" data-value="750,1334">iPhone 6</li>
+								<li class="dropdown-item" data-value="1920,1080">1080p (landscape)</li>
+								<li class="dropdown-item" data-value="1080,1920">1080p (portrait)</li>
+								<li class="dropdown-item" data-value="1280,720">720p (landscape)</li>
+								<li class="dropdown-item" data-value="720,1280">720p (portrait)</li>
+								<li class="dropdown-item" data-value="640,480">480p</li>
+								<li class="dropdown-item selected" data-value="800,600">Dribbble</li>
+							</ul>
+						</div>
 					</div>
 					<div>
 						<label for="project-duration">duration:</label>
@@ -30,7 +42,7 @@
 						<label for="project-duration" class="units">s</label>
 					</div>
 					<div>
-						<label for="project-width">frame width:</label>
+						<label for="project-width">cavnas w:</label>
 						<input type="text" id="project-width" name="project-width" value="800">
 						<label for="project-width" class="units">px</label>
 					</div>
@@ -38,22 +50,21 @@
 						<button id="loop-btn">loop</button>
 					</div>
 					<div>
-						<label for="project-height">frame height:</label>
+						<label for="project-height">canvas h:</label>
 						<input type="text" id="project-height" name="project-height" value="600">
 						<label for="project-height" class="units">px</label>
 					</div>
 					<div class="button-container">
 						<div class="clearfix">
-							<button id="upload-btn">import SVGs</button>
+							<button id="upload-btn" class="zoom-in">import SVGs</button>
 						</div>
 						<div class="clearfix">
-							<button id="save-btn" class="primary">save</button>
+							<button id="save-btn" class="primary zoom-out">save</button>
 						</div>
 					</div>
 					<div class="button-container">
 						<div>
 							<button class="play-btn playing"></button>
-							<button class="rewind-btn"></button>
 						</div>
 					</div>
 				</div>
@@ -77,8 +88,8 @@
 				</div>
 			</div>
 			<div class="layer-details">
-				<div class="layer-details-inner hidden">
-					<h3 class="layer-title"><span></span>Circle</h3>
+				<div class="layer-details-inner">
+					<h1 class="layer-title"><span></span>Circle</h1>
 					<div class="layer-options">
 						<div class="two-up">
 							<div>
@@ -132,17 +143,14 @@
 							<label for="layer-rotation" class="units">deg</label>
 						</div>
 						<div>
-							<label for="layer-filter">filter:</label>
-							<select id="layer-filter" name="layer-filter">
-								<option value="normal">normal</option>
-							</select>
-						</div>
-						<div>
 							<label for="layer-easing">easing:</label>
-							<select id="layer-easing" name="layer-easing">
-								<option value="linear">linear</option>
-								<option value="ease">ease</option>
-							</select>
+							<input type="text" id="layer-easing" name="layer-easing" class="dropdown">
+							<div class="dropdown-menu" data-target="layer-easing">
+								<ul>
+									<li class="dropdown-item selected" data-value="linear">linear</li>
+									<li class="dropdown-item" data-value="ease">ease</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 					<div class="clear"></div>
@@ -150,7 +158,7 @@
 			</div>
 		</footer>
 		
-		<script src="jquery-2.1.1.min.js"></script><!-- supposedly faster to load -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script><!-- supposedly faster to load -->
 		<script src="scrub.js"></script>
 		<script src="main.js"></script>
 		<script src="dnd.js"></script>

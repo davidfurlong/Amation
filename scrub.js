@@ -59,7 +59,7 @@ function updateSlider() {
 		else{
 			$('.play-btn').removeClass('playing');
 		}
-	}, 50);
+	}, 1);
 };
 
 function getDuration() {
