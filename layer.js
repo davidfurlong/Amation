@@ -23,7 +23,7 @@
 
 function createTrack(trackID,fileName){
 	var bars = $(".bars");
-	var bg = '#'+Math.floor(Math.random()*16777215).toString(16);
+	var bg = '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6);
 	var newBarContainer = $('<div class="clearfix track new-bar" data-trackid="'+trackID+'"></div>');
 	var bar = $('<div class="bar" style="background-color:'+bg+';" data-color="'+bg+'"><hr><div class="width-handle new-handle"></div></div><h3 class="layer-name">'+fileName.replace('.svg','')+'</h3>');
 	newBarContainer.append(bar);
