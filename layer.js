@@ -24,7 +24,7 @@
 function createTrack(trackID,fileName){
 	var bars = $(".bars");
 	var newBarContainer = $('<div class="clearfix track" data-trackid="'+trackID+'"></div>');
-	var bar = $('<div><div class="bar"><hr></div><h3 class="layer-name">'+fileName+'</h3></div>');
+	var bar = $('<div class="bar"><hr></div><h3 class="layer-name">'+fileName+'</h3>');
 	newBarContainer.append(bar);
 	bars.append(newBarContainer);
 }

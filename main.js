@@ -226,6 +226,11 @@ $(function(){
 			$('.layer-details-inner').removeClass('hidden');
 		}
 	});
+
+	$('body').on('click', '.remove-keyframe-btn', function(e){
+		// remove a keyframe
+		console.log('keyframe removal still needs to be implemented');
+	});
 	$('body').click(function(e){
 		if($(e.target).is('.dropdown')){
 			$('div[data-target="'+$(e.target).attr('id')+'"]').toggle();
