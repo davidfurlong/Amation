@@ -151,6 +151,7 @@ input[type="text"]{
 .input-btn button{
 	background-color:transparent;
 	border:1px solid rgba(255,255,255,0.6);
+	height:40px;
 }
 button:focus{
 	outline:0;
@@ -166,9 +167,11 @@ button{
 	text-align: center;
 	width: 100%;
 	cursor: pointer;
-	height: 40px;
+	height: 35px;
 	font-size: 13px;
+	border:none;
 }
+	.button-inside{border:none !important;}
 
 button.primary{
 	background-color:#33FF63;
@@ -280,17 +283,30 @@ svg#canvas > g {
 h1, h1 input[type="text"]{
 	font-size:20pt;
 }
-.play-btn{
+.play-btn,.stop-btn{
 	position: relative;
-	height:75px;
-	width: 75px !important;
+	height:100px;
+	width: 100px !important;
+	background-color:rgba(255,255,255,0.1);
 }
-	.play-btn.playing:before{
-		top: 12px;
-		left: 44px;
+	.stop-btn:before{
+		top: 32px;
+		left: 32px;
 		content: ' ';
-		height: 50px;
-		width: 10px;
+		height: 36px;
+		width: 36px;
+		background-color:rgba(255,255,255,0.6);
+		position: absolute;
+		z-index: 1;
+		border:none;
+		border-radius: 2px;
+	}
+	.play-btn.playing:before{
+		top: 32px;
+		left: 32px;
+		content: ' ';
+		height: 36px;
+		width: 12px;
 		background-color:#fff;
 		position: absolute;
 		z-index: 1;
@@ -298,22 +314,25 @@ h1, h1 input[type="text"]{
 	}
 	.play-btn:before{
 		background-color:transparent;
-		top: 12px;
-		left: 27px;
+		top: 31px;
+		left: 35px;
 		content: ' ';
-		height: 0;
-		width: 0;
 		position: absolute;
-		border: 25px solid transparent;
-		border-left-color: white;
+
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 20px 0 20px 34.6px;
+		border-color: transparent transparent transparent #32ff62;
+
 		z-index: 1;
 	}
 	.play-btn.playing:after{
-		top: 12px;
-		left: 24px;
+		top: 32px;
+		left: 56px;
 		content: ' ';
-		height: 50px;
-		width: 10px;
+		height: 36px;
+		width: 12px;
 		background-color:#fff;
 		position: absolute;
 		z-index: 1;
@@ -342,7 +361,31 @@ h1 input[type="text"]{
 		float:left;
 		background-color:rgba(255,255,255,0.1);
 		overflow-y:auto;
+		position: relative;
 	}
+.canvas-controls{
+	position: absolute;
+	bottom: 40px;
+	width:480px;
+}
+.col-4{
+	width:25%;
+	float:left;
+}
+	.col-4>div{
+		width:100px;
+		margin:0 20px 20px 0;
+		background:rgba(255,255,255,0.1);
+		border-radius: 2px;
+		border:none;
+	}
+	.col-4>div>button,.col-4>div.stop-btn,.col-4>div.play-btn{
+		border:none;
+	}
+		.col-4>div.toggle{
+			border:1px solid rgba(255,255,255,0.6);
+		}
+.col-4>div.skip-down{margin-top:59px;}
 .canvas-container{
 	overflow:auto;
 	height:100%;
@@ -460,7 +503,6 @@ footer{
 	.keyframe.selected {
 		border: 1px solid blue;
 	}
-
 	.layer-details{
 		background-color:rgba(255,255,255,0.1);
 		width:540px;
@@ -523,6 +565,9 @@ footer{
 			.layer-options>div>div:first-child,.project-options>div>div:first-child{
 				border-right:1px solid rgba(255,255,255,0.6);
 			}
+			.layer-options>div>div.modified-parent, .project-options>div>div.modified-parent,.layer-options>div.modified-parent, .project-options>div.modified-parent{
+				background:rgba(255,255,255,0.1);
+			}
 	#layer-h,#layer-w{
 		width:48px;
 		padding-right:0;
@@ -553,6 +598,9 @@ footer{
 	}
 	#project-frame{
 		width:152px;
+	}
+	#project-w,#project-h{
+		width:46px;
 	}
 
 	select{

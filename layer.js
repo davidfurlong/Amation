@@ -1,7 +1,30 @@
-function createTrack(trackID){
+// function updateAnimation(){
+// 	var currentSlide = 0;
+// 	var id = 400;
+
+// 	var g = $('#'+id);
+// 	var anim = g.children('animate, animateTransform, animateColor');
+// 	anim.sort(function(a, b){
+// 		return (parseInt(b.attr('dur').replace('s', ''))+parseInt(b.attr('begin').replace('s', '')))-(parseInt(a.attr('dur').replace('s', ''))+parseInt(a.attr('begin').replace('s', '')));
+// 	});
+// 	var initial = g;
+	
+// 	if(currentSlide = 0){
+// 		initial.setAttribute('fill', $('#layer-fg').val());
+// 		initial.setAttribute('stroke', $('#layer-bg').val());
+// 		initial.setAttribute('width', $('#layer-w').val());
+// 		initial.setAttribute('height', $('#layer-h').val());
+// 		initial.setAttribute('opacity', $('#layer-opacity').val());
+// 		initial.setAttribute('scale', $('#layer-scale').val());
+// 		initial.setAttribute('stroke-width', $('#layer-weight').val());
+// 		initial.setAttribute('transform', 'translate('+$('#layer-x').val()+' '+$('#layer-y').val()+') rotate('+$('#layer-rotation').val()+')');
+// 	}
+// }
+
+function createTrack(trackID,fileName){
 	var bars = $(".bars");
 	var newBarContainer = $('<div class="clearfix track" data-trackid="'+trackID+'"></div>');
-	var bar = $('<div class="bar"></div><hr>');
+	var bar = $('<div><div class="bar"><hr></div><h3 class="layer-name">'+fileName+'</h3></div>');
 	newBarContainer.append(bar);
 	bars.append(newBarContainer);
 }
@@ -11,11 +34,12 @@ function editKeyFrame(trackID, pos){
 	console.log(pos);
 	console.log(tracks[trackID]);
 	var kf = findKeyFrameByPos(tracks[trackID].keyframes, pos);
+	console.log(kf);
 	if(kf == -1){
 		console.error('KeyFrame not found');
 		return
 	}
-
+	kf.attr = {};
 	kf.attr['fill'] = $('#layer-fg').val();
 	kf.attr['stroke'] = $('#layer-bg').val();
 	kf.attr['width'] = $('#layer-w').val();
@@ -84,16 +108,17 @@ function findKeyFrameByPos(ray, pos) {
 
 
 function recalculateAnimations(trackID) {
+	console.log('recalc Animations');
 	var keyFrames = tracks[trackID].keyframes;
 	keyFrames = keyFrames.sort(function(a, b){
 		return (parseInt(a.pos) - parseInt(b.pos));
 	});
 	var el = tracks[trackID].el;
 	var totalDuration = $('#project-duration').val();
-	var totalWidth = $('#ticket-container').children().length() * $('#ticket-container').children().get(0).width();
-	var trackWidth = $('.track data-trackid["'+trackID+'"]').find('.bar').width();
+	var totalWidth = $('#ticket-container').children().length * $('#ticker-container').children().get(0).width;
+	var trackWidth = $('.track[data-trackid="'+trackID+'"]').find('.bar').width;
 	var trackDuration = (trackWidth/totalWidth) * totalDuration;
-
+	console.log(window.y = el);
 	$(el).find('animate, animateTransform, animateColor').remove();
 
 
