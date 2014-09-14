@@ -32,8 +32,8 @@ function createTrack(trackID){
 function editKeyFrame(trackID, pos){
 	console.log(trackID);
 	console.log(pos);
-	console.log(tracks.trackID);
-	var kf = findKeyFrameByPos(tracks.trackID.keyframes, pos);
+	console.log(tracks[trackID]);
+	var kf = findKeyFrameByPos(tracks[trackID].keyframes, pos);
 	if(kf == -1){
 		console.error('KeyFrame not found');
 		return
@@ -56,7 +56,7 @@ function editKeyFrame(trackID, pos){
 
 function createKeyFrame(trackID, pos, el) {
 	var newKeyFrame = $('<div class="keyframe selected" data-pos="' + pos + '" style="left:'+pos+'px;"></div>');
-	tracks.trackID.keyframes.push(
+	tracks[trackID].keyframes.push(
 		{
 			"pos": pos, // acts like an id
 			"el": newKeyFrame
@@ -69,7 +69,7 @@ function createKeyFrame(trackID, pos, el) {
 function deleteKeyFrame(trackID, pos) {
 	if(pos == 0)
 		return
-	tracks.trackID.keyframes = tracks.trackID.keyframes.filter(function(el){
+	tracks[trackID].keyframes = tracks[trackID].keyframes.filter(function(el){
 		return el.pos != pos;
 	});
 	$('[data-trackID="'+trackID+'"] .bar').remove();
@@ -82,7 +82,7 @@ function recalculateAnimations(trackID) {
 }
 
 function populateDetails(trackID, pos) {
-	var kf = findKeyFrameByPos(tracks.trackID.keyframes, pos);
+	var kf = findKeyFrameByPos(tracks[trackID].keyframes, pos);
 	if(kf == -1){
 		console.error('KeyFrame not found');
 		return

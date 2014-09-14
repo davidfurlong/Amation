@@ -84,7 +84,7 @@ $(function(){
 			"keyframes": [],
 			"animations": []
 		}
-		tracks.trackID = obj;
+		tracks[trackID] = obj;
 		for(var i = 0; i < svgParsed.length; i ++){
 			newG.appendChild(svgParsed[i])
 		}
