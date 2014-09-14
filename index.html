@@ -1,3 +1,4 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <html>
 	<head>
 		<link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
@@ -36,7 +37,7 @@
 						</div>
 					</div>
 					<div class="button-inside">
-						<button id="upload-btn">import</button>
+						<button id="upload-btn">drag & drop to import</button>
 					</div>
 					<div class="two-up">
 						<div>
@@ -83,7 +84,8 @@
 			</div>
 			<div class="canvas-container">
 				<div id="canvas-center">
-					<svg id="canvas" xmlns='http://www.w3.org/2000/svg'
+					<svg id="canvas" xmlns="http://www.w3.org/2000/svg" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
  onload="Init(evt)" onmousedown="Grab(evt)" onmousemove="Drag(evt)" onmouseup="Drop(evt)" onclick="Select(evt)">
 					</svg>
 				</div>

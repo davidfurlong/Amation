@@ -16,7 +16,7 @@
 // 		initial.setAttribute('height', $('#layer-h').val());
 // 		initial.setAttribute('opacity', $('#layer-opacity').val());
 // 		initial.setAttribute('scale', $('#layer-scale').val());
-// 		initial.setAttribute('stroke-width', $('#layer-weight').val());
+// 		initial.setAttribute('stroke-width', $('#layer-stroke-weight').val());
 // 		initial.setAttribute('transform', 'translate('+$('#layer-x').val()+' '+$('#layer-y').val()+') rotate('+$('#layer-rotation').val()+')');
 // 	}
 // }
@@ -58,7 +58,7 @@ function editKeyFrame(trackID, pos){
 	kf.attr['height'] = $('#layer-h').val();
 	kf.attr['opacity'] = $('#layer-opacity').val();
 	kf.attr['scale'] = $('#layer-scale').val();
-	kf.attr['stroke-width'] = $('#layer-weight').val();
+	kf.attr['stroke-width'] = $('#layer-stroke-weight').val();
 	kf.attr['x'] = $('#layer-x').val();
 	kf.attr['y'] = $('#layer-y').val();
 	kf.attr['rotate'] = $('#layer-rotation').val();
@@ -110,7 +110,7 @@ function populateDetails(trackID, pos) {
 		$('#layer-h').val(kf.attr['height']  || "");
 		$('#layer-opacity').val(kf.attr['opacity'] || "");
 		$('#layer-scale').val(kf.attr['scale'] || "");
-		$('#layer-weight').val(kf.attr['stroke-width'] || "");
+		$('#layer-stroke-weight').val(kf.attr['stroke-width'] || "");
 		$('#layer-x').val(kf.attr['x'] || "0");
 		$('#layer-y').val(kf.attr['y'] || "0");
 		$('#layer-rotation').val(kf.attr['rotate'] || "0");
@@ -140,7 +140,7 @@ function findKeyFrameByPos(ray, pos) {
 function recalculateAnimations(trackID) {
 	console.log('recalculating Animations');
 	console.log(tracks);
-	var keyFrames = tracks[trackID].keyframes;
+	var keyFrames = tracks[trackID || currentTrack].keyframes;
 	keyFrames = keyFrames.sort(function(a, b){
 		return (parseInt(a.pos) - parseInt(b.pos));
 	});
@@ -178,11 +178,6 @@ function recalculateAnimations(trackID) {
 						// Create animation dawg.
 						switch(fields[j][0]) { // something broken
 						    case "rotate":
-						    	console.log((fields[j][2]));
-						    	console.log(pTs(kf['pos']));
-						    	console.log(kfa["rotate"]);
-						    	console.log(fields[j][1]);
-						    	console.log(typeof (fields[j][2]-pTs(kf['pos'])));
 						        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
 			        			anim.setAttribute('attributeName', 'transform');
 			        			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
@@ -191,8 +186,40 @@ function recalculateAnimations(trackID) {
 			        			anim.setAttribute('from', fields[j][1]+' 100 100'/*parseInt(fields[j][1])*/);
 			        			anim.setAttribute('to', kfa["rotate"]+' 100 100'/*kfa["rotate"]*/);
 			        			el.appendChild(anim);
-			        			console.log('appended animation');
 						        break;
+						    case "x":
+	    				        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+	    				        anim.setAttribute('attributeType', 'XML');
+	    	        			anim.setAttribute('attributeName', 'x');
+	    	        			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
+	    	        			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
+	    	        			anim.setAttribute('from', fields[j][1]/*parseInt(fields[j][1])*/);
+	    	        			anim.setAttribute('to', kfa["x"]/*kfa["rotate"]*/);
+	    	        			anim.setAttribute('fill', 'freeze');
+	    	        			el.appendChild(anim);
+	    	        			break;
+						    case "y":
+	    				        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+	    	        			anim.setAttribute('attributeType', 'XML');
+	    	        			anim.setAttribute('attributeName', 'y');
+	    	        			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
+	    	        			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
+	    	        			anim.setAttribute('from', fields[j][1]/*parseInt(fields[j][1])*/);
+	    	        			anim.setAttribute('to', kfa["y"]/*kfa["rotate"]*/);
+	    	        			anim.setAttribute('fill', 'freeze');
+	    	        			el.appendChild(anim);
+	    	        			break;
+	    	        		case "scale":
+						        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
+			        			anim.setAttribute('attributeName', 'transform');
+			        			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
+			        			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
+			        			anim.setAttribute('additive', 'sum');
+			        			anim.setAttribute('type', 'scale');
+			        			anim.setAttribute('from', (fields[j][1]/100).toFixed(2)/*parseInt(fields[j][1])*/);
+			        			anim.setAttribute('to', (kfa["scale"]/100).toFixed(2)/*kfa["rotate"]*/);
+			        			el.appendChild(anim);
+			        			break;
 						}
 					}
 					console.log('Has happened once')
@@ -212,5 +239,5 @@ function recalculateAnimations(trackID) {
 // kf.setAttribute('height', $('#layer-h').val());
 // kf.setAttribute('opacity', $('#layer-opacity').val());
 // kf.setAttribute('scale', $('#layer-scale').val());
-// kf.setAttribute('stroke-width', $('#layer-weight').val());
+// kf.setAttribute('stroke-width', $('#layer-stroke-weight').val());
 // kf.setAttribute('transform', 'translate('+$('#layer-x').val()+' '+$('#layer-y').val()+') rotate('+$('#layer-rotation').val()+')');

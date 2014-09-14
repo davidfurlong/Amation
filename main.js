@@ -219,6 +219,13 @@ $(function(){
 			editKeyFrame(currentTrack, currentKeyFrame);
 	});
 
+	$('#save-btn').click(function(e){
+		var s = new XMLSerializer();
+		var d = $('#canvas').get(0);
+		 var str = s.serializeToString(d);
+		window.prompt("Copy to clipboard: Ctrl+C, Enter", str);
+	});
+
 	$('.play-btn').click(function(e){
 		if($(e.target).hasClass('playing')){
 			document.getElementById("canvas").pauseAnimations();
@@ -337,6 +344,7 @@ $(function(){
 			var el = findKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame)
 			$(el['el']).remove();
 			removeKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame);
+			recalculateAnimations(currentTrack);
 			return false;
 		}
 	});
