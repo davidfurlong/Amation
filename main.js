@@ -36,12 +36,16 @@ $.fn.draggable = function(){
     return this;
 };
 
-
-
-
 var animationDuration = 40; // seconds
 var animationWidth = 500; // px
 var animationHeight = 400; // px
+
+var currentKeyFrame = null;
+var currentTrack = null;
+
+var draggingKeyFrame = false;
+
+var tracks = {};
 var scale = 1; // unitless, scale of canvas
 
 
@@ -66,26 +70,28 @@ $(function(){
 	    progress = document.getElementById('uploadprogress'),
 	    fileupload = document.getElementById('upload');
 
-	// "filereader formdata progress".split(' ').forEach(function (api) {
-	//   if (tests[api] === false) {
-	//     support[api].className = 'fail';
-	//   } else {
-	//     support[api].className = 'hidden';
-	//   }
-	// });
 
 	function processSvg(s) {
 		var parser = new DOMParser();
 		var doc = parser.parseFromString(s, "image/svg+xml");
 		var svgParsed = $($(doc).find('svg')[0]).children();
 		var newG = document.createElementNS("http://www.w3.org/2000/svg", "g");
-		newG.id = (new Date).getTime();
-		newG.className = "unit"
+		var trackID = (new Date).getTime()
+		newG.id = trackID;
+		newG.className = "vector-group";
+		var obj = {
+			"el": newG,
+			"keyframes": [],
+			"animations": []
+		}
+		tracks[trackID] = obj;
 		for(var i = 0; i < svgParsed.length; i ++){
 			newG.appendChild(svgParsed[i])
 		}
-		$('#canvas').append(newG);	
-		buildLayers();
+		$('#canvas').append(newG);
+
+		createTrack(trackID);
+		createKeyFrame(trackID, 0);
 	}
 
 	function previewfile(file) {
@@ -115,6 +121,7 @@ $(function(){
 	if (tests.dnd) { 
 	  holder.ondragover = function () { this.className = 'hover'; $('#drop-msg div').height($('body').height()-160); return false; };
 	  holder.ondragend = function () { this.className = ''; return false; };
+	  // holder.ondragleave = function () { this.className = ''; return false; };
 	  holder.ondrop = function (e) {
 	    this.className = '';
 	    e.preventDefault();
@@ -144,6 +151,7 @@ $(function(){
 	    return r;
 	}
 
+
 	function allowDrag(){
 		$('.keyframe').each(function(i,v){
 			if(!$(v).hasClass('draggable')){
@@ -168,31 +176,62 @@ $(function(){
 		$(e.target).parent().removeClass('focus');
 	});
 	$('#slider-container,#ticker-container').width($('body').width()-$('.layer-details').width());
+	
 	$(window).resize(function(){
 		$('#slider-container,#ticker-container').width($('body').width()-$('.layer-details').width());
 	});
-	$('body').click(function(e){
-		if($(e.target).is('.play-btn')){
-			if($(e.target).hasClass('playing')){
-				document.getElementById("canvas").pauseAnimations();
-			}
-			else{
-				document.getElementById("canvas").unpauseAnimations();
-				updateSlider();
-			}
-		}
-		else if($(e.target).is('.stop-btn')){
-			document.getElementById("canvas").setCurrentTime(0);
-			slider.val(0);
+
+	$('.play-btn').click(function(e){
+		if($(e.target).hasClass('playing')){
 			document.getElementById("canvas").pauseAnimations();
 		}
-		else if($(e.target).is('.bar')){
+		else{
+			document.getElementById("canvas").unpauseAnimations();
+			updateSlider();
+		}
+	});
+	$('.stop-btn').click(function(e){
+		document.getElementById("canvas").setCurrentTime(0);
+		slider.val(0);
+		document.getElementById("canvas").pauseAnimations();
+	});
+
+
+	$('.rewind-btn').click(function(e){
+		document.getElementById("canvas").setCurrentTime(0);
+		slider.val(0);
+	});
+
+	$('body').on('click', '.bar', function(e){
+		if(!e.defaultPrevented && !draggingKeyFrame){
 			var relPosX = $(e.target).position().left;
 			var posX = e.pageX - relPosX;
-			$(e.target).append('<div class="keyframe" data-pos="' + posX + '" style="left:'+(posX-5)+'px;"></div>');
-			allowDrag();
+			currentKeyFrame = posX;
+			currentTrack = $(this).closest('.clearfix').data('trackid');
+			createKeyFrame(currentTrack, posX);
 		}
-		else if($(e.target).is('.dropdown')){
+		allowDrag();
+	});
+
+	$('.layer-details-inner input').blur(function(e){
+		console.log('SAVE KEYFRAME');
+		editKeyFrame(currentTrack, currentKeyFrame);
+	});
+
+	$('body').on('click', '.keyframe', function(e){
+		e.preventDefault();
+		if(!draggingKeyFrame) {		
+			$('.keyframe').removeClass('selected');
+			$(this).addClass('selected');
+			currentKeyFrame = $(this).data('pos');
+			currentTrack = $(this).closest('.clearfix').data('trackid');
+			console.log(currentTrack);
+			populateDetails(currentTrack, currentKeyFrame);
+			$('.layer-details-inner').removeClass('hidden');
+		}
+	});
+	$('body').click(function(e){
+		if($(e.target).is('.dropdown')){
 			$('div[data-target="'+$(e.target).attr('id')+'"]').toggle();
 		}
 		else if($(e.target).is('.dropdown-item')){
@@ -250,12 +289,87 @@ $(function(){
 		updateCanvasDimensions();
 	});
 
+	$('body').on('drag', '.keyframe', function(e){
+		draggingKeyFrame = true;
+	});
+
+	$('body').on('mouseup', '.keyframe', function(e){
+		e.preventDefault();
+		draggingKeyFrame = false;
+	});
+
+
+	$('#project-width').blur(function(){
+		var w = $(this).val()
+		if(w == parseInt(w))
+			$('#canvas').width(w);
+		else 
+			$(this).parent().addClass('error');
+	});
+
+	$('#project-height').blur(function(){
+		var h = $(this).val()
+		if(h == parseInt(h))
+			$('#canvas').height(h);
+		else 
+			$(this).parent().addClass('error');
+	});
+
+	$('#project-duration').blur(function(){
+		var h = $(this).val()
+		if(h == parseInt(h))
+			var x = null;
+		else 
+			$(this).parent().addClass('error');
+	});
+
+	$('#project-height, #project-width, #project-duration').keyup(function(e){
+		var v = $(this).val()
+		if(v == parseInt(v) || v == "")
+			$(this).parent().removeClass('error');
+		else 
+			$(this).parent().addClass('error');
+		if(e.keyCode == 13)
+			$(this).blur();
+	});
+
+	// function setAnimation(el){
+
+	// 	if(translate || rotate || scale){
+	// 		var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
+	// 		anim.className = "animator";
+	// 		newG.appendChild(anim);
+	// 	}
+
+	// 	// $('#'+id)
+	// 	$('#layer-x').val();
+	// 	$('#layer-opacity').val();
+	// }
+
+
+
+	// animate
+	// attributeName
+	// dur
+	// to
+	// from
+	// begin
+
+	// animateTransform
+	// type
+	// repeatCount
+
+	$('#project-title-input').click(function(){
+		$(this).select();
+	})
+
 	$('#project-title-input').blur(function(){
 		if($(this).val() == "")
 			$(this).val("Project 1");
 	})
+
 	setupScrub();
-	buildLayers(svg);
+
 	allowDrag();
 	buildDropdowns();
 });

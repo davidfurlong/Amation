@@ -101,71 +101,73 @@
 				</div>
 			</div>
 			<div class="layer-details">
-				<h1 class="layer-title"><span></span>Circle</h1>
-				<div class="layer-options">
-					<div class="two-up">
-						<div>
-							<label for="layer-x">x:</label>
-							<input type="text" id="layer-x" name="layer-x" value="100">
+				<div class="layer-details-inner">
+					<h1 class="layer-title"><span></span>Circle</h1>
+					<div class="layer-options">
+						<div class="two-up">
+							<div>
+								<label for="layer-x">x:</label>
+								<input type="text" id="layer-x" name="layer-x" value="100">
+							</div>
+							<div>
+								<label for="layer-y">y:</label>
+								<input type="text" id="layer-y" name="layer-y" value="100">
+							</div>
+						</div>
+						<div class="two-up">
+							<div>
+								<label for="layer-x">#</label>
+								<input type="text" id="layer-fg" name="layer-fg" value="FF6666" class="full">
+							</div>
+							<div>
+								<label for="layer-x">#</label>
+								<input type="text" id="layer-bg" name="layer-bg" value="000000" class="full">
+							</div>
+						</div>
+						<div class="two-up">
+							<div>
+								<label for="layer-w">w:</label>
+								<input type="text" id="layer-w" name="layer-w" value="100">
+								<label for="layer-w" class="units">px</label>
+							</div>
+							<div>
+								<label for="layer-h">h:</label>
+								<input type="text" id="layer-h" name="layer-h" value="80">
+								<label for="layer-h" class="units">px</label>
+							</div>
 						</div>
 						<div>
-							<label for="layer-y">y:</label>
-							<input type="text" id="layer-y" name="layer-y" value="100">
-						</div>
-					</div>
-					<div class="two-up">
-						<div>
-							<label for="layer-x">#</label>
-							<input type="text" id="layer-fg" name="layer-fg" value="FF6666" class="full">
+							<label for="layer-opacity">opacity:</label>
+							<input for="layer-opacity" type="text" id="layer-opacity" name="layer-opacity" value="0.8">
 						</div>
 						<div>
-							<label for="layer-x">#</label>
-							<input type="text" id="layer-bg" name="layer-bg" value="000000" class="full">
-						</div>
-					</div>
-					<div class="two-up">
-						<div>
-							<label for="layer-w">w:</label>
-							<input type="text" id="layer-w" name="layer-w" value="100">
-							<label for="layer-w" class="units">px</label>
+							<label for="layer-scale">scale:</label>
+							<input type="text" id="layer-scale" name="layer-scale" value="100">
+							<label for="layer-scale" class="units">%</label>
 						</div>
 						<div>
-							<label for="layer-h">h:</label>
-							<input type="text" id="layer-h" name="layer-h" value="80">
-							<label for="layer-h" class="units">px</label>
+							<label for="layer-stroke-weight">stroke weight:</label>
+							<input type="text" id="layer-stroke-weight" name="layer-stroke-weight" value="4">
+							<label for="layer-stroke-weight" class="units">px</label>
+						</div>
+						<div>
+							<label for="layer-rotation">rotation:</label>
+							<input type="text" id="layer-rotation" name="layer-rotation" value="0">
+							<label for="layer-rotation" class="units">deg</label>
+						</div>
+						<div>
+							<label for="layer-easing">easing:</label>
+							<input type="text" id="layer-easing" name="layer-easing" class="dropdown">
+							<div class="dropdown-menu" data-target="layer-easing">
+								<ul>
+									<li class="dropdown-item selected" data-value="linear">linear</li>
+									<li class="dropdown-item" data-value="ease">ease</li>
+								</ul>
+							</div>
 						</div>
 					</div>
-					<div>
-						<label for="layer-opacity">opacity:</label>
-						<input for="layer-opacity" type="text" id="layer-opacity" name="layer-opacity" value="0.8">
-					</div>
-					<div>
-						<label for="layer-scale">scale:</label>
-						<input type="text" id="layer-scale" name="layer-scale" value="100">
-						<label for="layer-scale" class="units">%</label>
-					</div>
-					<div>
-						<label for="layer-stroke-weight">stroke weight:</label>
-						<input type="text" id="layer-stroke-weight" name="layer-stroke-weight" value="4">
-						<label for="layer-stroke-weight" class="units">px</label>
-					</div>
-					<div>
-						<label for="layer-rotation">rotation:</label>
-						<input type="text" id="layer-rotation" name="layer-rotation" value="0">
-						<label for="layer-rotation" class="units">%</label>
-					</div>
-					<div>
-						<label for="layer-easing">easing:</label>
-						<input type="text" id="layer-easing" name="layer-easing" class="dropdown">
-						<div class="dropdown-menu" data-target="layer-easing">
-							<ul>
-								<li class="dropdown-item selected" data-value="linear">linear</li>
-								<li class="dropdown-item" data-value="ease">ease</li>
-							</ul>
-						</div>
-					</div>
+					<div class="clear"></div>
 				</div>
-				<div class="clear"></div>
 			</div>
 		</footer>
 		

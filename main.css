@@ -230,11 +230,6 @@ svg#canvas > g {
 	cursor: pointer;
 }
 
-svg#canvas > g:hover {
-	stroke: blue;
-	stroke-width: 1px;
-}
-
 /* div bgs rgba(255,255,255,0.1)  rgba(255,255,255,0.2) */
 /* borders rgba(255,255,255,0.6) */
 /* field bg rgba(255,255,255,0.6) */
@@ -496,12 +491,17 @@ footer{
 		}
 	.keyframe{
 		border-radius: 50%;
-		height:10px;
-		width:10px;
+		height:16px;
+		width:16px;
 		background-color:#fff;
 		cursor: pointer;
 		position: absolute;
-		top:25px;		
+		top:20px;	
+		left: -8px;	
+	}
+
+	.keyframe.selected {
+		border: 1px solid blue;
 	}
 
 	.layer-details{
@@ -534,6 +534,9 @@ footer{
 		.layer-options>div.input-btn, .project-options>div.input-btn{border:none;}
 		div.two-up>div.focus,div.focus{
 			border:1px solid rgb(51,255,99);
+		}
+		div.two-up>div.error,div.error{
+			border:1px solid red;
 		}
 		div.two-up{
 			border:none;
@@ -583,7 +586,7 @@ footer{
 		padding-right:0;
 	}
 	#project-width{
-		width:91px;
+		width:85px;
 	}
 	#project-duration{
 		width:118px;
