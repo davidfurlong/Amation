@@ -1,6 +1,0 @@
-applications:
-- name: svg
-  memory: 256M
-  command: node server.js
-  services:
-    - MongoLab-qs
