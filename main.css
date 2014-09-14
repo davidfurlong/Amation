@@ -503,7 +503,6 @@ footer{
 	.keyframe.selected {
 		border: 1px solid blue;
 	}
-
 	.layer-details{
 		background-color:rgba(255,255,255,0.1);
 		width:540px;
@@ -565,6 +564,9 @@ footer{
 		}
 			.layer-options>div>div:first-child,.project-options>div>div:first-child{
 				border-right:1px solid rgba(255,255,255,0.6);
+			}
+			.layer-options>div>div.modified-parent, .project-options>div>div.modified-parent,.layer-options>div.modified-parent, .project-options>div.modified-parent{
+				background:rgba(255,255,255,0.1);
 			}
 	#layer-h,#layer-w{
 		width:48px;

@@ -213,11 +213,6 @@ $(function(){
 		allowDrag();
 	});
 
-	$('.layer-details-inner input').blur(function(e){
-		console.log('SAVE KEYFRAME');
-		editKeyFrame(currentTrack, currentKeyFrame);
-	});
-
 	$('body').on('click', '.keyframe', function(e){
 		e.preventDefault();
 		if(!draggingKeyFrame) {		
@@ -237,7 +232,7 @@ $(function(){
 		else if($(e.target).is('.dropdown-item')){
 			$(e.target).parent().children().removeClass('selected');
 			$(e.target).addClass('selected');
-			$('#'+$(e.target).parent().parent().data('target')).val($(e.target).html()).data('value',$(e.target).data('value'));
+			$('#'+$(e.target).parent().parent().data('target')).val($(e.target).html()).data('value',$(e.target).data('value')).addClass('modified').parent().addClass('modified-parent');
 			$(e.target).parent().parent().hide();
 
 			if($(e.target).parent().parent().data('target')=='project-frame'){
@@ -296,6 +291,12 @@ $(function(){
 	$('body').on('mouseup', '.keyframe', function(e){
 		e.preventDefault();
 		draggingKeyFrame = false;
+	});
+
+
+	// keyframe property watching
+	$('body').on('change', '.layer-details input', function(e){
+		$(e.target).addClass('modified').parent().addClass('modified-parent');
 	});
 
 
