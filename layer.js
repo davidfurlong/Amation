@@ -137,6 +137,19 @@ function findKeyFrameByPos(ray, pos) {
 	return -1;
 }
 
+function animationReset(elId, transform, value) {
+	var el = document.getElementById(elId);
+	switch (transform) {
+		case 'rotate':
+			// split up rotation data
+			var to = value.split(" ");
+			el.setAttribute('transform', 'rotate(' + to[0] + ', ' + to[1] + ', ' + to[2] + ')');
+			break;
+	}
+
+
+}
+
 function recalculateAnimations(trackID) {
 	console.log('recalculating Animations');
 	console.log(tracks);
@@ -185,6 +198,7 @@ function recalculateAnimations(trackID) {
 			        			anim.setAttribute('type', 'rotate');
 			        			anim.setAttribute('from', fields[j][1]+' 100 100'/*parseInt(fields[j][1])*/);
 			        			anim.setAttribute('to', kfa["rotate"]+' 100 100'/*kfa["rotate"]*/);
+			        			anim.setAttribute('onend', 'animationReset("' + el.getAttribute('id') + '", "' + anim.getAttribute('type') +  '", "'+ anim.getAttribute('to')+'")');
 			        			el.appendChild(anim);
 						        break;
 						    case "x":
