@@ -36,13 +36,16 @@ $.fn.draggable = function(){
     return this;
 };
 
-
-
-
 var animationDuration = 40; // seconds
 var animationWidth = 500; // px
 var animationHeight = 400; // px
 
+var currentKeyFrame = null;
+var currentTrack = null;
+
+var draggingKeyFrame = false;
+
+var tracks = {};
 
 
 $(function(){
@@ -66,27 +69,28 @@ $(function(){
 	    progress = document.getElementById('uploadprogress'),
 	    fileupload = document.getElementById('upload');
 
-	// "filereader formdata progress".split(' ').forEach(function (api) {
-	//   if (tests[api] === false) {
-	//     support[api].className = 'fail';
-	//   } else {
-	//     support[api].className = 'hidden';
-	//   }
-	// });
-
 
 	function processSvg(s) {
 		var parser = new DOMParser();
 		var doc = parser.parseFromString(s, "image/svg+xml");
 		var svgParsed = $($(doc).find('svg')[0]).children();
 		var newG = document.createElementNS("http://www.w3.org/2000/svg", "g");
-		newG.id = (new Date).getTime();
-		newG.className = "unit"
+		var trackID = (new Date).getTime()
+		newG.id = trackID;
+		newG.className = "vector-group";
+		var obj = {
+			"el": newG,
+			"keyframes": [],
+			"animations": []
+		}
+		tracks.trackID = obj;
 		for(var i = 0; i < svgParsed.length; i ++){
 			newG.appendChild(svgParsed[i])
 		}
-		$('#canvas').append(newG);	
-		buildLayers();
+		$('#canvas').append(newG);
+
+		createTrack(trackID);
+		createKeyFrame(trackID, 0);
 	}
 
 	function previewfile(file) {
@@ -145,6 +149,28 @@ $(function(){
 	    return r;
 	}
 
+	$('input[type="text"]').focus(function(e){
+		$(e.target).parent().addClass('focus');
+	});
+	$('input[type="text"]').blur(function(e){
+		$(e.target).parent().removeClass('focus');
+	});
+	$('#slider-container,#ticker-container').width($('body').width()-$('.layer-details').width());
+	
+	$(window).resize(function(){
+		$('#slider-container,#ticker-container').width($('body').width()-$('.layer-details').width());
+	});
+
+	$('.play-btn').click(function(e){
+		if($(e.target).hasClass('playing')){
+			document.getElementById("canvas").pauseAnimations();
+		}
+		else{
+			document.getElementById("canvas").unpauseAnimations();
+			updateSlider();
+		}
+	});
+
 	function allowDrag(){
 		$('.keyframe').each(function(i,v){
 			if(!$(v).hasClass('draggable')){
@@ -154,37 +180,49 @@ $(function(){
 		return true;
 	}
 
-	$('input[type="text"]').focus(function(e){
-		$(e.target).parent().addClass('focus');
+	$('.rewind-btn').click(function(e){
+		document.getElementById("canvas").setCurrentTime(0);
+		slider.val(0);
 	});
-	$('input[type="text"]').blur(function(e){
-		$(e.target).parent().removeClass('focus');
-	});
-	$('#slider-container,#ticker-container').width($('body').width()-$('.layer-details').width());
-	$(window).resize(function(){
-		$('#slider-container,#ticker-container').width($('body').width()-$('.layer-details').width());
-	});
-	$('body').click(function(e){
-		if($(e.target).is('.play-btn')){
-			if($(e.target).hasClass('playing')){
-				document.getElementById("canvas").pauseAnimations();
-			}
-			else{
-				document.getElementById("canvas").unpauseAnimations();
-				updateSlider();
-			}
-		}
-		else if($(e.target).is('.rewind-btn')){
-			document.getElementById("canvas").setCurrentTime(0);
-			slider.val(0);
-		}
-		else if($(e.target).is('.bar')){
+
+	$('body').on('click', '.bar', function(e){
+		if(!e.defaultPrevented && !draggingKeyFrame){
 			var relPosX = $(e.target).position().left;
 			var posX = e.pageX - relPosX;
-			$(e.target).append('<div class="keyframe" data-pos="' + posX + '" style="left:'+(posX-5)+'px;"></div>');
-			allowDrag();
+			currentKeyFrame = posX;
+			currentTrack = $(this).closest('.clearfix').data('trackid');
+			createKeyFrame(currentTrack, posX);
+		}
+		allowDrag();
+	});
+
+	$('.layer-details-inner input').blur(function(e){
+		console.log('SAVE KEYFRAME');
+		editKeyFrame(currentTrack, currentKeyFrame);
+	});
+
+	$('body').on('click', '.keyframe', function(e){
+		e.preventDefault();
+		if(!draggingKeyFrame) {		
+			$('.keyframe').removeClass('selected');
+			$(this).addClass('selected');
+			currentKeyFrame = $(this).data('pos');
+			currentTrack = $(this).closest('.clearfix').data('trackid');
+			console.log(currentTrack);
+			populateDetails(currentTrack, currentKeyFrame);
+			$('.layer-details-inner').removeClass('hidden');
 		}
 	});
+
+	$('body').on('drag', '.keyframe', function(e){
+		draggingKeyFrame = true;
+	});
+
+	$('body').on('mouseup', '.keyframe', function(e){
+		e.preventDefault();
+		draggingKeyFrame = false;
+	});
+
 
 	$('#project-width').blur(function(){
 		var w = $(this).val()
@@ -233,49 +271,6 @@ $(function(){
 	// 	$('#layer-opacity').val();
 	// }
 
-	function updateAnimation(){
-		var currentSlide = 0;
-		var id = 400;
-
-
-		var g = $('#'+id);
-		var anim = g.children('animate, animateTransform, animateColor');
-		anim.sort(function(a, b){
-			return (parseInt(b.attr('dur').replace('s', ''))+parseInt(b.attr('begin').replace('s', '')))-(parseInt(a.attr('dur').replace('s', ''))+parseInt(a.attr('begin').replace('s', '')));
-		});
-		var initial = g;
-		
-		if(currentSlide = 0){
-			initial.setAttribute('fill', $('#layer-fg').val());
-			initial.setAttribute('stroke', $('#layer-bg').val());
-			initial.setAttribute('width', $('#layer-w').val());
-			initial.setAttribute('height', $('#layer-h').val());
-			initial.setAttribute('opacity', $('#layer-opacity').val());
-			initial.setAttribute('scale', $('#layer-scale').val());
-			initial.setAttribute('stroke-width', $('#layer-weight').val());
-			initial.setAttribute('transform', 'translate('+$('#layer-x').val()+' '+$('#layer-y').val()+') rotate('+$('#layer-rotation').val()+')');
-		}
-	}
-
-	// $('#layer-fg').val()
-	// $('#layer-bg').val()
-	// $('#layer-w').val()
-	// $('#layer-h').val()
-	// $('#layer-opacity').val()
-	// $('#layer-scale').val()
-	// $('#layer-weight').val()
-
-
-	// $('#layer-rotation').val()
-	// // $('#layer-x').val()
-	// // $('#layer-y').val()
-
-
-	// // $('#layer-filter').val()
-	// $('#layer-easing').val()
-
-	// }
-
 
 
 	// animate
@@ -289,7 +284,6 @@ $(function(){
 	// type
 	// repeatCount
 
-
 	$('#project-title-input').click(function(){
 		$(this).select();
 	})
@@ -298,7 +292,6 @@ $(function(){
 		if($(this).val() == "")
 			$(this).val("Project 1");
 	})
+
 	setupScrub();
-	buildLayers(svg);
-	allowDrag();
 });

@@ -350,12 +350,17 @@ footer{
 		}
 	.keyframe{
 		border-radius: 50%;
-		height:10px;
-		width:10px;
+		height:16px;
+		width:16px;
 		background-color:#fff;
 		cursor: pointer;
 		position: absolute;
-		top:25px;		
+		top:20px;	
+		left: -8px;	
+	}
+
+	.keyframe.selected {
+		border: 1px solid blue;
 	}
 
 	.layer-details{
