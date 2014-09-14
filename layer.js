@@ -170,7 +170,8 @@ function recalculateAnimations(trackID) {
 	function pTs(pos){
 		return totalDuration * (pos / totalWidth);
 	}
-
+	var elX = el.getBBox().width/2;
+	var elY = el.getBBox().height/2;
 	console.log('Timing test');
 	console.log('total:'+totalDuration);
 	console.log('track:'+trackDuration);
@@ -201,8 +202,8 @@ function recalculateAnimations(trackID) {
 			        			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
 			        			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
 			        			anim.setAttribute('type', 'rotate');
-			        			anim.setAttribute('from', fields[j][1]+' 100 100'/*parseInt(fields[j][1])*/);
-			        			anim.setAttribute('to', kfa["rotate"]+' 100 100'/*kfa["rotate"]*/);
+			        			anim.setAttribute('from', fields[j][1]+' '+elX+' '+elY/*parseInt(fields[j][1])*/);
+			        			anim.setAttribute('to', kfa["rotate"]+' '+elX+' '+elY/*kfa["rotate"]*/);
 			        			anim.setAttribute('onend', 'animationReset("' + el.getAttribute('id') + '", "' + anim.getAttribute('type') +  '", "'+ anim.getAttribute('to')+'")');
 			        			el.appendChild(anim);
 			        			console.log('appended animation');
