@@ -1,4 +1,4 @@
-$.fn.draggable = function(){
+$.fn.draggable = function(){ // todo update keframes positions
     var $this = this,
     ns = 'draggable_'+(Math.random()+'').replace('.',''),
     mm = 'mousemove.'+ns,
