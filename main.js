@@ -1,3 +1,4 @@
+
 $.fn.draggable = function(){
     var $this = this,
     ns = 'draggable_'+(Math.random()+'').replace('.',''),
@@ -183,6 +184,11 @@ $(function(){
 		$('#slider-container,#ticker-container').width($('body').width()-$('.layer-details').width());
 	});
 
+	$('.layer-details input').keypress(function(e){
+		if(e.keyCode == 13)
+			editKeyFrame(currentTrack, currentKeyFrame);
+	});
+
 	$('.play-btn').click(function(e){
 		if($(e.target).hasClass('playing')){
 			document.getElementById("canvas").pauseAnimations();
@@ -205,7 +211,12 @@ $(function(){
 	});
 
 	$('body').on('click', '.bar', function(e){
-		if(!e.defaultPrevented && !draggingKeyFrame){
+		console.log(e);
+		console.log(e.isDefaultPrevented());
+		console.log(draggingKeyFrame);
+		if($(e.currentTarget).hasClass('.keyframe'))
+			return;
+		if(!e.isDefaultPrevented()){
 			var relPosX = $(e.target).position().left;
 			var posX = e.pageX - relPosX;
 			currentKeyFrame = posX;
@@ -258,6 +269,7 @@ $(function(){
 			scale -= scale*.1;
 		}
 	});
+
 	$(document).keypress(function(e){
 		if(!$(e.target).is('input:focus') && e.which == 32){
 			e.preventDefault();
@@ -271,6 +283,7 @@ $(function(){
 			return false;
 		}
 	});
+
 	function updateCanvasDimensionsFromDropdown(){
 		var dims = $('#project-frame').data('value').split(',');
 		if(dims[0]>0 && dims[1]>0){

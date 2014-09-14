@@ -35,11 +35,12 @@ function editKeyFrame(trackID, pos){
 	console.log(pos);
 	console.log(tracks[trackID]);
 	var kf = findKeyFrameByPos(tracks[trackID].keyframes, pos);
+	console.log(kf);
 	if(kf == -1){
 		console.error('KeyFrame not found');
 		return
 	}
-
+	kf.attr = {};
 	kf.attr['fill'] = $('#layer-fg').val();
 	kf.attr['stroke'] = $('#layer-bg').val();
 	kf.attr['width'] = $('#layer-w').val();
@@ -78,9 +79,6 @@ function deleteKeyFrame(trackID, pos) {
 	recalculateAnimations(trackID);
 }
 
-function recalculateAnimations(trackID) {
-
-}
 
 function populateDetails(trackID, pos) {
 	var kf = findKeyFrameByPos(tracks[trackID].keyframes, pos);
@@ -107,6 +105,53 @@ function findKeyFrameByPos(ray, pos) {
 		if(ray[i].pos == pos) return ray[i]
 	}
 	return -1;
+}
+
+
+function recalculateAnimations(trackID) {
+	console.log('recalc Animations');
+	var keyFrames = tracks[trackID].keyframes;
+	keyFrames = keyFrames.sort(function(a, b){
+		return (parseInt(a.pos) - parseInt(b.pos));
+	});
+	var el = tracks[trackID].el;
+	var totalDuration = $('#project-duration').val();
+	var totalWidth = $('#ticket-container').children().length * $('#ticker-container').children().get(0).width;
+	var trackWidth = $('.track[data-trackid="'+trackID+'"]').find('.bar').width;
+	var trackDuration = (trackWidth/totalWidth) * totalDuration;
+	console.log(window.y = el);
+	$(el).find('animate, animateTransform, animateColor').remove();
+
+
+	// variable, previous value, previous time in seconds
+	// todo may not be in seconds
+	var fields = [['fill', null , -1], ['stroke', null , -1], ['width', null , -1], ['height', null , -1], ['opacity', null , -1], ['stroke-width', null , -1], ['scale', null , -1], ['x', null , -1], ['y', null , -1], ['rotate', null , -1]];
+	for(var i = 0; i < keyFrames.length; i++){
+		var kf = keyFrames[i];
+		var kfa = kf.attr;
+
+		for(var j = 0; j < keyFrames[i].length; j++){
+			if(kfa.hasOwnProperty(fields[j][0])){
+				if(fields[j][2] != -1){
+					// Create animation dawg.
+					switch(fields[j][0]) {
+					    case "rotate":
+					        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
+		        			anim.setAttribute('attributeName', 'transform');
+		        			anim.setAttribute('begin', parseInt(fields[j][2])+'s');
+		        			anim.setAttribute('dur', parseInt(fields[j][2]-kf[pos])+'s');
+		        			anim.setAttribute('type', 'rotate');
+		        			anim.setAttribute('from', parseInt(fields[j][1]));
+		        			anim.setAttribute('to', kfa["rotate"]);
+		        			el.appendChild(anim);
+					        break;
+					}
+				}
+				fields[j][1] = kfa[fields[0]];
+				fields[j][2] = kf[pos];
+			}
+		}
+	}
 }
 
 // kf.setAttribute('fill', $('#layer-fg').val());
