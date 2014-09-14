@@ -1,5 +1,4 @@
-// for future keyframe draggability
-/*$.fn.draggable = function(){
+$.fn.draggable = function(){
     var $this = this,
     ns = 'draggable_'+(Math.random()+'').replace('.',''),
     mm = 'mousemove.'+ns,
@@ -26,16 +25,17 @@
             $this.css({left: ev.pageX - adjX - offset.x - $('.timeline').css('padding-left').replace('px','')});
         });
         $w.on(mu, function(){
-        	if($this.hasClass('start')){
-        		console.log($this.parent().css('margin-left').replace('px','')+ev.pageX - adjX - $this.data(ns).x - $('.timeline').css('padding-left').replace('px','')+'px');
-        		$this.parent().css('background-color','green').css('margin-left',$this.parent().css('margin-left')+ev.pageX - adjX - $this.data(ns).x - $('.timeline').css('padding-left').replace('px','')+'px');
+        	if($this.hasClass('track')){
+        		// track dragged, call handler
+        		// to do
+        		
         	}
             $w.off(mm + ' ' + mu).removeData(ns);
         });
     });
 
     return this;
-};*/
+};
 
 var animationDuration = 40; // seconds
 var animationWidth = 500; // px
@@ -45,6 +45,7 @@ var currentKeyFrame = null;
 var currentTrack = null;
 
 var draggingKeyFrame = false;
+var draggingTrack = false;
 
 var tracks = {};
 var scale = 1; // unitless, scale of canvas
@@ -259,6 +260,7 @@ $(function(){
 	});
 	$(document).keypress(function(e){
 		if(!$(e.target).is('input:focus') && e.which == 32){
+			e.preventDefault();
 			if($('.play-btn').hasClass('playing')){
 				document.getElementById("canvas").pauseAnimations();
 			}

@@ -468,8 +468,10 @@ footer{
 	.bars{margin-top:40px;}
 	.bars>div{
 		padding:20px 0;
-		border-bottom:1px solid #fff;
+		/*border-bottom:1px solid #fff;*/
 		clear:both;
+		position: relative;
+		left:0;
 	}
 		.bars>div>div{
 			width:300px;
