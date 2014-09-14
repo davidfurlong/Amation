@@ -61,7 +61,7 @@ function editKeyFrame(trackID, pos){
 function createKeyFrame(trackID, pos, el) {
 
 	$('.selected').removeClass('selected');
-	var newKeyFrame = $('<div class="keyframe selected" data-pos="' + pos + '" style="left:'+(pos-5)+'px;"></div>');
+	var newKeyFrame = $('<div class="keyframe selected" data-pos="' + pos + '" style="left:'+(pos-8)+'px;"></div>');
 	tracks[trackID].keyframes.push(
 		{
 			"pos": pos, // acts like an id
