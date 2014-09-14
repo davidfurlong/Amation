@@ -7,7 +7,18 @@ html, body {
 }
 h1,h2,h3,h4,h5,h6{
 	font-weight:normal;
+	margin: 0;
 }
+
+h1, h1 input[type="text"]{
+	font-size:20pt;
+	margin-bottom: 20px;
+}
+
+h2 {
+	margin-bottom: 20px;
+}
+
 input[type="range"] {
   -webkit-appearance: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
@@ -145,6 +156,20 @@ button:focus{
 	outline:0;
 	border:1px solid rgb(51,255,99);
 }
+button{
+	font-family: 'Inconsolata', sans-serif;
+	border:none;
+	border-radius: 2;
+	background-color:#000;
+	padding: 10px;
+	color:#fff;
+	text-align: center;
+	width: 100%;
+	cursor: pointer;
+	height: 40px;
+	font-size: 13px;
+}
+
 button.primary{
 	background-color:#33FF63;
 	color:#000;
@@ -194,7 +219,6 @@ button{
 	width: 100%;
 	cursor: pointer;
 }
-
 input.full{
 	padding-left:10px;
 	width:74px;
