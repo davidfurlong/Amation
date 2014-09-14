@@ -9,33 +9,60 @@ $.fn.draggable = function(){
     adjX = 0, adjY = 0;
 
     $this.mousedown(function(ev){
-        var pos = $this.offset();
-        if (isFixed) {
-            adjX = $w.scrollLeft(); adjY = $w.scrollTop();
-        }
-        var ox = (ev.pageX - pos.left), oy = (ev.pageY - pos.top);
-        $this.data(ns,{ x : ox, y: oy });
-        $w.on(mm, function(ev){
-            ev.preventDefault();
-            ev.stopPropagation();
-            if (isFixed) {
-                adjX = $w.scrollLeft(); adjY = $w.scrollTop();
-            }
-            var offset = $this.data(ns);
-            // $this.css({left: ev.pageX - adjX - offset.x, top: ev.pageY - adjY - offset.y});
-            $this.css({left: ev.pageX - adjX - offset.x - $('.timeline').css('padding-left').replace('px','')});
-        });
-        $w.on(mu, function(){
-        	if($this.hasClass('track')){
-        		// track dragged, call handler
-        		// to do
-        		
-        	}
-            $w.off(mm + ' ' + mu).removeData(ns);
-        });
+    	if(!$(ev.target).is('.width-handle')){
+	        var pos = $this.offset();
+	        if (isFixed) {
+	            adjX = $w.scrollLeft(); adjY = $w.scrollTop();
+	        }
+	        var ox = (ev.pageX - pos.left), oy = (ev.pageY - pos.top);
+	        $this.data(ns,{ x : ox, y: oy });
+	        $w.on(mm, function(ev){
+	            ev.preventDefault();
+	            ev.stopPropagation();
+	            if (isFixed) {
+	                adjX = $w.scrollLeft(); adjY = $w.scrollTop();
+	            }
+	            var offset = $this.data(ns);
+	            // $this.css({left: ev.pageX - adjX - offset.x, top: ev.pageY - adjY - offset.y});
+	            $this.css({left: ev.pageX - adjX - offset.x - $('.timeline').css('padding-left').replace('px','')});
+	        });
+	        $w.on(mu, function(){
+	        	if($this.hasClass('track')){
+	        		// track dragged, call handler
+	        		// to do
+	        		
+	        	}
+	            $w.off(mm + ' ' + mu).removeData(ns);
+	        });
+	    }
     });
 
     return this;
+};
+
+$.fn.dragWidth = function(){
+	var $this = this;
+    ns = 'draggableWidth_'+(Math.random()+'').replace('.',''),
+    mm = "mousemove."+ns,
+    mu = "mouseup."+ns;
+ 	$this.mousedown(function(ev){
+ 		var pos = $this.offset();
+ 		var ox = (ev.pageX - pos.left), oy = (ev.pageY - pos.top);
+ 		$this.data(ns,{ x: ox, y: oy});
+ 		$this.data('origWidth',$this.parent().width());
+ 		$(window).on(mm, function(ev){
+ 			ev.preventDefault();
+ 			ev.stopPropagation();
+ 			var offset = $this.data(ns);
+ 			var relPos = $this.parent().parent().css('left').replace('px','')!=='auto' ? $this.parent().parent().css('left').replace('px','') : 0;
+ 			$this.parent().width( ev.pageX - offset.x - $('.timeline').css('padding-left').replace('px','') - relPos);
+ 		});
+
+        $(window).on(mu, function(){
+            $(window).off(mm + ' ' + mu).removeData(ns);
+        });
+ 	});
+	return this;
 };
 
 var animationDuration = 40; // seconds

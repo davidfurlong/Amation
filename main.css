@@ -479,6 +479,7 @@ footer{
 			height:60px;
 			float:left;
 			position: relative;
+			cursor: pointer;
 		}
 			.bars hr{
 				width:100%;
@@ -486,6 +487,15 @@ footer{
 				background-color:#fff;
 				border:none;
 				margin:30px 0 0 0;
+			}
+			.bars .width-handle{
+				position: absolute;
+				right: -10px;
+				top: 0;
+				width:10px;
+				background-color:transparent;
+				height: 60px;
+				cursor: e-resize;
 			}
 		.bars>div>h3{
 			margin-left:20px;
