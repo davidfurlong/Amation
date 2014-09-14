@@ -247,7 +247,7 @@ $(function(){
 		if(!e.isDefaultPrevented()){
 			var relPosX = $(e.target).position().left;
 			var posX = e.pageX - relPosX;
-			currentKeyFrame = parseInt(posX-$('.layer-details').width()-80);
+			currentKeyFrame = parseInt(posX-$(this).closest('.track').position().left);
 			currentTrack = $(this).closest('.clearfix').data('trackid');
 			createKeyFrame(currentTrack, currentKeyFrame, this);
 		}
