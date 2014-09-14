@@ -525,10 +525,10 @@ footer{
 		box-sizing:border-box;
 		border-right:1px solid rgba(255,255,255,0.6);
 	}
-	.layer-title{
+	.layer-title-container{
 		float:left;
 	}
-		.layer-title span{
+		.layer-title-container span{
 			background-color: #FF33E2;
 			width: 15px;
 			height: 15px;
@@ -536,6 +536,14 @@ footer{
 			float: left;
 			margin: 7px 10px 0 0;
 		}
+			.layer-title-container span.layer-title{
+				background-color: transparent;
+				width: auto;
+				height: auto;
+				display: inline;
+				float: none;
+				margin: auto;
+			}
 	.layer-toolbar{
 		float: right;
 	}

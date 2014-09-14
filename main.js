@@ -106,13 +106,14 @@ $(function(){
 		var doc = parser.parseFromString(s, "image/svg+xml");
 		var svgParsed = $($(doc).find('svg')[0]).children();
 		var newG = document.createElementNS("http://www.w3.org/2000/svg", "g");
-		var trackID = (new Date).getTime()
+		var trackID = (new Date).getTime();
 		newG.id = trackID;
 		newG.className = "vector-group";
 		var obj = {
 			"el": newG,
 			"keyframes": [],
-			"animations": []
+			"animations": [],
+			"layerName": fileName.replace('.svg','')
 		}
 		tracks[trackID] = obj;
 		for(var i = 0; i < svgParsed.length; i ++){
@@ -262,17 +263,28 @@ $(function(){
 			currentTrack = $(this).closest('.clearfix').data('trackid');
 			console.log(currentTrack);
 			populateDetails(currentTrack, currentKeyFrame);
-			$('.layer-title').html('<span style="background-color:' + $(e.target).parent().data('color') + ';"></span>' + $(e.target).parent().parent().find('.layer-name').html());
+			$('.layer-title-container').html('<span style="background-color:' + $(e.target).parent().data('color') + ';"></span><span class="layer-title">' + $(e.target).parent().parent().find('.layer-name').html() + '</span>');
 			$('.layer-details-inner').removeClass('hidden');
 		}
 	});
 
 	$('body').on('click', '.remove-layer-btn', function(e){
-		// remove a keyframe
-		removeKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame);
-		var el = findKeyFrameByPos(tracks.currentTrack.keyframes, currentKeyFrame)
-		tracks.currentTrack.keyframes[currentKeyFrame][el].remove();
-		// todo
+		if($('.layer-title').html()!='(empty)'){
+			$.each(tracks,function(i,v){
+				console.log(v.layerName,$('.layer-title').html());
+				if(v.layerName == $('.layer-title').html()){
+					delete tracks[i];
+					document.getElementById(i).remove();
+				}
+			});
+			$('.track').each(function(i,v){
+				console.log($(v).find('.layer-name').html(),$('.layer-title').html());
+				if($(v).find('.layer-name').html() == $('.layer-title').html()){
+					$(v).remove();
+				}
+			});
+			$('.layer-title-container').html('<span class="layer-title">(empty)</span>');
+		}
 	});
 	$('body').click(function(e){
 		if($(e.target).is('.dropdown')){
@@ -318,6 +330,10 @@ $(function(){
 			// delete key
 			$('.selected.keyframe').remove();
 			// todo david
+			// remove a keyframe
+			removeKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame);
+			var el = findKeyFrameByPos(tracks.currentTrack.keyframes, currentKeyFrame)
+			tracks.currentTrack.keyframes[currentKeyFrame][el].remove();
 		}
 	});
 
