@@ -1,4 +1,5 @@
-$.fn.draggable = function(){
+// for future keyframe draggability
+/*$.fn.draggable = function(){
     var $this = this,
     ns = 'draggable_'+(Math.random()+'').replace('.',''),
     mm = 'mousemove.'+ns,
@@ -34,7 +35,7 @@ $.fn.draggable = function(){
     });
 
     return this;
-};
+};*/
 
 var animationDuration = 40; // seconds
 var animationWidth = 500; // px
@@ -71,7 +72,7 @@ $(function(){
 	    fileupload = document.getElementById('upload');
 
 
-	function processSvg(s) {
+	function processSvg(s,fileName) {
 		var parser = new DOMParser();
 		var doc = parser.parseFromString(s, "image/svg+xml");
 		var svgParsed = $($(doc).find('svg')[0]).children();
@@ -90,7 +91,7 @@ $(function(){
 		}
 		$('#canvas').append(newG);
 
-		createTrack(trackID);
+		createTrack(trackID,fileName);
 		createKeyFrame(trackID, 0);
 	}
 
@@ -100,7 +101,7 @@ $(function(){
 	    reader.onload = function (event) {
 	      var base64Svg = event.target.result;
 	      base64Svg = base64Svg.replace('data:image/svg+xml;base64,', '');
-	      processSvg(decode_base64(base64Svg));
+	      processSvg(decode_base64(base64Svg),file.name);
 	    };
 
 	    reader.readAsDataURL(file);
@@ -155,7 +156,7 @@ $(function(){
 	function allowDrag(){
 		$('.keyframe').each(function(i,v){
 			if(!$(v).hasClass('draggable')){
-				$(v).addClass('draggable').draggable();
+				$(v).addClass('draggable');//.draggable();
 			}
 		});
 		return true;
