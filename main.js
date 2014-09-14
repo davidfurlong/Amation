@@ -247,7 +247,7 @@ $(function(){
 		if(!e.isDefaultPrevented()){
 			var relPosX = $(e.target).position().left;
 			var posX = e.pageX - relPosX;
-			currentKeyFrame = parseInt(posX-$('.layer-details').width()-50);
+			currentKeyFrame = parseInt(posX-$('.layer-details').width()-80);
 			currentTrack = $(this).closest('.clearfix').data('trackid');
 			createKeyFrame(currentTrack, currentKeyFrame, this);
 		}
@@ -326,7 +326,8 @@ $(function(){
 			}
 			return false;
 		}
-		else if(e.which == 8){
+		else if(e.which == 8 && !$(e.target).is('input:focus')){
+			e.preventDefault();
 			// delete key
 			$('.selected.keyframe').remove();
 			// todo david

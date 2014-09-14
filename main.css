@@ -22,7 +22,7 @@ h2 {
 input[type="range"] {
   -webkit-appearance: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-  width: 100%;
+  width: calc(100% - 15px);
   height: 20px;
   margin: 0;
   border: none;
@@ -456,8 +456,18 @@ footer{
 	#ticker-container span{
 		display:block;
 		float:left;
-		border-left:1px solid #fff;
 		box-sizing:border-box;
+		color: #ddd;
+		font-size: 10px;
+		padding-left: 1px;
+	}
+	#ticker-container {
+		padding-bottom: 2px;
+		border-bottom: 1px solid white;
+		background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAGCAYAAADkOT91AAAAGUlEQVQIW2NkQAOMZAj8BwJGIIBpZUQXAAC5qwgHE3+U0QAAAABJRU5ErkJggg==');
+		background-repeat: repeat-x;
+		background-position: 0px 8px;
+		background-size: 4px 6px;
 	}
 	#slider-container{
 		height:100%;
@@ -509,12 +519,12 @@ footer{
 		background-color: #fff;
 		cursor: pointer;
 		position: absolute;
-		top: 21px;	
+		top: 22px;	
 		left: 0;
 	}
 
 	.keyframe.selected {
-		border: 1px solid blue;
+		border: 2px solid black;
 	}
 	.layer-details{
 		background-color:rgba(255,255,255,0.1);

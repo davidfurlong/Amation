@@ -32,9 +32,9 @@ function setupScrub() {
 function buildTicker(){
 	$('#ticker-container').html('');
 	var width = $('#slider').width();
-	var duration = $('#project-duration').val();
+	var duration = parseInt($('#project-duration').val())+1;
 	for(var i=0; i<duration; i++){
-		$('#ticker-container').append('<span style="width:' + Math.floor(width/duration) + 'px;">' + i + 's</span>');
+		$('#ticker-container').append('<span style="width:' + Math.floor(width/(duration)) + 'px;">' + i + 's</span>');
 	}
 }
 
