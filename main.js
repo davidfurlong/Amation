@@ -42,7 +42,7 @@ $.fn.draggable = function(){
 var animationDuration = 40; // seconds
 var animationWidth = 500; // px
 var animationHeight = 400; // px
-
+var scale = 1; // unitless, scale of canvas
 
 
 $(function(){
@@ -206,6 +206,14 @@ $(function(){
 		}
 		else if($(e.target).is('#loop-btn')){
 			$('#loop-btn').toggleClass('active');
+		}
+		else if($(e.target).is('.zoom-in')){
+			$('#canvas-center').css('transform','scale(' + ( scale + (scale*.1) ) + ')');
+			scale += scale*.1;
+		}
+		else if($(e.target).is('.zoom-out')){
+			$('#canvas-center').css('transform','scale(' + ( scale - (scale*.1) ) + ')');
+			scale -= scale*.1;
 		}
 	});
 	$(document).keypress(function(e){
