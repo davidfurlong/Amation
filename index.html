@@ -18,7 +18,7 @@
 					<h3><span></span>Playground</h3>
 				</div>
 				<h1 class="project-title"><input id="project-title-input" type="text" value="Project 1"></h1>
-				<div class="project-options">
+				<div class="project-options clearfix">
 					<div>
 						<label for="project-frame">canvas:</label>
 						<input type="text" id="project-frame" name="project-frame" class="dropdown" data-value="wInPx,hInPx">
@@ -36,36 +36,49 @@
 							</ul>
 						</div>
 					</div>
+					<div class="button-inside">
+						<button id="upload-btn">import</button>
+					</div>
+					<div class="two-up">
+						<div>
+							<label for="project-w">w:</label>
+							<input type="text" id="project-w" name="project-w" value="800">
+							<label for="project-w" class="units">px</label>
+						</div>
+						<div>
+							<label for="project-h">h:</label>
+							<input type="text" id="project-h" name="project-h" value="600">
+							<label for="project-h" class="units">px</label>
+						</div>
+					</div>
+					<div class="button-inside">
+						<button id="save-btn" class="primary">save</button>
+					</div>
 					<div>
 						<label for="project-duration">duration:</label>
 						<input type="text" id="project-duration" name="project-duration" value="10">
 						<label for="project-duration" class="units">s</label>
 					</div>
-					<div>
-						<label for="project-width">cavnas w:</label>
-						<input type="text" id="project-width" name="project-width" value="800">
-						<label for="project-width" class="units">px</label>
-					</div>
-					<div class="input-btn">
-						<button id="loop-btn">loop</button>
-					</div>
-					<div>
-						<label for="project-height">canvas h:</label>
-						<input type="text" id="project-height" name="project-height" value="600">
-						<label for="project-height" class="units">px</label>
-					</div>
-					<div class="button-container">
-						<div class="clearfix">
-							<button id="upload-btn" class="zoom-in">import SVGs</button>
-						</div>
-						<div class="clearfix">
-							<button id="save-btn" class="primary zoom-out">save</button>
+				</div>
+				<div class="canvas-controls clearfix">
+					<div class="col-4">
+						<div class="input-btn toggle skip-down">
+							<button id="loop-btn">loop</button>
 						</div>
 					</div>
-					<div class="button-container">
-						<div>
-							<button class="play-btn playing"></button>
+					<div class="col-4">
+						<div class="input-btn">
+							<button class="zoom-in">+</button>
 						</div>
+						<div class="input-btn">
+							<button class="zoom-out">-</button>
+						</div>
+					</div>
+					<div class="col-4">
+						<button class="stop-btn"></button>
+					</div>
+					<div class="col-4">
+						<button class="play-btn"></button>
 					</div>
 				</div>
 			</div>

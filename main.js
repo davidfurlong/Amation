@@ -181,9 +181,10 @@ $(function(){
 				updateSlider();
 			}
 		}
-		else if($(e.target).is('.rewind-btn')){
+		else if($(e.target).is('.stop-btn')){
 			document.getElementById("canvas").setCurrentTime(0);
 			slider.val(0);
+			document.getElementById("canvas").pauseAnimations();
 		}
 		else if($(e.target).is('.bar')){
 			var relPosX = $(e.target).position().left;
@@ -231,21 +232,21 @@ $(function(){
 	function updateCanvasDimensionsFromDropdown(){
 		var dims = $('#project-frame').data('value').split(',');
 		if(dims[0]>0 && dims[1]>0){
-			$('#project-width').val(dims[0]);
-			$('#project-height').val(dims[1]);
+			$('#project-w').val(dims[0]);
+			$('#project-h').val(dims[1]);
 			$('#canvas,#canvas-center').width(dims[0]);
 			$('#canvas').height(dims[1]);
 		}
 	}
 	function updateCanvasDimensions(){
-		var dims = [$('#project-width').val(), $('#project-height').val()];
+		var dims = [$('#project-w').val(), $('#project-h').val()];
 		if(dims[0]>0 && dims[1]>0){
 			$('#project-frame').data('value',dims[0]+','+dims[1]).val('custom');
 			$('#canvas,#canvas-center').width(dims[0]);
 			$('#canvas').height(dims[1]);
 		}
 	}
-	$('#project-height,#project-width').on("keyup",function(e){
+	$('#project-h,#project-w').on("keyup",function(e){
 		updateCanvasDimensions();
 	});
 
