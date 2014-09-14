@@ -219,9 +219,9 @@ $(function(){
 		if(!e.isDefaultPrevented()){
 			var relPosX = $(e.target).position().left;
 			var posX = e.pageX - relPosX;
-			currentKeyFrame = posX;
+			currentKeyFrame = parseInt(posX);
 			currentTrack = $(this).closest('.clearfix').data('trackid');
-			createKeyFrame(currentTrack, posX);
+			createKeyFrame(currentTrack, currentKeyFrame);
 		}
 		allowDrag();
 	});
@@ -241,7 +241,9 @@ $(function(){
 
 	$('body').on('click', '.remove-keyframe-btn', function(e){
 		// remove a keyframe
-		console.log('keyframe removal still needs to be implemented');
+		removeKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame);
+		var el = findKeyFrameByPos(tracks.currentTrack.keyframes, currentKeyFrame)
+		tracks.currentTrack.keyframes[currentKeyFrame][el].remove();
 	});
 	$('body').click(function(e){
 		if($(e.target).is('.dropdown')){

@@ -49,7 +49,7 @@ function editKeyFrame(trackID, pos){
 	kf.attr['stroke-width'] = $('#layer-weight').val();
 	kf.attr['x'] = $('#layer-x').val();
 	kf.attr['y'] = $('#layer-y').val();
-	kf.attr['rotate'] = $('#layer-rotate').val();
+	kf.attr['rotate'] = $('#layer-rotation').val();
 	// kf.attr['transform'] = 'translate('+$('#layer-x').val()+' '+$('#layer-y').val()+') rotate('+$('#layer-rotation').val()+')';
 	
 	recalculateAnimations(trackID);
@@ -80,7 +80,11 @@ function deleteKeyFrame(trackID, pos) {
 
 
 function populateDetails(trackID, pos) {
+	console.log(tracks[trackID].keyframes);
 	var kf = findKeyFrameByPos(tracks[trackID].keyframes, pos);
+	console.log(trackID);
+	console.log(pos);
+	
 	if(kf == -1){
 		console.error('KeyFrame not found');
 		return
@@ -95,33 +99,46 @@ function populateDetails(trackID, pos) {
 		$('#layer-weight').val(kf.attr['stroke-width'] || "");
 		$('#layer-x').val(kf.attr['x'] || "0");
 		$('#layer-y').val(kf.attr['y'] || "0");
-		$('#layer-rotate').val(kf.attr['rotate'] || "0");
+		$('#layer-rotation').val(kf.attr['rotate'] || "0");
 	}
 }
 
-function findKeyFrameByPos(ray, pos) {
+function removeKeyFrameByPos(ray, pos) {
 	for(var i = 0; i < ray.length; ray++){
-		if(ray[i].pos == pos) return ray[i]
+		if(ray[i].pos == pos){
+			ray.splice(i, 1);
+		}
+	}
+	return -1;
+}
+
+function findKeyFrameByPos(ray, pos) {
+	console.log(typeof ray);
+	console.log(ray.length);
+	for(var k = 0; k < ray.length; k++){
+		if(ray[k].pos == pos) {
+			return ray[k];
+		}
 	}
 	return -1;
 }
 
 
 function recalculateAnimations(trackID) {
-	console.log('recalc Animations');
+	console.log('recalculating Animations');
 	var keyFrames = tracks[trackID].keyframes;
 	keyFrames = keyFrames.sort(function(a, b){
 		return (parseInt(a.pos) - parseInt(b.pos));
 	});
 	var el = tracks[trackID].el;
+	console.log(typeof el);
 	var totalDuration = $('#project-duration').val();
 	var totalWidth = $('#ticket-container').children().length * $('#ticker-container').children().get(0).width;
 	var trackWidth = $('.track[data-trackid="'+trackID+'"]').find('.bar').width;
 	var trackDuration = (trackWidth/totalWidth) * totalDuration;
-	console.log(window.y = el);
 	$(el).find('animate, animateTransform, animateColor').remove();
 
-
+	console.log(keyFrames.length);
 	// variable, previous value, previous time in seconds
 	// todo may not be in seconds
 	var fields = [['fill', null , -1], ['stroke', null , -1], ['width', null , -1], ['height', null , -1], ['opacity', null , -1], ['stroke-width', null , -1], ['scale', null , -1], ['x', null , -1], ['y', null , -1], ['rotate', null , -1]];
@@ -129,25 +146,30 @@ function recalculateAnimations(trackID) {
 		var kf = keyFrames[i];
 		var kfa = kf.attr;
 
-		for(var j = 0; j < keyFrames[i].length; j++){
+		for(var j = 0; j < fields.length; j++){
 			if(kfa.hasOwnProperty(fields[j][0])){
 				if(fields[j][2] != -1){
+					console.log('ANIMATION HAPPEN');
+					console.log(fields[j][0]);
 					// Create animation dawg.
 					switch(fields[j][0]) {
 					    case "rotate":
 					        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
 		        			anim.setAttribute('attributeName', 'transform');
-		        			anim.setAttribute('begin', parseInt(fields[j][2])+'s');
-		        			anim.setAttribute('dur', parseInt(fields[j][2]-kf[pos])+'s');
+		        			anim.setAttribute('begin', '0s'/*parseInt(fields[j][2])+'s'*/);
+		        			anim.setAttribute('dur', '10s');
+		        			// anim.setAttribute('dur', parseInt(fields[j][2]-kf['pos'])+'s');
 		        			anim.setAttribute('type', 'rotate');
-		        			anim.setAttribute('from', parseInt(fields[j][1]));
-		        			anim.setAttribute('to', kfa["rotate"]);
+		        			anim.setAttribute('from', '0 100 100'/*parseInt(fields[j][1])*/);
+		        			anim.setAttribute('to', '360 100 100'/*kfa["rotate"]*/);
 		        			el.appendChild(anim);
+		        			console.log('appended animation');
 					        break;
 					}
 				}
+				console.log('Has happened once')
 				fields[j][1] = kfa[fields[0]];
-				fields[j][2] = kf[pos];
+				fields[j][2] = kf['pos'];
 			}
 		}
 	}
