@@ -30,9 +30,16 @@
 // 	tracks[trackID].offset = elq;
 // }
 
+var colors = ['#33c1ff','#ff33e2','#ff8533','#5133ff','#ff3333'];
+var colorCounter = 0;
+
 function createTrack(trackID,fileName){
 	var bars = $(".bars");
-	var bg = '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6);
+	// var bg = '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6);
+	var bg = colors[colorCounter];
+	colorCounter++;
+	if(colorCounter == 5)
+		colorCounter = 0;
 	var newBarContainer = $('<div class="clearfix track new-bar" data-trackid="'+trackID+'"></div>');
 	var bar = $('<div class="bar" style="background-color:'+bg+';" data-color="'+bg+'"><hr><div class="width-handle new-handle"></div></div><h3 class="layer-name">'+fileName.replace('.svg','')+'</h3>');
 	newBarContainer.append(bar);
