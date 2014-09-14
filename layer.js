@@ -21,6 +21,15 @@
 // 	}
 // }
 
+// function updateTrackOffset(trackID, el){
+// 	if($(el).find('.bar').position())
+// 		var elq = $(el).find('.bar').position().left || 0;
+// 	else
+// 		var elq = 0;
+
+// 	tracks[trackID].offset = elq;
+// }
+
 function createTrack(trackID,fileName){
 	var bars = $(".bars");
 	var bg = '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6);
@@ -128,7 +137,6 @@ function findKeyFrameByPos(ray, pos) {
 	return -1;
 }
 
-
 function recalculateAnimations(trackID) {
 	console.log('recalculating Animations');
 	var keyFrames = tracks[trackID].keyframes;
@@ -136,49 +144,66 @@ function recalculateAnimations(trackID) {
 		return (parseInt(a.pos) - parseInt(b.pos));
 	});
 	var el = tracks[trackID].el;
-	console.log(typeof el);
 	var totalDuration = $('#project-duration').val();
-	var totalWidth = $('#ticket-container').children().length * $('#ticker-container').children().get(0).width;
-	var trackWidth = $('.track[data-trackid="'+trackID+'"]').find('.bar').width;
-	var trackDuration = (trackWidth/totalWidth) * totalDuration;
+	var totalWidth = parseInt($('#ticker-container').width(),10);
+	var trackWidth = parseInt($('.track[data-trackid="'+trackID+'"]').find('.bar').width(), 10);
+	var trackOffset = parseInt($('.track[data-trackid="'+trackID+'"]').find('.bar').position().left, 10);
+	
+	var trackDuration = (trackWidth / totalWidth) * totalDuration;
+	var trackStart = (trackOffset / totalWidth) * totalDuration;
 	$(el).find('animate, animateTransform, animateColor').remove();
 
-	console.log(keyFrames.length);
+	function pTs(pos){
+		return totalDuration * (pos / totalWidth);
+	}
+
+	console.log('Timing test');
+	console.log('total:'+totalDuration);
+	console.log('track:'+trackDuration);
+	console.log('start:'+trackStart);
 	// variable, previous value, previous time in seconds
 	// todo may not be in seconds
 	var fields = [['fill', null , -1], ['stroke', null , -1], ['width', null , -1], ['height', null , -1], ['opacity', null , -1], ['stroke-width', null , -1], ['scale', null , -1], ['x', null , -1], ['y', null , -1], ['rotate', null , -1]];
 	for(var i = 0; i < keyFrames.length; i++){
 		var kf = keyFrames[i];
 		var kfa = kf.attr;
-
-		for(var j = 0; j < fields.length; j++){
-			if(kfa.hasOwnProperty(fields[j][0])){
-				if(fields[j][2] != -1){
-					console.log('ANIMATION HAPPEN');
-					console.log(fields[j][0]);
-					// Create animation dawg.
-					switch(fields[j][0]) {
-					    case "rotate":
-					        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
-		        			anim.setAttribute('attributeName', 'transform');
-		        			anim.setAttribute('begin', '0s'/*parseInt(fields[j][2])+'s'*/);
-		        			anim.setAttribute('dur', '10s');
-		        			// anim.setAttribute('dur', parseInt(fields[j][2]-kf['pos'])+'s');
-		        			anim.setAttribute('type', 'rotate');
-		        			anim.setAttribute('from', '0 100 100'/*parseInt(fields[j][1])*/);
-		        			anim.setAttribute('to', '360 100 100'/*kfa["rotate"]*/);
-		        			el.appendChild(anim);
-		        			console.log('appended animation');
-					        break;
+		console.log(kf);
+		if(kfa != undefined){
+			for(var j = 0; j < fields.length; j++){
+				if(kfa.hasOwnProperty(fields[j][0])){
+					if(fields[j][2] != -1){
+						console.log('ANIMATION HAPPEN');
+						console.log(fields[j][0]);
+						// Create animation dawg.
+						switch(fields[j][0]) { // something broken
+						    case "rotate":
+						    	console.log((fields[j][2]));
+						    	console.log(pTs(kf['pos']));
+						    	console.log(kfa["rotate"]);
+						    	console.log(fields[j][1]);
+						    	console.log(typeof (fields[j][2]-pTs(kf['pos'])));
+						        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
+			        			anim.setAttribute('attributeName', 'transform');
+			        			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
+			        			anim.setAttribute('dur', (fields[j][2]-pTs(kf['pos'])).toFixed(2)+"s");
+			        			anim.setAttribute('type', 'rotate');
+			        			anim.setAttribute('from', fields[j][1]+' 100 100'/*parseInt(fields[j][1])*/);
+			        			anim.setAttribute('to', kfa["rotate"]+' 100 100'/*kfa["rotate"]*/);
+			        			el.appendChild(anim);
+			        			console.log('appended animation');
+						        break;
+						}
 					}
+					console.log('Has happened once')
+					fields[j][1] = kfa[fields[j][0]];
+					fields[j][2] = pTs(kf['pos']);
 				}
-				console.log('Has happened once')
-				fields[j][1] = kfa[fields[0]];
-				fields[j][2] = kf['pos'];
 			}
 		}
 	}
 }
+
+
 
 // kf.setAttribute('fill', $('#layer-fg').val());
 // kf.setAttribute('stroke', $('#layer-bg').val());

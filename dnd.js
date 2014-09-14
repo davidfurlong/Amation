@@ -8,9 +8,84 @@
       var DragTarget = null;
 
       var selectedElement = null;
+      var selGroup = null;
+
+      function getG(el){
+         return $(el).parentsUntil('svg').get(0);
+      }
 
       function Select(evt) {
-         
+         console.log('Select');
+         selectedElement = getG(evt.toElement);
+         if($(selectedElement).is("g") && !$(selectedElement).hasClass('selection')){
+            console.log(selectedElement);
+            $(selGroup).remove();
+            // var store = $('svg > g').className.replace('selected', '');
+            // $('svg > g').attr('class', store);
+            // $(selectedElement).attr('class','selected');
+            var bbox = selectedElement.getBBox();
+
+            selGroup = document.createElementNS("http://www.w3.org/2000/svg","g");
+            selGroup.setAttribute("class", "selection")
+            selGroup.setAttributeNS(null, 'transform', 'translate(' + bbox.x + ',' + bbox.y + ')');
+            var sel = document.createElementNS("http://www.w3.org/2000/svg","rect");
+            sel.setAttribute("stroke","white");
+            sel.setAttribute("stroke-width","1px");
+            sel.setAttribute("x", bbox.x);
+            sel.setAttribute("y", bbox.y);
+            sel.setAttribute("width", bbox.width);
+            sel.setAttribute("height", bbox.height);
+            sel.setAttribute("fill", "transparent");
+            
+
+            // top left
+            var c1 = document.createElementNS("http://www.w3.org/2000/svg","circle");
+            c1.setAttribute("stroke","white");
+            c1.setAttribute("stroke-width","1px");
+            c1.setAttribute("cx", bbox.x);
+            c1.setAttribute("cy", bbox.y);
+            c1.setAttribute("r", "5");
+            c1.setAttribute("fill", "transparent");
+            c1.setAttribute("class", "tl-circle")
+
+            // top right
+            var c2 = document.createElementNS("http://www.w3.org/2000/svg","circle");
+            c2.setAttribute("stroke","white");
+            c2.setAttribute("stroke-width","1px");
+            c2.setAttribute("cx", bbox.x+bbox.width);
+            c2.setAttribute("cy", bbox.y);
+            c2.setAttribute("r", "5");
+            c2.setAttribute("fill", "transparent");
+            c2.setAttribute("class", "tr-circle");
+
+            // bottom left
+            var c3 = document.createElementNS("http://www.w3.org/2000/svg","circle");
+            c3.setAttribute("stroke","white");
+            c3.setAttribute("stroke-width","1px");
+            c3.setAttribute("cx", bbox.x);
+            c3.setAttribute("cy", bbox.y+bbox.height);
+            c3.setAttribute("r", "5");
+            c3.setAttribute("fill", "transparent");
+
+            // bottom right
+            var c4 = document.createElementNS("http://www.w3.org/2000/svg","circle");
+            c4.setAttribute("stroke","white");
+            c4.setAttribute("stroke-width","1px");
+            c4.setAttribute("cx", bbox.x+bbox.width);
+            c4.setAttribute("cy", bbox.y+bbox.height);
+            c4.setAttribute("r", "5");
+            c4.setAttribute("fill", "transparent");
+
+            selGroup.appendChild(sel);
+            selGroup.appendChild(c1);
+            selGroup.appendChild(c2);
+            selGroup.appendChild(c3);
+            selGroup.appendChild(c4);
+            $('#canvas').append(selGroup);
+
+            $(selectedElement).remove();
+            $('#canvas').append(selectedElement);
+         }
       }
 
       function Init(evt) {
@@ -32,34 +107,38 @@
 
       function Grab(evt) {
          // find out which element we moused down on
-         var targetElement = $(evt.target).parentsUntil('svg').get(0);
-         if(evt.toElement.id == 'canvas')
-            return
-         // you cannot drag the background itself, so ignore any attempts to mouse down on it
-         if ( BackDrop != targetElement )
-         {
-            
-            //set the item moused down on as the element to be dragged
-            DragTarget = targetElement;
+         if($(evt.target).parentsUntil('svg').get(0).classList){
+            var targetElement = $(evt.target).parentsUntil('svg').get(0);
+            if(evt.toElement.id == 'canvas'){
+               console.log('trying to grab canvas');
+               return
+            }
+            // you cannot drag the background itself, so ignore any attempts to mouse down on it
+            if ( BackDrop != targetElement )
+            {
+               
+               //set the item moused down on as the element to be dragged
+               DragTarget = targetElement;
 
-            // move this element to the "top" of the display, so it is (almost)
-            //    always over other elements (exception: in this case, elements that are
-            //    "in the folder" (children of the folder group) with only maintain
-            //    hierarchy within that group
-            DragTarget.parentNode.appendChild( DragTarget );
+               // move this element to the "top" of the display, so it is (almost)
+               //    always over other elements (exception: in this case, elements that are
+               //    "in the folder" (children of the folder group) with only maintain
+               //    hierarchy within that group
+               DragTarget.parentNode.appendChild( DragTarget );
 
-            // turn off all pointer events to the dragged element, this does 2 things:
-            //    1) allows us to drag text elements without selecting the text
-            //    2) allows us to find out where the dragged element is dropped (see Drop)
-            DragTarget.setAttributeNS(null, 'pointer-events', 'none');
+               // turn off all pointer events to the dragged element, this does 2 things:
+               //    1) allows us to drag text elements without selecting the text
+               //    2) allows us to find out where the dragged element is dropped (see Drop)
+               DragTarget.setAttributeNS(null, 'pointer-events', 'none');
 
-            // we need to find the current position and translation of the grabbed element,
-            //    so that we only apply the differential between the current location
-            //    and the new location
-            var transMatrix = DragTarget.getCTM();
-            GrabPoint.x = TrueCoords.x - Number(transMatrix.e);
-            GrabPoint.y = TrueCoords.y - Number(transMatrix.f);
+               // we need to find the current position and translation of the grabbed element,
+               //    so that we only apply the differential between the current location
+               //    and the new location
+               var transMatrix = DragTarget.getCTM();
+               GrabPoint.x = TrueCoords.x - Number(transMatrix.e);
+               GrabPoint.y = TrueCoords.y - Number(transMatrix.f);
 
+            }
          }
       };
 
@@ -80,18 +159,25 @@
             // apply a new tranform translation to the dragged element, to display
             //    it in its new location
             DragTarget.setAttributeNS(null, 'transform', 'translate(' + newX + ',' + newY + ')');
+
+            if(selectedElement != null){
+
+               selGroup.setAttributeNS(null, 'transform', 'translate(' + newX + ',' + newY + ')');
+            }
          }
       };
 
 
       function Drop(evt) {
          console.log('drop');
+         console.log(evt);
          // if we aren't currently dragging an element, don't do anything
          if ( DragTarget )
          {
             // since the element currently being dragged has its pointer-events turned off,
             //    we are afforded the opportunity to find out the element it's being dropped on
-            var targetElement = evt.target;
+            var targetElement = $(evt.target).parentsUntil('svg').get(0);
+            console.log(targetElement);
 
             // turn the pointer-events back on, so we can grab this item later
             DragTarget.setAttributeNS(null, 'pointer-events', 'all');

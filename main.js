@@ -30,7 +30,8 @@ $.fn.draggable = function(){
 	        	if($this.hasClass('track')){
 	        		// track dragged, call handler
 	        		// todo david
-	        		
+	        		// console.log(window.y = $this);
+	        		// updateTrackOffset($(this).data('trackid'), this);
 	        	}
 	            $w.off(mm + ' ' + mu).removeData(ns);
 	        });
@@ -313,7 +314,7 @@ $(function(){
 		}
 	});
 
-	$(document).keyup(function(e){
+	$(document).keydown(function(e){
 		if(!$(e.target).is('input:focus') && e.which == 32){
 			// space key
 			e.preventDefault();
@@ -333,8 +334,9 @@ $(function(){
 			// todo david
 			// remove a keyframe
 			removeKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame);
-			var el = findKeyFrameByPos(tracks.currentTrack.keyframes, currentKeyFrame)
-			tracks.currentTrack.keyframes[currentKeyFrame][el].remove();
+			var el = findKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame)
+			tracks[currentTrack].keyframes[currentKeyFrame][el].remove();
+			return false;
 		}
 	});
 

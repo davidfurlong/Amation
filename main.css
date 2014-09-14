@@ -245,6 +245,24 @@ input.full{
 svg#canvas > g {
 	cursor: pointer;
 }
+svg#canvas > g:hover {
+	/* could do something */
+}
+
+.selected {
+	stroke: black;
+	stroke-width: 5px;
+}
+
+.selection-circle {
+	stroke: white;
+	stroke-width: 5px;
+}
+
+
+#canvas * {
+	pointer-events: auto;
+}
 
 /* div bgs rgba(255,255,255,0.1)  rgba(255,255,255,0.2) */
 /* borders rgba(255,255,255,0.6) */
@@ -489,6 +507,10 @@ footer{
 		height:100%;
 		position: absolute;
 		overflow:hidden;
+		margin-left: -16px;
+	}
+	.bar {
+		border-radius: 3px;
 	}
 			
 	.bars{margin-top:40px;}
