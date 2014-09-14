@@ -23,65 +23,65 @@
             // var store = $('svg > g').className.replace('selected', '');
             // $('svg > g').attr('class', store);
             // $(selectedElement).attr('class','selected');
-            var bbox = selectedElement.getBBox();
+            // var bbox = selectedElement.getBBox();
 
-            selGroup = document.createElementNS("http://www.w3.org/2000/svg","g");
-            selGroup.setAttribute("class", "selection")
-            selGroup.setAttributeNS(null, 'transform', 'translate(' + bbox.x + ',' + bbox.y + ')');
-            var sel = document.createElementNS("http://www.w3.org/2000/svg","rect");
-            sel.setAttribute("stroke","white");
-            sel.setAttribute("stroke-width","1px");
-            sel.setAttribute("x", bbox.x);
-            sel.setAttribute("y", bbox.y);
-            sel.setAttribute("width", bbox.width);
-            sel.setAttribute("height", bbox.height);
-            sel.setAttribute("fill", "transparent");
+            // selGroup = document.createElementNS("http://www.w3.org/2000/svg","g");
+            // selGroup.setAttribute("class", "selection")
+            // selGroup.setAttributeNS(null, 'transform', 'translate(' + bbox.x + ',' + bbox.y + ')');
+            // var sel = document.createElementNS("http://www.w3.org/2000/svg","rect");
+            // sel.setAttribute("stroke","white");
+            // sel.setAttribute("stroke-width","1px");
+            // sel.setAttribute("x", bbox.x);
+            // sel.setAttribute("y", bbox.y);
+            // sel.setAttribute("width", bbox.width);
+            // sel.setAttribute("height", bbox.height);
+            // sel.setAttribute("fill", "transparent");
             
 
-            // top left
-            var c1 = document.createElementNS("http://www.w3.org/2000/svg","circle");
-            c1.setAttribute("stroke","white");
-            c1.setAttribute("stroke-width","1px");
-            c1.setAttribute("cx", bbox.x);
-            c1.setAttribute("cy", bbox.y);
-            c1.setAttribute("r", "5");
-            c1.setAttribute("fill", "transparent");
-            c1.setAttribute("class", "tl-circle")
+            // // top left
+            // var c1 = document.createElementNS("http://www.w3.org/2000/svg","circle");
+            // c1.setAttribute("stroke","white");
+            // c1.setAttribute("stroke-width","1px");
+            // c1.setAttribute("cx", bbox.x);
+            // c1.setAttribute("cy", bbox.y);
+            // c1.setAttribute("r", "5");
+            // c1.setAttribute("fill", "transparent");
+            // c1.setAttribute("class", "tl-circle")
 
-            // top right
-            var c2 = document.createElementNS("http://www.w3.org/2000/svg","circle");
-            c2.setAttribute("stroke","white");
-            c2.setAttribute("stroke-width","1px");
-            c2.setAttribute("cx", bbox.x+bbox.width);
-            c2.setAttribute("cy", bbox.y);
-            c2.setAttribute("r", "5");
-            c2.setAttribute("fill", "transparent");
-            c2.setAttribute("class", "tr-circle");
+            // // top right
+            // var c2 = document.createElementNS("http://www.w3.org/2000/svg","circle");
+            // c2.setAttribute("stroke","white");
+            // c2.setAttribute("stroke-width","1px");
+            // c2.setAttribute("cx", bbox.x+bbox.width);
+            // c2.setAttribute("cy", bbox.y);
+            // c2.setAttribute("r", "5");
+            // c2.setAttribute("fill", "transparent");
+            // c2.setAttribute("class", "tr-circle");
 
-            // bottom left
-            var c3 = document.createElementNS("http://www.w3.org/2000/svg","circle");
-            c3.setAttribute("stroke","white");
-            c3.setAttribute("stroke-width","1px");
-            c3.setAttribute("cx", bbox.x);
-            c3.setAttribute("cy", bbox.y+bbox.height);
-            c3.setAttribute("r", "5");
-            c3.setAttribute("fill", "transparent");
+            // // bottom left
+            // var c3 = document.createElementNS("http://www.w3.org/2000/svg","circle");
+            // c3.setAttribute("stroke","white");
+            // c3.setAttribute("stroke-width","1px");
+            // c3.setAttribute("cx", bbox.x);
+            // c3.setAttribute("cy", bbox.y+bbox.height);
+            // c3.setAttribute("r", "5");
+            // c3.setAttribute("fill", "transparent");
 
-            // bottom right
-            var c4 = document.createElementNS("http://www.w3.org/2000/svg","circle");
-            c4.setAttribute("stroke","white");
-            c4.setAttribute("stroke-width","1px");
-            c4.setAttribute("cx", bbox.x+bbox.width);
-            c4.setAttribute("cy", bbox.y+bbox.height);
-            c4.setAttribute("r", "5");
-            c4.setAttribute("fill", "transparent");
+            // // bottom right
+            // var c4 = document.createElementNS("http://www.w3.org/2000/svg","circle");
+            // c4.setAttribute("stroke","white");
+            // c4.setAttribute("stroke-width","1px");
+            // c4.setAttribute("cx", bbox.x+bbox.width);
+            // c4.setAttribute("cy", bbox.y+bbox.height);
+            // c4.setAttribute("r", "5");
+            // c4.setAttribute("fill", "transparent");
 
-            selGroup.appendChild(sel);
-            selGroup.appendChild(c1);
-            selGroup.appendChild(c2);
-            selGroup.appendChild(c3);
-            selGroup.appendChild(c4);
-            $('#canvas').append(selGroup);
+            // selGroup.appendChild(sel);
+            // selGroup.appendChild(c1);
+            // selGroup.appendChild(c2);
+            // selGroup.appendChild(c3);
+            // selGroup.appendChild(c4);
+            // $('#canvas').append(selGroup);
 
             $(selectedElement).remove();
             $('#canvas').append(selectedElement);

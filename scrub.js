@@ -48,8 +48,15 @@ function updateSlider() {
 			$('.play-btn').addClass('playing');
 			time = (svg.getCurrentTime()/getDuration())*slider.attr('max');
 			if(time >= slider.attr('max')){
-				svg.setCurrentTime(0);
-				slider.val(0);
+				if($('#loop-btn').hasClass('active')){
+					svg.setCurrentTime(0);
+					slider.val(0);
+				}
+				else {
+					svg.pauseAnimations();
+					svg.setCurrentTime(0);
+					slider.val(0);
+				}
 			}
 			else{
 				slider.val(time);

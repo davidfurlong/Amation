@@ -30,6 +30,7 @@ $.fn.draggable = function(){
 	        	if($this.hasClass('track')){
 	        		// track dragged, call handler
 	        		// todo david
+	        		recalculateAnimations(currentTrack);
 	        		// console.log(window.y = $this);
 	        		// updateTrackOffset($(this).data('trackid'), this);
 	        	}
@@ -333,9 +334,9 @@ $(function(){
 			$('.selected.keyframe').remove();
 			// todo david
 			// remove a keyframe
-			removeKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame);
 			var el = findKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame)
-			tracks[currentTrack].keyframes[currentKeyFrame][el].remove();
+			$(el['el']).remove();
+			removeKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame);
 			return false;
 		}
 	});
