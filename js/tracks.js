@@ -221,14 +221,3 @@ function animationReset(elId, transform, value) {
 		}
 	}
 }
-
-
-
-// kf.setAttribute('fill', $('#layer-fg').val());
-// kf.setAttribute('stroke', $('#layer-bg').val());
-// kf.setAttribute('width', $('#layer-w').val());
-// kf.setAttribute('height', $('#layer-h').val());
-// kf.setAttribute('opacity', $('#layer-opacity').val());
-// kf.setAttribute('scale', $('#layer-scale').val());
-// kf.setAttribute('stroke-width', $('#layer-stroke-weight').val());
-// kf.setAttribute('transform', 'translate('+$('#layer-x').val()+' '+$('#layer-y').val()+') rotate('+$('#layer-rotation').val()+')');
