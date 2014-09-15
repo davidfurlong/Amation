@@ -1,35 +1,3 @@
-// function updateAnimation(){
-// 	var currentSlide = 0;
-// 	var id = 400;
-
-// 	var g = $('#'+id);
-// 	var anim = g.children('animate, animateTransform, animateColor');
-// 	anim.sort(function(a, b){
-// 		return (parseInt(b.attr('dur').replace('s', ''))+parseInt(b.attr('begin').replace('s', '')))-(parseInt(a.attr('dur').replace('s', ''))+parseInt(a.attr('begin').replace('s', '')));
-// 	});
-// 	var initial = g;
-
-// 	if(currentSlide = 0){
-// 		initial.setAttribute('fill', $('#layer-fg').val());
-// 		initial.setAttribute('stroke', $('#layer-bg').val());
-// 		initial.setAttribute('width', $('#layer-w').val());
-// 		initial.setAttribute('height', $('#layer-h').val());
-// 		initial.setAttribute('opacity', $('#layer-opacity').val());
-// 		initial.setAttribute('scale', $('#layer-scale').val());
-// 		initial.setAttribute('stroke-width', $('#layer-stroke-weight').val());
-// 		initial.setAttribute('transform', 'translate('+$('#layer-x').val()+' '+$('#layer-y').val()+') rotate('+$('#layer-rotation').val()+')');
-// 	}
-// }
-
-// function updateTrackOffset(trackID, el){
-// 	if($(el).find('.bar').position())
-// 		var elq = $(el).find('.bar').position().left || 0;
-// 	else
-// 		var elq = 0;
-
-// 	tracks[trackID].offset = elq;
-// }
-
 var colors = ['#33c1ff','#ff33e2','#ff8533','#5133ff','#ff3333'];
 var colorCounter = 0;
 
@@ -169,7 +137,7 @@ function animationReset(elId, transform, value) {
 		var totalWidth = parseInt($('#ticker-container').width(),10);
 		var trackWidth = parseInt($('.track[data-trackid="'+trackID+'"]').find('.bar').width(), 10);
 		var trackOffset = parseInt($('.track[data-trackid="'+trackID+'"]').find('.bar').position().left, 10);
-		
+
 		var trackDuration = (trackWidth / totalWidth) * totalDuration;
 		var trackStart = (trackOffset / totalWidth) * totalDuration;
 		$(el).find('animate, animateTransform, animateColor').remove();
