@@ -114,7 +114,7 @@ $(function(){
 		var obj = {
 			"el": newG,
 			"keyframes": [],
-			"layerName": fileName.replace('.svg','')
+			"trackName": fileName.replace('.svg','')
 		}
 		tracks[trackID] = obj;
 		for(var i = 0; i < svgParsed.length; i ++){
@@ -222,7 +222,10 @@ $(function(){
 		var s = new XMLSerializer();
 		var d = $('#canvas').get(0);
 		 var str = s.serializeToString(d);
-		window.prompt("Copy to clipboard: Ctrl+C, Enter", str);
+		 var projectTitle = $('#project-title-input').val()
+		 var blob = new Blob([str], {type: "image/svg+xml"});
+		 saveAs(blob, projectTitle+".svg");
+		// window.prompt("Copy to clipboard: Ctrl+C, Enter", str);
 	});
 
 	$('.play-btn').click(function(e){
@@ -280,8 +283,8 @@ $(function(){
 	$('body').on('click', '.remove-layer-btn', function(e){
 		if($('.layer-title').html()!='(empty)'){
 			$.each(tracks,function(i,v){
-				console.log(v.layerName,$('.layer-title').html());
-				if(v.layerName == $('.layer-title').html()){
+				console.log(v.trackName,$('.layer-title').html());
+				if(v.trackName == $('.layer-title').html()){
 					delete tracks[i];
 					document.getElementById(i).remove();
 				}

@@ -170,6 +170,8 @@ function recalculateAnimations(trackID) {
 	function pTs(pos){
 		return totalDuration * (pos / totalWidth);
 	}
+	var elCX = el.getBBox().width/2;
+	var elCY = el.getBBox().height/2;
 
 	console.log('Timing test');
 	console.log('total:'+totalDuration);
@@ -188,6 +190,7 @@ function recalculateAnimations(trackID) {
 					if(fields[j][2] != -1){
 						console.log('ANIMATION HAPPEN');
 						console.log(fields[j][0]);
+
 						// Create animation dawg.
 						switch(fields[j][0]) { // something broken
 						    case "rotate":
@@ -196,8 +199,8 @@ function recalculateAnimations(trackID) {
 			        			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
 			        			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
 			        			anim.setAttribute('type', 'rotate');
-			        			anim.setAttribute('from', fields[j][1]+' 100 100'/*parseInt(fields[j][1])*/);
-			        			anim.setAttribute('to', kfa["rotate"]+' 100 100'/*kfa["rotate"]*/);
+			        			anim.setAttribute('from', fields[j][1]+' '+elCX+' '+elCY/*parseInt(fields[j][1])*/);
+			        			anim.setAttribute('to', kfa["rotate"]+' '+elCX+' '+elCY/*kfa["rotate"]*/);
 			        			anim.setAttribute('onend', 'animationReset("' + el.getAttribute('id') + '", "' + anim.getAttribute('type') +  '", "'+ anim.getAttribute('to')+'")');
 			        			anim.setAttribute('fill', 'freeze');
 			        			el.appendChild(anim);
@@ -211,17 +214,15 @@ function recalculateAnimations(trackID) {
 	    	        			anim.setAttribute('fill', 'freeze');
 	    	        			el.appendChild(anim);
 	    	        			break;
-						    // case "y":
-	    				 //        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
-	    	    //     			anim.setAttribute('attributeType', 'XML');
-	    	    //     			anim.setAttribute('attributeName', 'y');
+						    // case "opacity":
+	    				 //        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateColor");
 	    	    //     			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
 	    	    //     			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
-	    	    //     			anim.setAttribute('from', fields[j][1]/*parseInt(fields[j][1])*/);
-	    	    //     			anim.setAttribute('to', kfa["y"]/*kfa["rotate"]*/);
+	    	    //     			anim.setAttribute('from', fields[j][1]);
+	    	    //     			anim.setAttribute('to', kfa["opacity"]);
 	    	    //     			anim.setAttribute('fill', 'freeze');
 	    	    //     			el.appendChild(anim);
-	    	    //     			break;
+
 	    	        		case "scale":
 						        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
 			        			anim.setAttribute('attributeName', 'transform');
