@@ -350,6 +350,9 @@ $(function(){
 			recalculateAnimations(currentTrack);
 			return false;
 		}
+		else if(e.which == 13 && $(e.target).is('input:focus')){
+			$(e.target).blur();
+		}
 	});
 
 	function updateCanvasDimensionsFromDropdown(){
@@ -462,4 +465,8 @@ $(function(){
 
 	allowDrag();
 	buildDropdowns();
+
+	document.getElementById("canvas").setCurrentTime(0);
+	slider.val(0);
+	document.getElementById("canvas").pauseAnimations();
 });

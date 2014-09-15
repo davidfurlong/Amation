@@ -30,14 +30,21 @@
 // 	tracks[trackID].offset = elq;
 // }
 
+var colors = ['#33c1ff','#ff33e2','#ff8533','#5133ff','#ff3333'];
+var colorCounter = 0;
+
 function createTrack(trackID,fileName){
 	var bars = $(".bars");
-	var bg = '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6);
+	// var bg = '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6);
+	var bg = colors[colorCounter];
+	colorCounter++;
+	if(colorCounter == 5)
+		colorCounter = 0;
 	var newBarContainer = $('<div class="clearfix track new-bar" data-trackid="'+trackID+'"></div>');
 	var bar = $('<div class="bar" style="background-color:'+bg+';" data-color="'+bg+'"><hr><div class="width-handle new-handle"></div></div><h3 class="layer-name">'+fileName.replace('.svg','')+'</h3>');
 	newBarContainer.append(bar);
 	bars.append(newBarContainer);
-	$('.new-bar').draggable().removeClass('new-bar');
+	$('.new-bar').removeClass('new-bar'); // .draggable().removeClass('new-bar');
 	$('.new-handle').dragWidth().removeClass('new-handle');
 }
 
@@ -170,9 +177,8 @@ function recalculateAnimations(trackID) {
 	function pTs(pos){
 		return totalDuration * (pos / totalWidth);
 	}
-	var elCX = el.getBBox().width/2;
-	var elCY = el.getBBox().height/2;
-
+	var elX = el.getBBox().width/2;
+	var elY = el.getBBox().height/2;
 	console.log('Timing test');
 	console.log('total:'+totalDuration);
 	console.log('track:'+trackDuration);
@@ -199,8 +205,8 @@ function recalculateAnimations(trackID) {
 			        			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
 			        			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
 			        			anim.setAttribute('type', 'rotate');
-			        			anim.setAttribute('from', fields[j][1]+' '+elCX+' '+elCY/*parseInt(fields[j][1])*/);
-			        			anim.setAttribute('to', kfa["rotate"]+' '+elCX+' '+elCY/*kfa["rotate"]*/);
+			        			anim.setAttribute('from', fields[j][1]+' '+elX+' '+elY/*parseInt(fields[j][1])*/);
+			        			anim.setAttribute('to', kfa["rotate"]+' '+elX+' '+elY/*kfa["rotate"]*/);
 			        			anim.setAttribute('onend', 'animationReset("' + el.getAttribute('id') + '", "' + anim.getAttribute('type') +  '", "'+ anim.getAttribute('to')+'")');
 			        			anim.setAttribute('fill', 'freeze');
 			        			el.appendChild(anim);

@@ -14,7 +14,7 @@
 		<div class="container">
 			<div class="project-details">
 				<div class="branding">
-					<h3><span></span>Amation</h3>
+					<h3><img src="logo.svg" alt="Amation logo">Amation</h3>
 				</div>
 				<h1 class="project-title"><input id="project-title-input" type="text" value="Project 1"></h1>
 				<div class="project-options clearfix">
@@ -36,7 +36,7 @@
 						</div>
 					</div>
 					<div class="button-inside">
-						<button id="upload-btn">drag & drop to import</button>
+						<button id="save-btn" class="primary">save</button>
 					</div>
 					<div class="two-up">
 						<div>
@@ -51,7 +51,7 @@
 						</div>
 					</div>
 					<div class="button-inside">
-						<button id="save-btn" class="primary">save</button>
+						<p id="upload-btn">drag & drop to import</p>
 					</div>
 					<div>
 						<label for="project-duration">duration:</label>
@@ -151,7 +151,7 @@
 					</div>
 					<div>
 						<label for="layer-stroke-weight">stroke weight:</label>
-						<input type="text" id="layer-stroke-weight" name="layer-stroke-weight" value="0">
+						<input type="text" name="layer-stroke-weight" value="0"> <!-- id="layer-stroke-weight" -->
 						<label for="layer-stroke-weight" class="units">px</label>
 					</div>
 					<div>
@@ -161,8 +161,8 @@
 					</div>
 					<div>
 						<label for="layer-easing">easing:</label>
-						<input type="text" id="layer-easing" name="layer-easing" class="dropdown">
-						<div class="dropdown-menu" data-target="layer-easing">
+						<input type="text" id="fake-id" name="layer-easing" class="dropdown"><!-- id="layer-easing" -->
+						<div class="dropdown-menu" data-target="fake-id">
 							<ul>
 								<li class="dropdown-item selected" data-value="linear">linear</li>
 								<li class="dropdown-item" data-value="ease">ease</li>
