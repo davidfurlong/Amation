@@ -8,7 +8,7 @@
 // 		return (parseInt(b.attr('dur').replace('s', ''))+parseInt(b.attr('begin').replace('s', '')))-(parseInt(a.attr('dur').replace('s', ''))+parseInt(a.attr('begin').replace('s', '')));
 // 	});
 // 	var initial = g;
-	
+
 // 	if(currentSlide = 0){
 // 		initial.setAttribute('fill', $('#layer-fg').val());
 // 		initial.setAttribute('stroke', $('#layer-bg').val());
@@ -79,11 +79,11 @@ function createKeyFrame(trackID, pos, el) {
 	$('.selected').removeClass('selected');
 	var newKeyFrame = $('<div class="keyframe selected" data-pos="' + pos + '" style="left:'+(pos-8)+'px;"></div>');
 	tracks[trackID].keyframes.push(
-		{
+	{
 			"pos": pos, // acts like an id
 			"el": newKeyFrame
 		}
-	);
+		);
 	el = el || $('[data-trackid="'+trackID+'"] .bar');
 	$(el).append(newKeyFrame);	
 }
@@ -152,37 +152,37 @@ function animationReset(elId, transform, value) {
 			var to = value.split(" ");
 			el.setAttribute('transform', 'rotate(' + to[0] + ', ' + to[1] + ', ' + to[2] + ')');
 			break;
+		}
+
+
 	}
 
+	function recalculateAnimations(trackID) {
+		console.log('recalculating Animations');
+		console.log(tracks);
+		var keyFrames = tracks[trackID || currentTrack].keyframes;
+		keyFrames = keyFrames.sort(function(a, b){
+			return (parseInt(a.pos) - parseInt(b.pos));
+		});
+		var el = tracks[trackID].el;
+		var totalDuration = $('#project-duration').val();
+		var totalWidth = parseInt($('#ticker-container').width(),10);
+		var trackWidth = parseInt($('.track[data-trackid="'+trackID+'"]').find('.bar').width(), 10);
+		var trackOffset = parseInt($('.track[data-trackid="'+trackID+'"]').find('.bar').position().left, 10);
+		
+		var trackDuration = (trackWidth / totalWidth) * totalDuration;
+		var trackStart = (trackOffset / totalWidth) * totalDuration;
+		$(el).find('animate, animateTransform, animateColor').remove();
 
-}
-
-function recalculateAnimations(trackID) {
-	console.log('recalculating Animations');
-	console.log(tracks);
-	var keyFrames = tracks[trackID || currentTrack].keyframes;
-	keyFrames = keyFrames.sort(function(a, b){
-		return (parseInt(a.pos) - parseInt(b.pos));
-	});
-	var el = tracks[trackID].el;
-	var totalDuration = $('#project-duration').val();
-	var totalWidth = parseInt($('#ticker-container').width(),10);
-	var trackWidth = parseInt($('.track[data-trackid="'+trackID+'"]').find('.bar').width(), 10);
-	var trackOffset = parseInt($('.track[data-trackid="'+trackID+'"]').find('.bar').position().left, 10);
-	
-	var trackDuration = (trackWidth / totalWidth) * totalDuration;
-	var trackStart = (trackOffset / totalWidth) * totalDuration;
-	$(el).find('animate, animateTransform, animateColor').remove();
-
-	function pTs(pos){
-		return totalDuration * (pos / totalWidth);
-	}
-	var elX = el.getBBox().width/2;
-	var elY = el.getBBox().height/2;
-	console.log('Timing test');
-	console.log('total:'+totalDuration);
-	console.log('track:'+trackDuration);
-	console.log('start:'+trackStart);
+		function pTs(pos){
+			return totalDuration * (pos / totalWidth);
+		}
+		var elX = el.getBBox().width/2;
+		var elY = el.getBBox().height/2;
+		console.log('Timing test');
+		console.log('total:'+totalDuration);
+		console.log('track:'+trackDuration);
+		console.log('start:'+trackStart);
 	// variable, previous value, previous time in seconds
 	// todo may not be in seconds
 	var fields = [['fill', null , -1], ['stroke', null , -1], ['width', null , -1], ['height', null , -1], ['opacity', null , -1], ['stroke-width', null , -1], ['scale', null , -1], ['x', null , -1], ['y', null , -1], ['rotate', null , -1]];
@@ -199,48 +199,50 @@ function recalculateAnimations(trackID) {
 
 						// Create animation dawg.
 						switch(fields[j][0]) { // something broken
-						    case "rotate":
-						        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
-			        			anim.setAttribute('attributeName', 'transform');
-			        			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
-			        			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
-			        			anim.setAttribute('type', 'rotate');
-			        			anim.setAttribute('from', fields[j][1]+' '+elX+' '+elY/*parseInt(fields[j][1])*/);
-			        			anim.setAttribute('to', kfa["rotate"]+' '+elX+' '+elY/*kfa["rotate"]*/);
-			        			anim.setAttribute('onend', 'animationReset("' + el.getAttribute('id') + '", "' + anim.getAttribute('type') +  '", "'+ anim.getAttribute('to')+'")');
-			        			anim.setAttribute('fill', 'freeze');
-			        			el.appendChild(anim);
-						        break;
-						    case "x":
-	    				        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
-	    	        			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
-	    	        			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
-	    	        			anim.setAttribute('from', fields[7][1] +","+fields[8][1]);
-	    	        			anim.setAttribute('to', kfa["x"] +","+kfa["y"]);
-	    	        			anim.setAttribute('fill', 'freeze');
-	    	        			el.appendChild(anim);
-	    	        			break;
-						    // case "opacity":
-	    				 //        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateColor");
-	    	    //     			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
-	    	    //     			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
-	    	    //     			anim.setAttribute('from', fields[j][1]);
-	    	    //     			anim.setAttribute('to', kfa["opacity"]);
-	    	    //     			anim.setAttribute('fill', 'freeze');
-	    	    //     			el.appendChild(anim);
-
-	    	        		case "scale":
-						        var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
-			        			anim.setAttribute('attributeName', 'transform');
-			        			anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
-			        			anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
-			        			anim.setAttribute('additive', 'sum');
-			        			anim.setAttribute('type', 'scale');
-			        			anim.setAttribute('from', (fields[j][1]/100).toFixed(2)/*parseInt(fields[j][1])*/);
-			        			anim.setAttribute('to', (kfa["scale"]/100).toFixed(2)/*kfa["rotate"]*/);
-			        			anim.setAttribute('fill', 'freeze');
-			        			el.appendChild(anim);
-			        			break;
+							case "rotate":
+								var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
+								anim.setAttribute('attributeName', 'transform');
+								anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
+								anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
+								anim.setAttribute('type', 'rotate');
+								anim.setAttribute('from', fields[j][1]+' '+elX+' '+elY/*parseInt(fields[j][1])*/);
+								anim.setAttribute('to', kfa["rotate"]+' '+elX+' '+elY/*kfa["rotate"]*/);
+								anim.setAttribute('onend', 'animationReset("' + el.getAttribute('id') + '", "' + anim.getAttribute('type') +  '", "'+ anim.getAttribute('to')+'")');
+								anim.setAttribute('fill', 'freeze');
+								el.appendChild(anim);
+								break;
+							case "x":
+								var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
+								anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
+								anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
+								anim.setAttribute('from', fields[7][1] +","+fields[8][1]);
+								anim.setAttribute('to', kfa["x"] +","+kfa["y"]);
+								anim.setAttribute('fill', 'freeze');
+								el.appendChild(anim);
+								break;
+							case "opacity":
+								var anim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+								anim.setAttribute('attributeName', 'opacity');
+								anim.setAttribute('attributeType', 'css');
+								anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
+								anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
+								anim.setAttribute('from', fields[j][1]);
+								anim.setAttribute('to', kfa["opacity"]);
+								anim.setAttribute('fill', 'freeze');
+								el.appendChild(anim);
+								break;
+							case "scale":
+								var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
+								anim.setAttribute('attributeName', 'transform');
+								anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
+								anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
+								anim.setAttribute('additive', 'sum');
+								anim.setAttribute('type', 'scale');
+								anim.setAttribute('from', (fields[j][1]/100).toFixed(2)/*parseInt(fields[j][1])*/);
+								anim.setAttribute('to', (kfa["scale"]/100).toFixed(2)/*kfa["rotate"]*/);
+								anim.setAttribute('fill', 'freeze');
+								el.appendChild(anim);
+								break;
 						}
 					}
 					console.log('Has happened once')

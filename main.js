@@ -214,8 +214,10 @@ $(function(){
 	});
 
 	$('.layer-details input').keypress(function(e){
-		if(e.keyCode == 13)
+		if(e.keyCode == 13){
 			editKeyFrame(currentTrack, currentKeyFrame);
+			$(e.target).blur();
+		}
 	});
 
 	$('#save-btn').click(function(e){
@@ -349,9 +351,6 @@ $(function(){
 			removeKeyFrameByPos(tracks[currentTrack].keyframes, currentKeyFrame);
 			recalculateAnimations(currentTrack);
 			return false;
-		}
-		else if(e.which == 13 && $(e.target).is('input:focus')){
-			$(e.target).blur();
 		}
 	});
 
