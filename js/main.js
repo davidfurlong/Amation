@@ -152,7 +152,7 @@ $(function(){
 	}
 
 	if (tests.dnd) { 
-	  holder.ondragover = function () { this.className = 'hover'; $('#drop-msg div').height($('body').height()-160); return false; };
+	  holder.ondragover = function () { this.className = 'hover'; return false; };
 	  holder.ondragend = function () { this.className = ''; return false; };
 	  // holder.ondragleave = function () { this.className = ''; return false; };
 	  holder.ondrop = function (e) {

@@ -277,12 +277,12 @@ svg#canvas > g:hover {
 	top: 0;
 	left: 0;
 	box-sizing:border-box;
-	background:rgba(0,0,0,0.6);
+	background:rgba(0,0,0,0.8);
 	z-index:200;
 }
 	#drop-msg>div{
 		margin:80px;
-		border:1px dashed rgba(255,255,255,0.6);
+		border:5px dashed rgba(255,255,255,0.8);
 		text-align: center;
 		height:100%;
 	}
@@ -296,7 +296,15 @@ svg#canvas > g:hover {
 		right: auto;
 		margin: auto;
 	}
-.hover>#drop-msg{display: block;}
+.hover>#drop-msg{
+	display: block;
+	height: calc(100%);
+}
+
+#drop-msg div {
+	height: calc(100% - 160px);
+	box-sizing: border-box;
+}
 
 .branding h3{
 	text-transform: uppercase;
