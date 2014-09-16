@@ -124,6 +124,7 @@ $(function(){
 
 		createTrack(trackID,fileName);
 		createKeyFrame(trackID, 0, null);
+		editKeyFrame(trackID, 0);
 	}
 
 	function previewfile(file) {
