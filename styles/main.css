@@ -171,7 +171,6 @@ input[type="text"]{
 }
 button:focus{
 	outline:0;
-	border:1px solid rgb(51,255,99);
 }
 button{
 	font-family: 'Inconsolata', sans-serif;
