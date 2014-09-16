@@ -708,6 +708,12 @@ footer{
 		color:#fff;
 		margin:8px 0;
 	}
+	#helper-label {
+		position: absolute;
+		top: 70px; 
+		margin-left: 50px;
+		color: #444;
+	}
 progress { width: 100%; }
 progress:after { content: '%'; }
 .fail { background: #c00; padding: 2px; color: #fff; }
