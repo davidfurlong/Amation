@@ -71,8 +71,8 @@ var animationDuration = 40; // seconds
 var animationWidth = 500; // px
 var animationHeight = 400; // px
 
-var currentKeyFrame = null;
-var currentTrack = null;
+var currentKeyFrame = null; // is a pos example 23
+var currentTrack = null; // is trackID example 434523453425
 
 var draggingKeyFrame = false;
 var draggingTrack = false;
@@ -215,20 +215,14 @@ $(function(){
 	});
 
 	$('.layer-details input').keypress(function(e){
-		if(e.keyCode == 13){
+		if(e.which == 13){
 			editKeyFrame(currentTrack, currentKeyFrame);
 			$(e.target).blur();
 		}
 	});
 
 	$('#save-btn').click(function(e){
-		var s = new XMLSerializer();
-		var d = $('#canvas').get(0);
-		 var str = s.serializeToString(d);
-		 var projectTitle = $('#project-title-input').val()
-		 var blob = new Blob([str], {type: "image/svg+xml"});
-		 saveAs(blob, projectTitle+".svg");
-		// window.prompt("Copy to clipboard: Ctrl+C, Enter", str);
+		downloadSVG();
 	});
 
 	$('.play-btn').click(function(e){
@@ -301,36 +295,40 @@ $(function(){
 			$('.layer-title-container').html('<span class="layer-title">(empty)</span>');
 		}
 	});
-	$('body').click(function(e){
-		if($(e.target).is('.dropdown')){
-			$('div[data-target="'+$(e.target).attr('id')+'"]').toggle();
-		}
-		else if($(e.target).is('.dropdown-item')){
-			$(e.target).parent().children().removeClass('selected');
-			$(e.target).addClass('selected');
-			$('#'+$(e.target).parent().parent().data('target')).val($(e.target).html()).data('value',$(e.target).data('value')).addClass('modified').parent().addClass('modified-parent');
-			$(e.target).parent().parent().hide();
+	$('body').on('click', '.dropdown', function(e){
+		$('div[data-target="'+$(e.target).attr('id')+'"]').toggle();
+	});
+	$('body').on('click', '.dropdown-item', function(e){
+		$(e.target).parent().children().removeClass('selected');
+		$(e.target).addClass('selected');
+		$('#'+$(e.target).parent().parent().data('target')).val($(e.target).html()).data('value',$(e.target).data('value')).addClass('modified').parent().addClass('modified-parent');
+		$(e.target).parent().parent().hide();
 
-			if($(e.target).parent().parent().data('target')=='project-frame'){
-				updateCanvasDimensionsFromDropdown();
-			}
+		if($(e.target).parent().parent().data('target')=='project-frame'){
+			updateCanvasDimensionsFromDropdown();
 		}
-		else if($(e.target).is('#loop-btn')){
-			$('#loop-btn').toggleClass('active');
-		}
-		else if($(e.target).is('.zoom-in')){
-			$('#canvas-center').css('transform','scale(' + ( scale + (scale*.1) ) + ')');
-			scale += scale*.1;
-		}
-		else if($(e.target).is('.zoom-out')){
-			$('#canvas-center').css('transform','scale(' + ( scale - (scale*.1) ) + ')');
-			scale -= scale*.1;
-		}
+	});
+	$('body').on('click', '#loop-btn', function(e){
+		$('#loop-btn').toggleClass('active');
+	});
+	$('#fit-btn').click(function(e){
+		$('#fit-btn').toggleClass('active');
+		if($('#fit-btn').hasClass('active'))
+			fitCanvas();
+	})
+	$('body').on('click', '.zoom-in', function(e){
+		$('#canvas-center').css('transform','scale(' + ( scale + (scale*.1) ) + ')');
+		scale += scale*.1;
+		$('#fit-btn').removeClass('active');
+	});
+	$('body').on('click', '.zoom-out', function(e){
+		$('#canvas-center').css('transform','scale(' + ( scale + (scale*.1) ) + ')');
+		scale += scale*.1;
+		$('#fit-btn').removeClass('active');
 	});
 
 	$(document).keydown(function(e){
 		if(!$(e.target).is('input:focus') && e.which == 32){
-			// space key
 			e.preventDefault();
 			if($('.play-btn').hasClass('playing')){
 				document.getElementById("canvas").pauseAnimations();
@@ -363,6 +361,8 @@ $(function(){
 			$('#canvas,#canvas-center').width(dims[0]);
 			$('#canvas').height(dims[1]);
 		}
+		if($('#fit-btn').hasClass('active'))
+			fitCanvas();
 	}
 	function updateCanvasDimensions(){
 		var dims = [$('#project-w').val(), $('#project-h').val()];
@@ -371,6 +371,8 @@ $(function(){
 			$('#canvas,#canvas-center').width(dims[0]);
 			$('#canvas').height(dims[1]);
 		}
+		if($('#fit-btn').hasClass('active'))
+			fitCanvas();
 	}
 	$('#project-h,#project-w').on("keyup",function(e){
 		updateCanvasDimensions();
@@ -422,35 +424,9 @@ $(function(){
 			$(this).parent().removeClass('error');
 		else 
 			$(this).parent().addClass('error');
-		if(e.keyCode == 13)
+		if(e.which == 13)
 			$(this).blur();
 	});
-
-	// function setAnimation(el){
-
-	// 	if(translate || rotate || scale){
-	// 		var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
-	// 		anim.className = "animator";
-	// 		newG.appendChild(anim);
-	// 	}
-
-	// 	// $('#'+id)
-	// 	$('#layer-x').val();
-	// 	$('#layer-opacity').val();
-	// }
-
-
-
-	// animate
-	// attributeName
-	// dur
-	// to
-	// from
-	// begin
-
-	// animateTransform
-	// type
-	// repeatCount
 
 	$('#project-title-input').click(function(){
 		$(this).select();
@@ -463,7 +439,6 @@ $(function(){
 	})
 
 	setupScrub();
-
 	allowDrag();
 	buildDropdowns();
 

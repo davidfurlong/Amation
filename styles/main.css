@@ -435,6 +435,7 @@ h1 input[type="text"]{
 		background-color:#fff;
 	}
 		#canvas-center{
+			transform-origin: 0 0;
 			margin:0 auto;
 			width:800px;
 		}
