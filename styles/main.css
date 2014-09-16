@@ -345,7 +345,7 @@ h1, h1 input[type="text"]{
 		content: ' ';
 		height: 36px;
 		width: 12px;
-		background-color:#fff;
+		background-color: #32ff62;
 		position: absolute;
 		z-index: 1;
 		border:none;
@@ -371,7 +371,7 @@ h1, h1 input[type="text"]{
 		content: ' ';
 		height: 36px;
 		width: 12px;
-		background-color:#fff;
+		background-color: #32ff62;
 		position: absolute;
 		z-index: 1;
 		border:none;
