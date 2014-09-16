@@ -459,6 +459,7 @@ $(function(){
 	$('#project-title-input').blur(function(){
 		if($(this).val() == "")
 			$(this).val("Project 1");
+		document.title = $(this).val() + " - Amation";
 	})
 
 	setupScrub();
