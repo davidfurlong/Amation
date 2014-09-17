@@ -37,6 +37,7 @@ function editKeyFrame(trackID, pos){
 	kf.attr['x'] = $('#layer-x').val();
 	kf.attr['y'] = $('#layer-y').val();
 	kf.attr['rotate'] = $('#layer-rotation').val();
+	kf.attr['easing'] = $('#layer-easing').val();
 	// kf.attr['transform'] = 'translate('+$('#layer-x').val()+' '+$('#layer-y').val()+') rotate('+$('#layer-rotation').val()+')';
 	
 	recalculateAnimations(trackID);
@@ -91,6 +92,7 @@ function populateDetails(trackID, pos) {
 		$('#layer-x').val(kf.attr['x'] || "0");
 		$('#layer-y').val(kf.attr['y'] || "0");
 		$('#layer-rotation').val(kf.attr['rotate'] || "0");
+		$('#layer-easing').val(kf.attr['easing'] || "linear");
 	}
 }
 
@@ -156,7 +158,7 @@ function animationReset(elId, transform, value) {
 	// variable, previous value, previous time in seconds
 	// todo may not be in seconds
 	var fields = [['fill', null , -1], ['stroke', null , -1], ['width', null , -1], ['height', null , -1], ['opacity', null , -1], ['stroke-width', null , -1], ['scale', null , -1], ['x', null , -1], ['y', null , -1], ['rotate', null , -1]];
-	for(var i = 0; i < keyFrames.length; i++){
+	for(var i = 0; i < keyFrames.length; i++){ // this needs to be rewritten
 		var kf = keyFrames[i];
 		var kfa = kf.attr;
 		console.log(kf);
@@ -169,6 +171,18 @@ function animationReset(elId, transform, value) {
 
 						// Create animation dawg.
 						switch(fields[j][0]) { // something broken
+							case "width":
+								var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
+								anim.setAttribute('attributeName', 'transform');
+								anim.setAttribute('begin', (fields[j][2]).toFixed(2)+'s');
+								anim.setAttribute('dur', (pTs(kf['pos'])-fields[j][2]).toFixed(2)+"s");
+								anim.setAttribute('type', 'skewX');
+								anim.setAttribute('from', fields[j][1]+' '+elX+' '+elY/*parseInt(fields[j][1])*/);
+								anim.setAttribute('to', kfa["rotate"]+' '+elX+' '+elY/*kfa["rotate"]*/);
+								anim.setAttribute('onend', 'animationReset("' + el.getAttribute('id') + '", "' + anim.getAttribute('type') +  '", "'+ anim.getAttribute('to')+'")');
+								anim.setAttribute('fill', 'freeze');
+								el.appendChild(anim);
+								break;
 							case "rotate":
 								var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
 								anim.setAttribute('attributeName', 'transform');
@@ -179,6 +193,10 @@ function animationReset(elId, transform, value) {
 								anim.setAttribute('to', kfa["rotate"]+' '+elX+' '+elY/*kfa["rotate"]*/);
 								anim.setAttribute('onend', 'animationReset("' + el.getAttribute('id') + '", "' + anim.getAttribute('type') +  '", "'+ anim.getAttribute('to')+'")');
 								anim.setAttribute('fill', 'freeze');
+								if(kfa['easing'] == "ease")
+									anim.setAttribute('calcMode', 'spline');
+									anim.setAttribute('keySplines', '1 0 0 1');
+									anim.setAttribute('values', fields[j][1]+' '+elX+' '+elY+';'+kfa["rotate"]+' '+elX+' '+elY);
 								el.appendChild(anim);
 								break;
 							case "x":
