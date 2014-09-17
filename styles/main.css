@@ -237,6 +237,9 @@ button{
 	width: 100%;
 	cursor: pointer;
 }
+#upload-btn {
+	text-align: center;
+}
 input.full{
 	padding-left:10px;
 	width:74px;
