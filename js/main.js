@@ -1,10 +1,3 @@
-
-// select all text on input field focus
-$("input[type='text']").click(function () {
-   $(this).select();
-});
-
-
 $.fn.draggable = function(){
     var $this = this,
     ns = 'draggable_'+(Math.random()+'').replace('.',''),
@@ -73,22 +66,27 @@ $.fn.dragWidth = function(){
 	return this;
 };
 
+// Default Values
 var animationDuration = 40; // seconds
 var animationWidth = 500; // px
 var animationHeight = 400; // px
 
-var currentKeyFrame = null; // is a pos example 23
-var currentTrack = null; // is trackID example 434523453425
+// Selection (View) States
+var currentKeyFrame = null; // is a pos (example 23)
+var currentTrack = null; // is trackID (example 434523453425)
 
+// Canvas (View) States
 var draggingKeyFrame = false;
 var draggingTrack = false;
 
+// Model States
 var tracks = {};
 var scale = 1; // unitless, scale of canvas
 
 
 $(function(){
 
+	// File Upload boxes definitions
 	var holder = document.getElementById('holder'),
 	    tests = {
 	      filereader: typeof FileReader != 'undefined',
@@ -96,11 +94,6 @@ $(function(){
 	      formdata: !!window.FormData,
 	      progress: "upload" in new XMLHttpRequest
 	    }, 
-	    support = {
-	      filereader: document.getElementById('filereader'),
-	      formdata: document.getElementById('formdata'),
-	      progress: document.getElementById('progress')
-	    },
 	    acceptedTypes = {
 	      'image/svg+xml': true,
 	      'image/svg': true
@@ -108,7 +101,23 @@ $(function(){
 	    progress = document.getElementById('uploadprogress'),
 	    fileupload = document.getElementById('upload');
 
+	if (tests.dnd) { 
+	  holder.ondragover = function () { this.className = 'hover'; return false; };
+	  holder.ondragend = function () { this.className = ''; return false; };
+	  // holder.ondragleave = function () { this.className = ''; return false; };
+	  holder.ondrop = function (e) {
+	    this.className = '';
+	    e.preventDefault();
+	    readfiles(e.dataTransfer.files);
+	  }
+	} else {
+	  fileupload.className = 'hidden';
+	  fileupload.querySelector('input').onchange = function () {
+	    readfiles(this.files);
+	  };
+	}
 
+	// parses SVG
 	function processSvg(s,fileName) {
 		var parser = new DOMParser();
 		var doc = parser.parseFromString(s, "image/svg+xml");
@@ -157,22 +166,6 @@ $(function(){
 	    }
 	}
 
-	if (tests.dnd) { 
-	  holder.ondragover = function () { this.className = 'hover'; return false; };
-	  holder.ondragend = function () { this.className = ''; return false; };
-	  // holder.ondragleave = function () { this.className = ''; return false; };
-	  holder.ondrop = function (e) {
-	    this.className = '';
-	    e.preventDefault();
-	    readfiles(e.dataTransfer.files);
-	  }
-	} else {
-	  fileupload.className = 'hidden';
-	  fileupload.querySelector('input').onchange = function () {
-	    readfiles(this.files);
-	  };
-	}
-
 	function decode_base64(s) {
 	    var e={},i,k,v=[],r='',w=String.fromCharCode;
 	    var n=[[65,91],[97,123],[48,58],[43,44],[47,48]];
@@ -189,7 +182,6 @@ $(function(){
 	    }
 	    return r;
 	}
-
 
 	function allowDrag(){
 		$('.keyframe').each(function(i,v){
@@ -211,9 +203,11 @@ $(function(){
 	$('input[type="text"]').focus(function(e){
 		$(e.target).parent().addClass('focus');
 	});
+
 	$('input[type="text"]').blur(function(e){
 		$(e.target).parent().removeClass('focus');
 	});
+
 	$('#slider-container,#ticker-container').width($('body').width()-$('.layer-details').width());
 	
 	$(window).resize(function(){
@@ -245,7 +239,6 @@ $(function(){
 		slider.val(0);
 		document.getElementById("canvas").pauseAnimations();
 	});
-
 
 	$('.rewind-btn').click(function(e){
 		document.getElementById("canvas").setCurrentTime(0);
@@ -283,6 +276,11 @@ $(function(){
 		}
 	});
 
+	// select all text on input field focus
+	$("input[type='text']").click(function () {
+	   $(this).select();
+	});
+
 	$('body').on('click', '.remove-layer-btn', function(e){
 		if($('.layer-title').html()!='(empty)'){
 			$.each(tracks,function(i,v){
@@ -314,19 +312,23 @@ $(function(){
 			updateCanvasDimensionsFromDropdown();
 		}
 	});
+
 	$('body').on('click', '#loop-btn', function(e){
 		$('#loop-btn').toggleClass('active');
 	});
+
 	$('#fit-btn').click(function(e){
 		$('#fit-btn').toggleClass('active');
 		if($('#fit-btn').hasClass('active'))
 			fitCanvas();
-	})
+	});
+
 	$('body').on('click', '.zoom-in', function(e){
 		$('#canvas-center').css('transform','scale(' + ( scale + (scale*.1) ) + ')');
 		scale += scale*.1;
 		$('#fit-btn').removeClass('active');
 	});
+
 	$('body').on('click', '.zoom-out', function(e){
 		$('#canvas-center').css('transform','scale(' + ( scale + (scale*.1) ) + ')');
 		scale += scale*.1;
@@ -370,6 +372,7 @@ $(function(){
 		if($('#fit-btn').hasClass('active'))
 			fitCanvas();
 	}
+
 	function updateCanvasDimensions(){
 		var dims = [$('#project-w').val(), $('#project-h').val()];
 		if(dims[0]>0 && dims[1]>0){
@@ -380,6 +383,7 @@ $(function(){
 		if($('#fit-btn').hasClass('active'))
 			fitCanvas();
 	}
+
 	$('#project-h,#project-w').on("keyup",function(e){
 		updateCanvasDimensions();
 	});
@@ -393,12 +397,10 @@ $(function(){
 		draggingKeyFrame = false;
 	});
 
-
 	// keyframe property watching
 	$('body').on('change', '.layer-details input', function(e){
 		$(e.target).addClass('modified').parent().addClass('modified-parent');
 	});
-
 
 	$('#project-width').blur(function(){
 		var w = $(this).val()

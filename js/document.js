@@ -6,8 +6,6 @@ function saveDocument(){
 	var x = $.extend(true, {}, tracks);
 	console.log(x);
 	for(track in x){
-		// console.log(x[track]);
-		// console.log(track);
 		x[track].el = x[track].el.id;
 		x[track].keyframes = x[track].keyframes.map(function(keyframe, i, ray){
 			delete keyframe.el

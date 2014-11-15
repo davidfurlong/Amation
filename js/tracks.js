@@ -1,6 +1,7 @@
 var colors = ['#33c1ff','#ff33e2','#ff8533','#5133ff','#ff3333'];
 var colorCounter = 0;
 
+// VIEW
 function createTrack(trackID,fileName){
 	var bars = $(".bars");
 	// var bg = '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6);
@@ -16,6 +17,7 @@ function createTrack(trackID,fileName){
 	$('.new-handle').dragWidth().removeClass('new-handle');
 }
 
+// VIEW UPDATING MODEL
 function editKeyFrame(trackID, pos){
 	console.log(trackID);
 	console.log(pos);
@@ -43,22 +45,23 @@ function editKeyFrame(trackID, pos){
 	recalculateAnimations(trackID);
 }
 
+// VIEW ADDING TO MODEL
 function createKeyFrame(trackID, pos, el) {
 	console.log(el);
 	console.log('^^^^^^^');
 	$('.selected').removeClass('selected');
 	var newKeyFrame = $('<div class="keyframe selected" data-pos="' + pos + '" style="left:'+(pos-8)+'px;"></div>');
-	tracks[trackID].keyframes.push(
-	{
-			"pos": pos, // acts like an id
-			"el": newKeyFrame
-		}
-		);
+	tracks[trackID].keyframes.push({
+		"pos": pos, // acts like an id
+		"el": newKeyFrame
+	});
 	el = el || $('[data-trackid="'+trackID+'"] .bar');
 	$(el).append(newKeyFrame);
 	return newKeyFrame;	
 }
 
+
+// VIEW REMOVING FROM MODEL
 function deleteKeyFrame(trackID, pos) {
 	if(pos == 0)
 		return
@@ -70,7 +73,16 @@ function deleteKeyFrame(trackID, pos) {
 	recalculateAnimations(trackID);
 }
 
+function findKeyFrameByPos(ray, pos) {
+	for(var k = 0; k < ray.length; k++){
+		if(ray[k].pos == pos) {
+			return ray[k];
+		}
+	}
+	return -1;
+}
 
+// VIEW POPULAING FROM MODEL
 function populateDetails(trackID, pos) {
 	console.log(tracks[trackID].keyframes);
 	var kf = findKeyFrameByPos(tracks[trackID].keyframes, pos);
@@ -96,6 +108,7 @@ function populateDetails(trackID, pos) {
 	}
 }
 
+
 function removeKeyFrameByPos(ray, pos) {
 	for(var i = 0; i < ray.length; ray++){
 		if(ray[i].pos == pos){
@@ -105,7 +118,7 @@ function removeKeyFrameByPos(ray, pos) {
 	return -1;
 }
 
-function findKeyFrameByPos(ray, pos) {
+function getKeyFrameByPos(ray, pos) {
 	console.log(typeof ray);
 	console.log(ray.length);
 	for(var k = 0; k < ray.length; k++){
@@ -125,13 +138,9 @@ function animationReset(elId, transform, value) {
 			el.setAttribute('transform', 'rotate(' + to[0] + ', ' + to[1] + ', ' + to[2] + ')');
 			break;
 		}
-
-
 	}
 
 	function recalculateAnimations(trackID) {
-		console.log('recalculating Animations');
-		console.log(tracks);
 		var keyFrames = tracks[trackID || currentTrack].keyframes;
 		keyFrames = keyFrames.sort(function(a, b){
 			return (parseInt(a.pos) - parseInt(b.pos));
@@ -151,10 +160,6 @@ function animationReset(elId, transform, value) {
 		}
 		var elX = el.getBBox().width/2;
 		var elY = el.getBBox().height/2;
-		console.log('Timing test');
-		console.log('total:'+totalDuration);
-		console.log('track:'+trackDuration);
-		console.log('start:'+trackStart);
 	// variable, previous value, previous time in seconds
 	// todo may not be in seconds
 	var fields = [['fill', null , -1], ['stroke', null , -1], ['width', null , -1], ['height', null , -1], ['opacity', null , -1], ['stroke-width', null , -1], ['scale', null , -1], ['x', null , -1], ['y', null , -1], ['rotate', null , -1]];
