@@ -10,7 +10,6 @@ function constructKeyStripes(dur, func) {
 	}
 }
 
-
 var animation = function(dur) {
 	/*\
 	 * animation.linear

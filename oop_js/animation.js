@@ -126,6 +126,7 @@ function removeAllAnimationsFromSVG(){
 	$(el).find('animate, animateTransform, animateColor').remove();
 }
 
+// TODO
 function recalculateAnimations(keyFrames, fields) {
 	// for each Keyframe
 	for(var i = 0; i < keyFrames.length; i++){ // this needs to be rewritten

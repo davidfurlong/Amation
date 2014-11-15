@@ -1,4 +1,3 @@
-
 $.fn.draggable = function(){
     var $this = this,
     ns = 'draggable_'+(Math.random()+'').replace('.',''),
@@ -183,7 +182,6 @@ $(function(){
 	    }
 	    return r;
 	}
-
 
 	function allowDrag(){
 		$('.keyframe').each(function(i,v){
