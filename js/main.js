@@ -1,4 +1,10 @@
 
+// select all text on input field focus
+$("input[type='text']").click(function () {
+   $(this).select();
+});
+
+
 $.fn.draggable = function(){
     var $this = this,
     ns = 'draggable_'+(Math.random()+'').replace('.',''),
